@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline | Octomatic</title>
+  <meta name="description" content="You are currently offline. Please check your internet connection.">
+  <link rel="icon" href="/faviconOctomatic.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --background: #0A0A0A;
+      --foreground: #ffffff;
+      --primary: #324c9e;
+      --primary-light: #4585f4;
+      --border: rgba(50, 76, 158, 0.2);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: var(--background);
+      color: var(--foreground);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .logo {
+      width: 120px;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--foreground);
+    }
+    
+    p {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+    
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background-color 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    
+    .button:hover {
+      background-color: var(--primary-light);
+    }
+    
+    .offline-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      padding: 1rem;
+    }
+    
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+      
+      .offline-icon {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/octomaticLogo.svg" alt="Octomatic Logo" class="logo">
+    
+    <svg class="offline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4585f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+      <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+      <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+      <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+      <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+      <line x1="12" y1="20" x2="12.01" y2="20"></line>
+    </svg>
+    
+    <h1>You're Offline</h1>
+    <p>It looks like you've lost your internet connection. Some features may be unavailable until you're back online.</p>
+    
+    <p>While you're offline, here's what you can know about Octomatic: We're Amsterdam's leading AI automation consultancy, specializing in helping Dutch businesses optimize their operations through intelligent automation solutions. Our team of experts has been transforming companies across the Netherlands by implementing custom AI workflows that reduce operational costs, improve efficiency, and drive sustainable growth.</p>
+    
+    <p>Our comprehensive services include business process automation, CRM system buildouts, workflow optimization, and GDPR-compliant automation solutions. We understand the unique challenges facing Dutch businesses and provide tailored automation strategies that integrate seamlessly with existing systems while ensuring full compliance with European data protection regulations.</p>
+    
+    <p>From small startups to enterprise-level organizations, we've helped hundreds of companies automate repetitive tasks, streamline customer communications, and build scalable systems that grow with their business. Our proven methodology combines cutting-edge AI technology with practical business insights to deliver measurable results and long-term value.</p>
+    
+    <p>Our automation solutions cover a wide range of business functions including lead generation, customer relationship management, project management, hiring systems, and workflow optimization. Each solution is custom-built to address specific business challenges while maintaining the highest standards of data security and privacy compliance required in the Dutch market.</p>
+    
+    <p>We specialize in creating automated workflows that eliminate manual data entry, reduce human error, and free up your team to focus on high-value activities. Our clients typically see 40-70% reduction in operational costs and significant improvements in productivity within the first three months of implementation.</p>
+    
+    <p>When you're back online, explore our case studies, read our latest insights on AI automation trends, or schedule a consultation to discover how we can help transform your business operations. We're here to guide you through every step of your automation journey and ensure you achieve maximum return on your automation investment.</p>
+    
+    <button class="button" onclick="tryReconnect()">Try Again</button>
+  </div>
+  
+  <script>
+    // Check if we're back online
+    function tryReconnect() {
+      if (navigator.onLine) {
+        // If we're back online, reload the page
+        window.location.reload();
+      } else {
+        // Still offline, show a message
+        alert('Still offline. Please check your internet connection and try again.');
+      }
+    }
+    
+    // Listen for online event
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html> 

@@ -1,0 +1,80 @@
+.landing-page {
+  @apply min-h-screen flex flex-col items-center justify-center relative px-4 overflow-hidden;
+  /* Commenting out the radial gradient to prevent unwanted blue background */
+  /* background: radial-gradient(circle at center, rgba(14, 165, 233, 0.13) 0%, rgba(14, 165, 233, 0) 70%); */
+}
+
+.logo {
+  @apply absolute top-5 left-5 text-[36px] font-bold;
+  font-family: 'Archivo', sans-serif;
+}
+
+.content {
+  @apply w-full max-w-[600px] mx-auto text-center z-10 space-y-3 p-8 pt-6 rounded-xl backdrop-blur-sm mt-12;
+  background: linear-gradient(
+    135deg,
+    rgba(17, 24, 39, 0.95),
+    rgba(17, 24, 39, 0.8)
+  );
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    0 0 0 1px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(0, 0, 0, 0.05),
+    0 0 0 3px rgba(0, 0, 0, 0.03),
+    inset 0 2px 4px 0 rgba(255, 255, 255, 0.05),
+    0 20px 40px -15px rgba(0, 0, 0, 0.5),
+    0 0 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.coming-soon {
+  @apply text-[52px] font-black mb-0 pt-0;
+  font-family: 'Archivo', sans-serif;
+  line-height: 1;
+}
+
+.heading {
+  @apply text-[18px] font-normal mb-6 w-full max-w-[500px] mx-auto;
+  font-family: 'Archivo', sans-serif;
+  line-height: 1.4;
+}
+
+.subheading {
+  @apply text-[20px] font-bold mb-6;
+  font-family: 'Archivo', sans-serif;
+  line-height: 1.5;
+}
+
+.form-container {
+  @apply w-full max-w-[500px] mx-auto space-y-4;
+  opacity: 0;
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.input-field {
+  @apply transition-all duration-300 hover:border-primary focus:border-primary;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submit-button {
+  @apply w-full bg-primary hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 mt-6;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(100vh) scale(1);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-20vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.bubble {
+  @apply fixed rounded-full pointer-events-none;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  animation: bubble-rise linear forwards;
+}

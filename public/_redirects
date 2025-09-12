@@ -1,0 +1,29 @@
+# Legacy redirects - ensure canonical URLs
+https://octomatic.ai/* https://www.octomatic.ai/:splat 301!
+http://octomatic.ai/* https://www.octomatic.ai/:splat 301!
+
+# Strategic Consolidation Redirects - Brand Focus & SEO Authority Consolidation
+# Redundant category terms → Solutions hub
+/services/workflow-optimization /services 301!
+/services/business-process-automation /services 301!
+/services/custom-ai-solutions /services 301!
+
+# Feature-as-service pages → Core offers
+/services/automation-roi-consulting /automation-strategy-workshop 301!
+/services/gdpr-compliant-automation /checklist 301!
+
+# Old URL redirects
+/gdpr-checklist /checklist 301!
+/nl/gdpr-checklist /nl/checklist 301!
+/privacy-policy /privacy 301!
+/nl/privacy-policy /nl/privacy 301!
+
+# Dutch language variants
+/nl/services/workflow-optimization /nl/services 301!
+/nl/services/business-process-automation /nl/services 301!
+/nl/services/custom-ai-solutions /nl/services 301!
+/nl/services/automation-roi-consulting /nl/automation-strategy-workshop 301!
+/nl/services/gdpr-compliant-automation /nl/checklist 301!
+
+# SPA routing - serve index.html for all routes that don't match static files
+/*    /index.html   200 

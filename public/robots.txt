@@ -1,0 +1,28 @@
+# Octomatic.ai Robots.txt
+# https://www.octomatic.ai
+
+User-agent: *
+Allow: /
+
+# Disallow potentially duplicate or low-value paths
+Disallow: /*?*
+Disallow: /*&
+Disallow: /*/amp/$
+Disallow: /*/print/$
+
+# Disallow common parameter patterns if needed
+# Disallow: /*?utm_
+# Disallow: /*?ref=
+# Disallow: /*?sessionid=
+
+# Disallow paths not intended for crawling
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /register/
+Disallow: /account/
+Disallow: /dashboard/
+Disallow: /_vite/ # Vite internal dev assets
+
+# Sitemap location
+Sitemap: https://www.octomatic.ai/sitemap.xml

@@ -1,0 +1,65 @@
+{
+  "name": "Octomatic",
+  "short_name": "Octomatic",
+  "description": "AI automation agency Amsterdam",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18191A",
+  "theme_color": "#324c9e",
+  "icons": [
+    {
+      "src": "/faviconOctomatic.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/octomatic-200.png",
+      "sizes": "200x200",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/octomatic-200.webp",
+      "sizes": "200x200",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/octomatic-400.png",
+      "sizes": "400x400",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/octomatic-400.webp",
+      "sizes": "400x400",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/octomatic-800.png",
+      "sizes": "800x800",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/octomatic-800.webp",
+      "sizes": "800x800",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/octomatic-1200.png",
+      "sizes": "1200x1200",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/octomatic-1200.webp",
+      "sizes": "1200x1200",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}

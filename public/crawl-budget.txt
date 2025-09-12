@@ -1,0 +1,63 @@
+# Octomatic.ai Crawl Budget Optimization Guide
+# This file serves as documentation for crawlers and internal reference
+
+# High-Priority URLs (should be crawled frequently)
+/
+/services/ai-automation-amsterdam/
+/nl/services/ai-automation-amsterdam/
+/services/
+/nl/services/
+/blog/
+/nl/blog/
+/get-started/
+/nl/get-started/
+/contact/
+/nl/contact/
+
+# Medium-Priority URLs (should be crawled regularly)
+/services/business-process-automation/
+/nl/services/business-process-automation/
+/services/workflow-optimization/
+/nl/services/workflow-optimization/
+/services/custom-ai-solutions/
+/nl/services/custom-ai-solutions/
+/about/
+/nl/about/
+/careers/
+/nl/careers/
+
+# Low-Priority URLs (can be crawled less frequently)
+/terms/
+/nl/terms/
+/privacy/
+/nl/privacy/
+/cookies/
+/nl/cookies/
+
+# URLs to prioritize for local SEO (Amsterdam)
+/services/ai-automation-amsterdam/
+/nl/services/ai-automation-amsterdam/
+
+# Crawl priority for resource types
+# 1. HTML pages
+# 2. XML sitemaps
+# 3. CSS and JS files
+# 4. Images
+
+# Important files for SEO
+/sitemap.xml
+/robots.txt
+/manifest.json
+
+# Recommended crawl frequency
+# Home page: Daily
+# Service pages: Weekly
+# Blog posts: Weekly
+# Legal pages: Monthly
+# Image assets: Monthly
+
+# Notes for search engines
+# - Our site is multilingual (English and Dutch)
+# - English is the canonical language
+# - Amsterdam-specific pages are high priority for local search
+# - Use hreflang in sitemap.xml for language variations 

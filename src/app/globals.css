@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 10%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 221 83% 53%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 10%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 221 83% 53%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 221 83% 53%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-archivo;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Typography Overrides */
+.prose {
+  @apply text-gray-300;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply text-blog-blue font-semibold;
+  scroll-margin-top: 100px;
+}
+
+.prose ul {
+  @apply list-disc pl-6 my-4;
+}
+
+.prose ul li {
+  @apply text-gray-300 mb-1;
+}
+
+.prose ul li::marker {
+  @apply text-blog-blue;
+}
+
+.prose p {
+  @apply text-gray-300 leading-relaxed my-4;
+}
+
+.prose strong {
+  @apply text-white font-semibold;
+}
+
+.prose a {
+  @apply text-blog-blue hover:text-blog-blue/80 transition-colors;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-blog-blue pl-4 italic;
+}
+
+.prose code {
+  @apply bg-black/40 px-1.5 py-0.5 rounded text-white;
+}
+
+.prose pre {
+  @apply bg-black/40 p-4 rounded-lg;
+}
+
+.prose img {
+  @apply rounded-lg my-8;
+}
+
+.prose figure {
+  @apply my-8;
+}
+
+.prose figure figcaption {
+  @apply text-sm text-gray-400 text-center mt-2;
+}
+
+.prose hr {
+  @apply border-gray-800 my-8;
+}
+
+.prose table {
+  @apply w-full border-collapse border border-gray-800 my-8;
+}
+
+.prose th {
+  @apply bg-black/40 text-white font-semibold p-2 border border-gray-800;
+}
+
+.prose td {
+  @apply p-2 border border-gray-800;
+}
+
+.prose h2 {
+  @apply mt-6 mb-3;
+}
+
+.prose h3 {
+  @apply mt-5 mb-2;
+}
+
+/* Critical styles only */
+:root {
+  --custom-blue: #324c9e;
+  --electric-blue: #4585f4;
+}
+
+/* Remove unused animations and transitions */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(50, 76, 158, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--custom-blue);
+  animation: spin 1s linear infinite;
+}
+
+/* Defer non-critical animations */
+.animations-loaded .fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  }
+}
+
+.bg-[#101112] { background-color: #101112; }

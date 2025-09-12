@@ -1,0 +1,6 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="100" fill="#4F46E5"/>
+  <circle cx="100" cy="75" r="30" fill="white"/>
+  <path d="M50 150 Q50 130 70 130 H130 Q150 130 150 150 V180 Q150 200 130 200 H70 Q50 200 50 180 V150 Z" fill="white"/>
+  <text x="100" y="190" text-anchor="middle" fill="#4F46E5" font-family="Arial, sans-serif" font-size="12" font-weight="bold">KT</text>
+</svg> 

@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 6%;
+    --foreground: 0 0% 100%;
+    --card: 240 17% 20%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 17% 20%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 12.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 12.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 12.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 217.2 32.6% 12.5%;
+    --ring: 224.3 76.3% 38%;
+    --radius: 0.5rem;
+  }
+
+  @property --border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes border-spin {
+    to {
+      --border-angle: 360deg;
+    }
+  }
+
+  .animate-border {
+    animation: border-spin 3s linear infinite;
+    background:
+      linear-gradient(#101112, #101112) padding-box,
+      conic-gradient(
+        from var(--border-angle),
+        #101112,
+        #324c9e 30%,
+        #4585f4 55%,
+        #324c9e 70%,
+        #101112
+      ) border-box;
+    border: 2px solid transparent;
+  }
+
+  .dark {
+    --border: 240 3.7% 15.9%;
+    --background: 240 10% 3.9%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply text-white;
+    background-color: #0A0A0A;
+  }
+}
+
+@layer components {
+  .section {
+    @apply min-h-screen flex items-center justify-center py-8 px-4;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-[#3ec7b8] to-[#4faeff] border-2 border-transparent rounded-full px-6 py-3 text-white font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-sky-500/40;
+  }
+
+  .btn-outline {
+    @apply border-2 border-[#4fd1c5] text-white rounded-full px-6 py-3 transition-all duration-300 hover:bg-[#112C46]/30;
+  }
+
+  .card {
+    @apply rounded-xl p-8 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30;
+    background-color: #2A2A3B;
+  }
+}

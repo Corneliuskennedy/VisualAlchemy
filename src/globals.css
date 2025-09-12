@@ -1,0 +1,9 @@
+
+:root {
+    --custom-blue: #324c9e;
+}
+
+.outline {
+    -webkit-text-stroke: 1px var(--custom-blue);
+    text-shadow: 0 0 5px rgba(50, 76, 158, 0.5);
+} 
