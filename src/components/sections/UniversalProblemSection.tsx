@@ -52,17 +52,17 @@ export default function UniversalProblemSection() {
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Section Header - Clean Text Layout */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight tracking-tight font-archivo">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-foreground mb-8 leading-tight tracking-tight font-archivo">
             The €67,560 Annual Leak Every Business Ignores
           </h2>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto font-normal leading-relaxed font-archivo">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto font-normal leading-relaxed font-archivo">
             While you focus on growth, operational inefficiency quietly steals your profits
           </p>
         </div>
 
         {/* Body Copy - Text Only */}
         <div className="text-center mb-16">
-          <p className="text-lg md:text-xl text-gray-400 max-w-5xl mx-auto leading-relaxed font-archivo">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-5xl mx-auto leading-relaxed font-archivo">
             Dutch businesses lose an average of €67,560 annually to operational inefficiency. That's not a typo—it's the hidden cost of running your business on manual processes, disconnected systems, and reactive firefighting. Your team spends 23+ hours per week on repetitive tasks that could be automated. Every manual handoff, every duplicate data entry, every 'quick fix' that becomes permanent—it all adds up to massive profit leakage.
           </p>
         </div>
@@ -88,13 +88,13 @@ export default function UniversalProblemSection() {
                   <div className={`text-6xl md:text-7xl font-light ${colors.text} mb-2 tracking-tight`}>
                     {metric.value}
                   </div>
-                  <div className="text-gray-400 font-medium text-sm uppercase tracking-[0.2em]">
+                  <div className="text-muted-foreground font-medium text-sm uppercase tracking-[0.2em]">
                     {metric.label}
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed font-normal text-base font-archivo">
+                <p className="text-muted-foreground leading-relaxed font-normal text-base font-archivo">
                   {metric.description}
                 </p>
 

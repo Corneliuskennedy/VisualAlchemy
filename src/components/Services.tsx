@@ -43,7 +43,7 @@ const ServiceCard = memo(({ icon, title, description, isNL, id, isBottomRow = fa
                          bg-gradient-to-br from-[#324c9e]/15 to-[#6B8AE6]/10 border border-[#324c9e]/30 
                          group-hover:from-[#324c9e]/25 group-hover:to-[#6B8AE6]/20 group-hover:border-[#324c9e]/50
                          transition-all duration-300`}>
-            {React.cloneElement(icon as React.ReactElement, { 
+            {React.cloneElement(icon as React.ReactElement<any>, { 
               className: `${isBottomRow ? 'w-6 h-6' : 'w-7 h-7'} text-[#6B8AE6] group-hover:text-[#4585f4] transition-colors duration-300` 
             })}
           </div>

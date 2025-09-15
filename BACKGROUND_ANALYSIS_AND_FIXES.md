@@ -153,3 +153,4 @@ The animated background was only visible on the hero section because **individua
 
 The website now has a **truly premium, enterprise-grade animated background** that flows seamlessly across all sections while maintaining optimal performance! 🎨✨
 
+

@@ -32,11 +32,11 @@ const TranslationDebug = lazy(() => import("@/components/TranslationDebug").then
 
 // Loading fallbacks
 const NavbarFallback = () => (
-  <div className="hidden md:block h-20 bg-[#0A0A0A] border-b border-border/10" />
+  <div className="hidden md:block h-20 bg-background border-b border-border/10" />
 );
 
 const MainFallback = () => (
-  <div className="min-h-screen bg-[#0A0A0A] animate-pulse" />
+  <div className="min-h-screen bg-background animate-pulse" />
 );
 
 // Create a client with optimized settings
@@ -103,7 +103,7 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="en" href="https://octomatic.ai/" />
         <link rel="alternate" hrefLang="nl" href="https://octomatic.ai/nl" />
       </head>
-      <body className={`${inter.className} ${archivo.variable} text-foreground font-archivo`}>
+      <body className={`${inter.className} ${archivo.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
             <ThemeProvider
@@ -140,7 +140,7 @@ export default function RootLayout({
                     </main>
 
                     <footer role="contentinfo" className="relative z-10">
-                      <Suspense fallback={<div className="h-[200px] bg-[#101112] border-t border-border/10" />}>
+                      <Suspense fallback={<div className="h-[200px] bg-secondary border-t border-border/10" />}>
                         <Footer />
                       </Suspense>
                     </footer>

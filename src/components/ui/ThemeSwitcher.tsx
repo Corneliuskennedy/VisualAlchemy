@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -14,10 +14,47 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   variant = 'default' 
 }) => {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  // Prevent hydration mismatch by not rendering until mounted
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
+
+  // Don't render theme-dependent content until mounted
+  if (!mounted) {
+    if (variant === 'compact') {
+      return (
+        <button
+          className={`
+            p-2 rounded-lg
+            bg-white/5 
+            border border-white/10
+            transition-all duration-300
+            ${className}
+          `}
+          disabled
+        >
+          <Sun className="w-4 h-4 text-gray-400" />
+        </button>
+      );
+    }
+    
+    return (
+      <div className={`flex items-center gap-3 ${className}`}>
+        <span className="text-sm font-medium text-gray-400">
+          Theme
+        </span>
+        <div className="relative w-12 h-6 rounded-full p-1 bg-slate-700">
+          <div className="w-4 h-4 rounded-full bg-slate-300" />
+        </div>
+      </div>
+    );
+  }
 
   if (variant === 'compact') {
     return (

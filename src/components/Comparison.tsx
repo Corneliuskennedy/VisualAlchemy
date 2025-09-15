@@ -50,7 +50,7 @@ const ComparisonCard: React.FC<ComparisonCardProps> = ({ title, isHighlighted = 
                   : 'bg-gray-800/50 group-hover:bg-gray-800'
                 }
               `}>
-                {React.cloneElement(item.icon as React.ReactElement, {
+                {React.cloneElement(item.icon as React.ReactElement<any>, {
                   className: `w-5 h-5 ${isHighlighted ? 'text-[#4585f4]' : 'text-gray-400'} transition-colors group-hover:text-[#4585f4]`
                 })}
               </div>

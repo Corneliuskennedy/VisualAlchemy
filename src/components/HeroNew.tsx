@@ -17,7 +17,7 @@ const PRIMARY_BUTTON_STYLES = `
   min-w-[200px] sm:min-w-[240px]
   px-5 sm:px-7 py-2.5 sm:py-3.5
   rounded-full
-  bg-[#324c9e] hover:bg-[#324c9e]/90 text-white
+  bg-primary hover:bg-primary/90 text-primary-foreground
   font-medium
   text-sm sm:text-base
   transition-all duration-300
@@ -27,14 +27,14 @@ const SECONDARY_BUTTON_STYLES = `
   min-w-[200px] sm:min-w-[240px]
   px-5 sm:px-7 py-2.5 sm:py-3.5
   rounded-full
-  bg-[#0A0A0A] text-white
-  border border-[#324c9e]/70
+  bg-background text-foreground
+  border border-primary/70
   font-medium
   text-sm sm:text-base
   transition-all duration-300
   hover:shadow-[0_0_20px_-5px_rgba(69,133,244,0.4)]
-  hover:border-[#4585f4]
-  hover:text-[#4585f4]
+  hover:border-primary
+  hover:text-primary
 `;
 
 const MobileButton = ({
@@ -70,14 +70,14 @@ const MobileSecondaryButton = ({
       min-w-[200px] sm:min-w-[240px]
       px-5 sm:px-7 py-2.5 sm:py-3.5
       rounded-full
-      bg-[#0A0A0A] text-white
-      border border-[#324c9e]/70
+      bg-background text-foreground
+      border border-primary/70
       font-medium
       text-sm sm:text-base
       transition-all duration-300
       hover:shadow-[0_0_15px_-5px_rgba(69,133,244,0.4)]
-      hover:border-[#4585f4]
-      hover:text-[#4585f4]
+      hover:border-primary
+      hover:text-primary
       active:translate-y-[1px]
     `}
   >
@@ -186,7 +186,7 @@ const Hero = () => {
 
             <div className="space-y-6">
               {/* Power Headline */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight font-archivo">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight tracking-tight font-archivo">
                 {isNL ? 'Stop Geld Verliezen aan' : 'Stop Losing Money to'}
                 <span className="block text-transparent bg-gradient-to-r from-[#4585f4] via-[#6B8AE6] to-[#8B9AE8] bg-clip-text drop-shadow-[0_4px_12px_rgba(69,133,244,0.3)]">
                   {isNL ? 'Operationele Chaos' : 'Operational Chaos'}
@@ -221,7 +221,7 @@ const Hero = () => {
             {/* Dual CTA Strategy */}
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mt-8">
               {/* Primary CTA */}
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] text-white font-bold text-lg rounded-2xl shadow-2xl hover:shadow-[#4585f4]/25 transition-all duration-300 hover:scale-105 font-archivo">
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-primary to-[#6B8AE6] text-primary-foreground font-bold text-lg rounded-2xl shadow-2xl hover:shadow-primary/25 transition-all duration-300 hover:scale-105 font-archivo">
                 <span className="relative z-10">
                   {isNL ? '🚀 Claim Je Gratis Analyse (€2.500 waarde)' : '🚀 Claim Your Free Analysis (€2,500 value)'}
                 </span>
@@ -229,7 +229,7 @@ const Hero = () => {
               </button>
 
               {/* Secondary CTA */}
-              <button className="px-6 py-3 border-2 border-gray-600 text-gray-300 hover:text-white hover:border-gray-400 font-semibold rounded-xl transition-all duration-300 font-archivo">
+              <button className="px-6 py-3 border-2 border-muted text-muted-foreground hover:text-foreground hover:border-border font-semibold rounded-xl transition-all duration-300 font-archivo">
                 {isNL ? '📊 Bekijk Resultaten (2 min)' : '📊 See Results (2 min)'}
               </button>
             </div>

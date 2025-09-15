@@ -55,7 +55,7 @@ interface TranslatedTextProps {
   key: string;
   fallback?: string;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 export function TranslatedText({ 
@@ -80,7 +80,7 @@ interface TranslatedHTMLProps {
   key: string;
   fallback?: string;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: keyof React.JSX.IntrinsicElements;
 }
 
 export function TranslatedHTML({ 
