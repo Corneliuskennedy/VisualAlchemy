@@ -1,16 +1,15 @@
+'use client';
+
 import React from 'react';
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "@/hooks/useTranslations";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
-import GridBackground from "./ui/GridBackground";
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 const Footer = () => {
   const { t, getSection } = useTranslations();
   const { language } = useLanguage();
-  const isLargeScreen = useIsLargeScreen();
   const currentYear = new Date().getFullYear();
   const isNL = language === 'nl';
 
@@ -50,12 +49,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative border-t border-border/10">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none w-full h-full">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <footer className="relative" style={{ borderTop: '1px solid #4a5568' }}>
 
       <div className="container relative mx-auto px-4 py-16 z-[1]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-12">
@@ -180,7 +174,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-border/10 mt-12 pt-8">
+        <div className="mt-12 pt-8" style={{ borderTop: '1px solid #4a5568' }}>
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-4 text-gray-400 text-sm">
               <span>© {currentYear} Octomatic. {footerSection.copyright}</span>

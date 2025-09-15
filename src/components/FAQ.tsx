@@ -6,15 +6,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useTranslations } from '@/hooks/useTranslations';
-import GridBackground from './ui/GridBackground';
 import { useRouter } from "next/navigation";
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 const FAQ = () => {
   const { t, language } = useTranslations();
   const router = useRouter();
-  const isLargeScreen = useIsLargeScreen();
-
+  
   // Memoize the FAQ items so they're recalculated only when the translations update.
   const faqs = useMemo(() => [
     {
@@ -69,14 +66,9 @@ const FAQ = () => {
     : "We build our automation solutions with a 'privacy-by-design' approach, ensuring that data protection is a core part of the architecture. For more details, you can review the official GDPR guidelines on the ";
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <section className="py-16 relative z-10 overflow-hidden">
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent drop-shadow-lg">

@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const TestimonialsAndCases = () => {
   return (
     <section className="py-24 relative">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center">What Our Clients Say</h2>
         
         {/* Testimonials Grid */}

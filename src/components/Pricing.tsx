@@ -1,8 +1,6 @@
 import React from 'react';
 import useLanguage from "@/contexts/LanguageContext";
-import GridBackground from '@/components/ui/GridBackground';
 import { useRouter } from "next/navigation";
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 import { Check, Crown } from 'lucide-react';
 
 interface PricingCardProps {
@@ -143,8 +141,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
 
 const Pricing = () => {
   const { t } = useLanguage();
-  const isLargeScreen = useIsLargeScreen();
-
+  
   const plans = [
     {
       title: t('pricing', 'starter.title'),
@@ -196,16 +193,11 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="py-24 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <section id="pricing" className="py-16 relative z-10 overflow-hidden">
       
       <div className="absolute top-0 left-0 right-0 h-px bg-[#4585f4]/20"></div>
       
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center mb-20">
           <h2 
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white leading-tight"

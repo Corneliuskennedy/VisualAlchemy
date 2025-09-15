@@ -1,33 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Grid Animation Keyframes */
+@keyframes grid-move {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, 5px);
+  }
+}
+
+@keyframes grid-move-subtle {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-5px, 10px);
+  }
+}
+
 @layer base {
   :root {
-    --background: 0 0% 10%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    /* Light mode (default) */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
     --primary: 221 83% 53%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 20% 35%;
     --accent: 221 83% 53%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
     --ring: 221 83% 53%;
     --radius: 0.5rem;
+    
+    /* Design System Colors - Light Mode */
+    --primary-bg: #FFFFFF;
+    --secondary-bg: #F8FAFC;
+    --surface: #F1F5F9;
+    --primary-brand: #3B82F6;
+    --startup-accent: #EA580C;
+    --startup-accent-hover: #DC2626;
+    --sme-accent: #3B82F6;
+    --sme-accent-hover: #2563EB;
+    --text-primary: #0F172A;
+    --text-secondary: #334155;
+    --text-muted: #64748B;
+    --text-disabled: #94A3B8;
+    --border-default: rgba(15, 23, 42, 0.1);
+    --border-hover: rgba(15, 23, 42, 0.2);
+    --border-focus: #3B82F6;
   }
 
   .dark {
-    --background: 0 0% 10%;
+    /* Dark mode */
+    --background: 0 0% 4%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -43,27 +83,99 @@
     --accent-foreground: 210 40% 98%;
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217 33% 17%;
+    --border: 240 3.7% 25%;
     --input: 217 33% 17%;
     --ring: 221 83% 53%;
+    
+    /* Design System Colors - Dark Mode */
+    --primary-bg: #0A0A0A;
+    --secondary-bg: #1A1A1A;
+    --surface: #2A2A2A;
+    --primary-brand: #4585f4;
+    --startup-accent: #FF6B35;
+    --startup-accent-hover: #E55D2B;
+    --sme-accent: #4585f4;
+    --sme-accent-hover: #3B73D9;
+    --text-primary: #FFFFFF;
+    --text-secondary: #E5E5E5;
+    --text-muted: #9CA3AF;
+    --text-disabled: #6B7280;
+    --border-default: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --border-focus: #4585f4;
   }
 
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-archivo;
+    @apply text-foreground font-archivo;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Removed bg-background to allow global animated background */
   }
 }
 
-/* Typography Overrides */
-.prose {
+/* Typography Overrides - Dark Mode */
+.dark .prose {
   @apply text-gray-300;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+.dark .prose h1, .dark .prose h2, .dark .prose h3, .dark .prose h4, .dark .prose h5, .dark .prose h6 {
   @apply text-blog-blue font-semibold;
+  scroll-margin-top: 100px;
+}
+
+.dark .prose ul li {
+  @apply text-gray-300 mb-1;
+}
+
+.dark .prose ul li::marker {
+  @apply text-blog-blue;
+}
+
+.dark .prose p {
+  @apply text-gray-300 leading-relaxed my-4;
+}
+
+.dark .prose strong {
+  @apply text-white font-semibold;
+}
+
+.dark .prose code {
+  @apply bg-black/40 px-1.5 py-0.5 rounded text-white;
+}
+
+.dark .prose pre {
+  @apply bg-black/40 p-4 rounded-lg;
+}
+
+.dark .prose figure figcaption {
+  @apply text-sm text-gray-400 text-center mt-2;
+}
+
+.dark .prose hr {
+  @apply border-gray-800 my-8;
+}
+
+.dark .prose table {
+  @apply w-full border-collapse border border-gray-800 my-8;
+}
+
+.dark .prose th {
+  @apply bg-black/40 text-white font-semibold p-2 border border-gray-800;
+}
+
+.dark .prose td {
+  @apply p-2 border border-gray-800;
+}
+
+/* Typography Overrides - Light Mode */
+.prose {
+  @apply text-slate-700;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply text-blue-600 font-semibold;
   scroll-margin-top: 100px;
 }
 
@@ -72,35 +184,35 @@
 }
 
 .prose ul li {
-  @apply text-gray-300 mb-1;
+  @apply text-slate-700 mb-1;
 }
 
 .prose ul li::marker {
-  @apply text-blog-blue;
+  @apply text-blue-600;
 }
 
 .prose p {
-  @apply text-gray-300 leading-relaxed my-4;
+  @apply text-slate-700 leading-relaxed my-4;
 }
 
 .prose strong {
-  @apply text-white font-semibold;
+  @apply text-slate-900 font-semibold;
 }
 
 .prose a {
-  @apply text-blog-blue hover:text-blog-blue/80 transition-colors;
+  @apply text-blue-600 hover:text-blue-500 transition-colors;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-blog-blue pl-4 italic;
+  @apply border-l-4 border-blue-600 pl-4 italic;
 }
 
 .prose code {
-  @apply bg-black/40 px-1.5 py-0.5 rounded text-white;
+  @apply bg-slate-100 px-1.5 py-0.5 rounded text-slate-900;
 }
 
 .prose pre {
-  @apply bg-black/40 p-4 rounded-lg;
+  @apply bg-slate-100 p-4 rounded-lg;
 }
 
 .prose img {
@@ -112,23 +224,23 @@
 }
 
 .prose figure figcaption {
-  @apply text-sm text-gray-400 text-center mt-2;
+  @apply text-sm text-slate-500 text-center mt-2;
 }
 
 .prose hr {
-  @apply border-gray-800 my-8;
+  @apply border-slate-200 my-8;
 }
 
 .prose table {
-  @apply w-full border-collapse border border-gray-800 my-8;
+  @apply w-full border-collapse border border-slate-200 my-8;
 }
 
 .prose th {
-  @apply bg-black/40 text-white font-semibold p-2 border border-gray-800;
+  @apply bg-slate-50 text-slate-900 font-semibold p-2 border border-slate-200;
 }
 
 .prose td {
-  @apply p-2 border border-gray-800;
+  @apply p-2 border border-slate-200;
 }
 
 .prose h2 {

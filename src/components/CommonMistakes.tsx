@@ -3,24 +3,15 @@
 import React from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { AlertTriangle, TrendingUp, MessageSquare, CreditCard, ArrowRight } from 'lucide-react';
-import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
-import GridBackground from './ui/GridBackground';
 import { Button } from './ui/button';
 
 const CommonMistakes = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
 
   return (
-    <section className="py-16 md:py-24 bg-[#0A0A0A] relative" aria-label="Common automation mistakes">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none opacity-30" />
-        </div>
-      )}
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 relative z-10" aria-label="Common automation mistakes">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">

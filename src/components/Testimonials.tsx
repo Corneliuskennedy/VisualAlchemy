@@ -1,8 +1,6 @@
 import React from 'react';
 import { Quote, Star } from 'lucide-react';
 import { useTranslations } from '@/hooks/useTranslations';
-import GridBackground from './ui/GridBackground';
-import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 
 interface TestimonialCardProps {
   quote: string;
@@ -66,8 +64,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, author, logo, 
 
 const Testimonials = () => {
   const { t } = useTranslations();
-  const isLargeScreen = useIsLargeScreen();
-
+  
   const testimonials = [
     {
       quote: t('testimonials', 'testimonial1.quote'),
@@ -87,16 +84,11 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-24 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <section id="testimonials" className="py-16 relative z-10 overflow-hidden">
       
       <div className="absolute top-0 left-0 right-0 h-px bg-[#6B8AE6]/20"></div>
       
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">

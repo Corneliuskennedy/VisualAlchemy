@@ -176,6 +176,9 @@ const config = {
                 'archivo-thin': '100',
                 'archivo-black': '900',
             },
+            backgroundImage: {
+                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            },
         },
     },
     plugins: [

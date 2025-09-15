@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState, useMemo, useCallback, memo } from 'react';
-import { Hand, BatteryLow, EyeOff, ArrowRight } from "lucide-react";
-import GridBackground from './ui/GridBackground';
+import { Hand, BatteryLow, EyeOff, ArrowRight, AlertTriangle, Euro } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useTranslations } from '@/hooks/useTranslations';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 import { useRouter } from 'next/navigation';
+import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
+import GridBackground from './ui/GridBackground';
 
 const INITIAL_ANGLE = 225;
 const ROTATION_DURATION = 4000;
@@ -104,7 +104,8 @@ const Problems = () => {
   const titleRef = useScrollAnimation();
   const { t, language } = useTranslations();
   const isLargeScreen = useIsLargeScreen();
-
+  const isNL = language === 'nl';
+  
   const handleMouseEnter = useCallback((index: number) => {
     // Simplified hover effect, no rotation animation needed
   }, []);
@@ -172,63 +173,152 @@ const Problems = () => {
   ], [t, language]);
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#0A0A0A]" id="business-challenges">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <div className="relative overflow-hidden" id="business-challenges">
+      {/* No local background - let global background show through */}
       
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div ref={titleRef} className="text-center mb-24 opacity-0">
-          <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white/90 leading-tight">
-            {t('problems', 'title')}
-            <span className="block text-[#6B8AE6] mt-4">
-              {t('problems', 'subtitle')}
-            </span>
+      <div className="relative z-10 mx-auto px-6 w-full max-w-6xl py-16">
+        {/* Header Section */}
+        <div ref={titleRef} className="text-center mb-20 opacity-0">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight tracking-tight font-archivo">
+            {isNL ? (
+              <>Uw bedrijf <span className="text-red-400">lekt geld</span></>
+            ) : (
+              <>Your business is <span className="text-red-400">leaking money</span></>
+            )}
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed mb-8">
-            {t('problems', 'description')}
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto font-normal leading-relaxed font-archivo">
+            {isNL 
+              ? "Elk handmatig proces, losgekoppeld systeem en repetitieve taak is een verborgen belasting op uw groei. Wij laten u zien waar."
+              : "Every manual process, disconnected system, and repetitive task is a hidden tax on your growth. We'll show you where."
+            }
           </p>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 mb-8">
-              <div className="text-center p-6 rounded-lg bg-black/20 border border-gray-800/50">
-                <div className="text-2xl font-bold text-[#6B8AE6] mb-2">€15,000+</div>
-                <p className="text-sm text-gray-400">Typical annual savings per client</p>
-              </div>
-              <div className="text-center p-6 rounded-lg bg-black/20 border border-gray-800/50">
-                <div className="text-2xl font-bold text-[#6B8AE6] mb-2">40%</div>
-                <p className="text-sm text-gray-400">Reduction in manual processing time</p>
-              </div>
-              <div className="text-center p-6 rounded-lg bg-black/20 border border-gray-800/50">
-                <div className="text-2xl font-bold text-[#6B8AE6] mb-2">12+</div>
-                <p className="text-sm text-gray-400">Businesses successfully served</p>
+        </div>
+
+        {/* THE HIDDEN COSTS - Big Red Urgent Card */}
+        <div className="mb-20">
+          <div className="relative overflow-hidden bg-gradient-to-br from-red-900/30 via-red-800/20 to-orange-900/30 border-2 border-red-500/40 rounded-3xl p-12 max-w-5xl mx-auto">
+            {/* Animated Warning Stripes */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-500/5 to-transparent animate-pulse" />
+            
+            {/* Urgency Badge */}
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-red-600/40 to-orange-600/40 border border-red-400/50 rounded-full px-8 py-4 shadow-xl">
+                <AlertTriangle className="w-6 h-6 text-red-400" />
+                <span className="text-red-300 font-black text-lg uppercase tracking-widest font-archivo">
+                  {isNL ? "DE VERBORGEN KOSTEN" : "THE HIDDEN COSTS"}
+                </span>
+                <AlertTriangle className="w-6 h-6 text-red-400" />
               </div>
             </div>
-            
-            <p className="text-gray-400 leading-relaxed">
-              Based on our hands-on experience working with Dutch businesses, these challenges are costing companies 
-              significant time and money. The good news? We've developed proven automation solutions that consistently 
-              deliver measurable ROI within 6 months for our clients.
-            </p>
+
+            {/* Problem Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Wasted Time */}
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Hand className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-4xl font-black text-red-400 mb-2 font-archivo">10+ hours lost per week</div>
+                <div className="text-red-300 font-bold text-lg mb-4 font-archivo">Wasted time</div>
+                <p className="text-gray-200 leading-relaxed font-archivo">
+                  {isNL 
+                    ? "Uw beste mensen verspillen tijd aan handmatige data-invoer, kopiëren tussen systemen en repetitieve taken die geautomatiseerd kunnen worden."
+                    : "Your best people waste time on manual data entry, copying between systems, and repetitive tasks that could be automated."
+                  }
+                </p>
+                <div className="mt-4 text-sm text-gray-300 font-archivo">
+                  <div className="font-semibold text-red-300 mb-2">{isNL ? "Veelvoorkomende uitdagingen:" : "Common Challenges:"}</div>
+                  <ul className="text-left space-y-1">
+                    <li>• {isNL ? "Handmatige data-invoer 10+ uur per week" : "Manual data entry consuming 10+ hours per week"}</li>
+                    <li>• {isNL ? "Kopiëren tussen meerdere systemen" : "Copy-paste operations between multiple systems"}</li>
+                    <li>• {isNL ? "Repetitieve e-mailresponses" : "Repetitive email responses and follow-ups"}</li>
+                    <li>• {isNL ? "Factuurverwerking workflows" : "Invoice processing and approval workflows"}</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Hidden Costs */}
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Euro className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-4xl font-black text-orange-400 mb-2 font-archivo">€5,630/month loss</div>
+                <div className="text-orange-300 font-bold text-lg mb-4 font-archivo">Hidden costs</div>
+                <p className="text-gray-200 leading-relaxed font-archivo">
+                  {isNL 
+                    ? "Inefficiënte workflows, handmatige fouten en legacy software eten stilletjes in uw winst zonder dat u het doorheeft."
+                    : "Inefficient workflows, manual errors, and legacy software silently eat into your profits without you realizing it."
+                  }
+                </p>
+                <div className="mt-4 text-sm text-gray-300 font-archivo">
+                  <div className="font-semibold text-orange-300 mb-2">{isNL ? "Veelvoorkomende uitdagingen:" : "Common Challenges:"}</div>
+                  <ul className="text-left space-y-1">
+                    <li>• {isNL ? "Legacy software met handmatige workarounds" : "Legacy software requiring manual workarounds"}</li>
+                    <li>• {isNL ? "Losgekoppelde systemen creëren data silo's" : "Disconnected systems creating data silos"}</li>
+                    <li>• {isNL ? "Trage reactietijden beïnvloeden productiviteit" : "Slow response times impacting productivity"}</li>
+                    <li>• {isNL ? "Dure onderhouds- en upgradekosten" : "Expensive maintenance and upgrade costs"}</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Manual Reporting */}
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <EyeOff className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-4xl font-black text-yellow-400 mb-2 font-archivo">8+ hours per month wasted on reporting</div>
+                <div className="text-yellow-300 font-bold text-lg mb-4 font-archivo">Manual reporting</div>
+                <p className="text-gray-200 leading-relaxed font-archivo">
+                  {isNL 
+                    ? "U verspilt waardevolle managementtijd aan het handmatig verzamelen van data, wat leidt tot trage, onbetrouwbare en uiteindelijk kostbare beslissingen."
+                    : "You waste valuable management time manually gathering data, which leads to slow, unreliable, and ultimately costly decisions."
+                  }
+                </p>
+                <div className="mt-4 text-sm text-gray-300 font-archivo">
+                  <div className="font-semibold text-yellow-300 mb-2">{isNL ? "Veelvoorkomende uitdagingen:" : "Common Challenges:"}</div>
+                  <ul className="text-left space-y-1">
+                    <li>• {isNL ? "Beslissingen gebaseerd op incomplete informatie" : "Decisions based on incomplete information"}</li>
+                    <li>• {isNL ? "Handmatige rapportage neemt waardevolle tijd in beslag" : "Manual reporting consuming valuable time"}</li>
+                    <li>• {isNL ? "Gemiste kansen door vertraagde inzichten" : "Missed opportunities due to delayed insights"}</li>
+                    <li>• {isNL ? "Inconsistente data tussen afdelingen" : "Inconsistent data across departments"}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom CTA */}
+            <div className="text-center mt-12">
+              <div className="mb-6">
+                <div className="text-3xl font-black text-white mb-2 font-archivo">
+                  {isNL ? "Totale impact: €67,560+ per jaar" : "Total Impact: €67,560+ per year"}
+                </div>
+                <p className="text-red-300 font-semibold font-archivo">
+                  {isNL ? "Gebaseerd op conservatieve schattingen voor Nederlandse MKB bedrijven" : "Based on conservative estimates for Dutch SME companies"}
+                </p>
+              </div>
+              
+              <button
+                className="relative group overflow-hidden px-12 py-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-black text-xl rounded-2xl transition-all duration-300 hover:shadow-2xl hover:shadow-red-500/30 hover:scale-105 transform-gpu font-archivo"
+                data-cal-namespace="automation-strategy-workshop"
+                data-cal-link="kennet-timmers/workshop"
+                data-cal-config='{"layout":"month_view"}'
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <AlertTriangle className="w-6 h-6" />
+                  {isNL ? "STOP HET GELDLEK - GRATIS AUDIT" : "STOP THE MONEY LEAK - FREE AUDIT"}
+                  <AlertTriangle className="w-6 h-6" />
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+              </button>
+              
+              <p className="text-sm text-gray-400 mt-4 font-medium font-archivo">
+                {isNL ? "✓ Geen verplichtingen ✓ 100% gratis ✓ Direct inzicht in besparingen" : "✓ No obligations ✓ 100% free ✓ Immediate savings insights"}
+              </p>
+            </div>
           </div>
         </div>
-        
-        <div className="grid md:grid-cols-3 gap-10">
-          {problems.map((problem, index) => (
-            <ProblemCard
-              key={index}
-              problem={problem}
-              index={index}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              angle={0}
-            />
-          ))}
-        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

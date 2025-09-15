@@ -67,7 +67,7 @@
   }
   body {
     @apply text-white;
-    background-color: #0A0A0A;
+    /* background-color: #0A0A0A; - Removed for global animated background */
   }
 }
 

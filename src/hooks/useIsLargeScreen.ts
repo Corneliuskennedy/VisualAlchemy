@@ -4,9 +4,8 @@ import { useState, useEffect } from 'react';
  * Hook to check if the viewport is a large screen (min-width: 1025px)
  */
 export function useIsLargeScreen(): boolean {
-  const [isLargeScreen, setIsLargeScreen] = useState(
-    typeof window !== 'undefined' ? window.matchMedia('(min-width: 1025px)').matches : false
-  );
+  // Always start with false to ensure server/client consistency
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
     // Check if window is available (for SSR)

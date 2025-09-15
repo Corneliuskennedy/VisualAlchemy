@@ -9,6 +9,7 @@ import { Flag } from "./ui/flag";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
 import { useCalIntroCall } from '@/hooks/use-cal';
+import { ThemeSwitcher } from "./ui/ThemeSwitcher";
 
 interface NavItemProps {
   item: {
@@ -51,7 +52,7 @@ const NavItem = React.memo<NavItemProps>(({ item, isMobile, onItemClick }) => {
       href={item.to!}
       onClick={handleClick}
       className={`text-gray-300 hover:text-white transition-colors relative z-50 flex items-center gap-1 ${
-        isMobile ? "py-3 px-4 rounded-lg hover:bg-white/5 w-full" : ""
+        isMobile ? "py-3 px-4 rounded-lg hover:bg-white/5 w-full" : "text-xs md:text-sm lg:text-base"
       }`}
     >
       {item.icon && item.icon}
@@ -184,6 +185,10 @@ export const Navbar = () => {
   const navItems = useMemo(
     () => [
       { 
+        label: language === "nl" ? "Startup Kickoff Lab" : "Startup Kickoff Lab", 
+        to: language === "nl" ? "/nl/services/startup-kickoff-lab" : "/services/startup-kickoff-lab" 
+      },
+      { 
         label: language === "nl" ? "Strategie Workshop" : "Strategy Workshop", 
         to: language === "nl" ? "/nl/automation-strategy-workshop" : "/automation-strategy-workshop" 
       },
@@ -230,7 +235,7 @@ export const Navbar = () => {
             />
 
             {/* Desktop Menu */}
-            <div className="flex items-center space-x-6 relative z-50" role="menubar">
+            <div className="flex items-center space-x-2 md:space-x-4 lg:space-x-6 relative z-50" role="menubar">
               {navItems.map((item, index) => (
                 <NavItem key={index} item={item} />
               ))}
@@ -243,16 +248,20 @@ export const Navbar = () => {
                 <Flag code={language === "nl" ? "gb" : "nl"} height="16" className="w-5 h-5" />
               </button>
               
+              {/* Theme Switcher */}
+              <ThemeSwitcher />
+              
               {/* Secondary CTA - Workshop */}
               <button
                 data-cal-namespace="automation-strategy-workshop"
                 data-cal-link="kennet-timmers/workshop"
                 data-cal-config='{"layout":"month_view"}'
-                className="border border-[#4585f4] text-[#4585f4] hover:bg-[#4585f4] hover:text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm font-medium"
+                className="border border-[#4585f4] text-[#4585f4] hover:bg-[#4585f4] hover:text-white px-2 md:px-3 lg:px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-1 md:gap-2 text-xs md:text-sm font-medium"
                 aria-label="Book strategy workshop"
                 type="button"
               >
-                {language === "nl" ? "Workshop" : "Workshop"}
+                <span className="hidden sm:inline">{language === "nl" ? "Workshop" : "Workshop"}</span>
+                <span className="sm:hidden">WS</span>
                 <ArrowRight className="w-3 h-3" />
               </button>
               
@@ -261,12 +270,13 @@ export const Navbar = () => {
                 data-cal-namespace="intro-call-30-minutes"
                 data-cal-link="kennet-timmers/intro-call-30-minutes"
                 data-cal-config='{"layout":"month_view"}'
-                className="bg-[#4585f4] hover:bg-[#4585f4]/90 text-white px-6 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl hover:shadow-[#4585f4]/25"
+                className="bg-[#4585f4] hover:bg-[#4585f4]/90 text-white px-3 md:px-4 lg:px-6 py-2 md:py-2.5 rounded-lg transition-all duration-300 flex items-center gap-1 md:gap-2 font-semibold shadow-lg hover:shadow-xl hover:shadow-[#4585f4]/25 text-xs md:text-sm"
                 aria-label="Book a free scoping call"
                 type="button"
               >
-                {language === "nl" ? "Gratis Gesprek" : "Free Call"}
-                <ArrowRight className="w-4 h-4" />
+                <span className="hidden sm:inline">{language === "nl" ? "Gratis Gesprek" : "Free Call"}</span>
+                <span className="sm:hidden">{language === "nl" ? "Gratis" : "Call"}</span>
+                <ArrowRight className="w-3 h-3 md:w-4 md:h-4" />
               </button>
             </div>
           </div>
@@ -359,8 +369,8 @@ export const Navbar = () => {
               </div>
             </div>
             
-            {/* Language switcher at bottom */}
-            <div className="p-6 border-t border-white/20">
+            {/* Settings at bottom */}
+            <div className="p-6 border-t border-white/20 space-y-3">
               <button
                 onClick={handleLanguageSwitch}
                 className="text-gray-300 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-lg flex items-center justify-center w-full gap-2"
@@ -369,6 +379,11 @@ export const Navbar = () => {
                 <Flag code={language === "nl" ? "gb" : "nl"} height="16" className="w-5 h-5" />
                 <span className="text-sm">{language === "nl" ? "English" : "Nederlands"}</span>
               </button>
+              
+              {/* Mobile Theme Switcher */}
+              <div className="flex justify-center">
+                <ThemeSwitcher />
+              </div>
             </div>
           </SheetContent>
         </Sheet>

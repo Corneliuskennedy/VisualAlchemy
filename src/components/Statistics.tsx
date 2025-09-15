@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
-import { Clock, TrendingUp, Target, MapPin } from 'lucide-react';
+import { Clock, TrendingUp, AlertTriangle, MapPin } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from './ui/GridBackground';
 
@@ -19,7 +19,8 @@ const Statistics = () => {
       description: isNL 
         ? "Nederlandse bedrijven besteden aan repetitieve taken" 
         : "Dutch businesses spend on repetitive tasks",
-      color: "text-red-400"
+      color: "from-red-400 to-red-600",
+      accentColor: "text-red-400"
     },
     {
       icon: TrendingUp,
@@ -28,109 +29,150 @@ const Statistics = () => {
       description: isNL 
         ? "Handmatig werk eliminatie in 90 dagen" 
         : "Manual work elimination in 90 days",
-      color: "text-green-400"
+      color: "from-green-400 to-green-600",
+      accentColor: "text-green-400"
     },
     {
-      icon: Target,
+      icon: AlertTriangle,
       number: "80%",
       unit: isNL ? "fout" : "mistake",
       description: isNL 
         ? "Bedrijven automatiseren eerst facturatie, maar klantcommunicatie heeft 3x meer impact" 
         : "Companies automate billing first, but customer communication has 3x more impact",
-      color: "text-orange-400"
-    },
-    {
-      icon: MapPin,
-      number: isNL ? "Naarden" : "Naarden",
-      unit: isNL ? "kantoor" : "office",
-      description: isNL 
-        ? "Lokale ondersteuning nabij Amsterdam met training voor soepele adoptie" 
-        : "Local support near Amsterdam with training for smooth adoption",
-      color: "text-blue-400"
+      color: "from-orange-400 to-orange-600",
+      accentColor: "text-orange-400"
     }
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-[#0A0A0A] relative" aria-label="Key statistics and insights">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none opacity-30" />
-        </div>
-      )}
+    <div className="relative overflow-hidden">
+      {/* No local background - let global background show through */}
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+      <div className="relative z-10 mx-auto px-6 w-full max-w-6xl">
+        <div className="text-center mb-24">          
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight tracking-tight font-archivo">
             {isNL ? (
-              <>De realiteit van <span className="text-[#4585f4]">handmatig werk</span></>
+              <>De realiteit van <span className="font-normal text-[#4585f4]">handmatig werk</span></>
             ) : (
-              <>The reality of <span className="text-[#4585f4]">manual work</span></>
+              <>The reality of <span className="font-normal text-[#4585f4]">manual work</span></>
             )}
           </h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto font-normal leading-relaxed font-archivo">
             {isNL 
-              ? "Waarom Nederlandse bedrijven kiezen voor onze bewezen automatiseringsmethodologie"
-              : "Why Dutch businesses choose our proven automation methodology"
+              ? "Waarom vooruitstrevende Nederlandse bedrijven kiezen voor boutique automatisering met directe founder-betrokkenheid"
+              : "Why forward-thinking Dutch businesses choose boutique automation with direct founder involvement"
             }
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {statistics.map((stat, index) => {
             const Icon = stat.icon;
+            
             return (
               <div 
                 key={index}
-                className="bg-gray-900/50 border border-gray-800/50 rounded-2xl p-8 text-center hover:bg-gray-800/50 transition-all duration-300 hover:-translate-y-1"
+                className="group relative"
+                style={{
+                  animationDelay: `${index * 100}ms`
+                }}
               >
-                <div className="w-16 h-16 bg-gray-800/50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <Icon className={`w-8 h-8 ${stat.color}`} />
-                </div>
-                
-                <div className="mb-4">
-                  <div className={`text-4xl md:text-5xl font-bold ${stat.color} mb-2`}>
-                    {stat.number}
+                {/* Card */}
+                <div className="
+                  relative overflow-hidden
+                  bg-white/[0.02] backdrop-blur-xl
+                  border border-white/[0.05]
+                  rounded-3xl p-8 text-center
+                  hover:bg-white/[0.04] hover:border-white/[0.1]
+                  hover:scale-[1.02] hover:-translate-y-1
+                  transition-all duration-500 ease-out
+                  transform-gpu will-change-transform
+                ">
+                  {/* Icon Container */}
+                  <div className="relative w-16 h-16 mx-auto mb-8">
+                    <div className={`
+                      w-16 h-16 rounded-2xl flex items-center justify-center
+                      bg-gradient-to-br ${stat.color} opacity-10
+                      group-hover:opacity-20 group-hover:scale-110
+                      transition-all duration-300 ease-out
+                    `} />
+                    <Icon className={`
+                      absolute inset-0 m-auto w-8 h-8 ${stat.accentColor}
+                      group-hover:scale-110 transition-transform duration-300
+                    `} />
                   </div>
-                  <div className="text-gray-400 font-medium text-lg">
-                    {stat.unit}
+                  
+                  {/* Number */}
+                  <div className="mb-6">
+                    <div className="text-6xl md:text-7xl font-light text-white mb-2 tracking-tight">
+                      {stat.number}
+                    </div>
+                    <div className="text-gray-400 font-medium text-sm uppercase tracking-[0.2em]">
+                      {stat.unit}
+                    </div>
                   </div>
+                  
+                  {/* Description */}
+                  <p className="text-gray-300 leading-relaxed font-normal text-base font-archivo">
+                    {stat.description}
+                  </p>
+
+                  {/* Hover Glow */}
+                  <div className={`
+                    absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100
+                    bg-gradient-to-br ${stat.color} blur-xl -z-10
+                    transition-opacity duration-500 ease-out
+                  `} style={{ filter: 'blur(40px)' }} />
                 </div>
-                
-                <p className="text-gray-300 leading-relaxed">
-                  {stat.description}
-                </p>
               </div>
             );
           })}
         </div>
 
-        {/* Call-to-Action Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-br from-[#4585f4]/10 to-[#6B8AE6]/10 border border-[#4585f4]/20 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+        {/* Elegant Call-to-Action Section */}
+        <div className="mt-32">
+          <div className="text-center max-w-4xl mx-auto">
+            <h3 className="text-4xl md:text-5xl font-semibold text-white mb-8 leading-tight font-archivo">
               {isNL 
-                ? "Stop met tijd verspillen aan repetitieve taken"
-                : "Stop wasting time on repetitive tasks"
+                ? "Klaar om samen de toekomst van werk te bouwen?"
+                : "Ready to build the future of work together?"
               }
             </h3>
-            <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            
+            <p className="text-xl text-gray-300 mb-12 font-normal leading-relaxed font-archivo">
               {isNL 
-                ? "Onze Value Stream Mapping Workshop identificeert welke processen het meest tijd kosten en hoe u ze kunt automatiseren voor maximale impact."
-                : "Our Value Stream Mapping Workshop identifies which processes cost you the most time and how to automate them for maximum impact."
+                ? "We werken met slechts 5 nieuwe klanten per maand om maximale aandacht en resultaten te garanderen."
+                : "We work with only 5 new clients per month to guarantee maximum attention and results."
               }
             </p>
-            <button
-              className="px-8 py-4 bg-[#4585f4] hover:bg-[#4585f4]/90 text-white font-semibold rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25"
-              data-cal-namespace="automation-strategy-workshop"
-              data-cal-link="kennet-timmers/workshop"
-              data-cal-config='{"layout":"month_view"}'
-            >
-              {isNL ? "Boek Gratis Proces Audit" : "Book Free Process Audit"}
-            </button>
+
+            {/* Minimal CTA Button */}
+            <div className="flex justify-center">
+              <button
+                className="group relative overflow-hidden px-12 py-4 bg-white/[0.03] backdrop-blur-xl border border-white/[0.1] hover:border-[#4585f4]/50 text-white font-medium text-lg rounded-2xl transition-all duration-500 hover:bg-white/[0.06] hover:scale-[1.02] transform-gpu"
+                data-cal-namespace="automation-strategy-workshop"
+                data-cal-link="kennet-timmers/workshop"
+                data-cal-config='{"layout":"month_view"}'
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  {isNL ? "Boek Gratis Proces Audit" : "Book Free Process Audit"}
+                  <div className="w-5 h-5 rounded-full bg-[#4585f4]/20 flex items-center justify-center group-hover:bg-[#4585f4]/30 transition-colors duration-300">
+                    <div className="w-2 h-2 rounded-full bg-[#4585f4] group-hover:scale-110 transition-transform duration-300" />
+                  </div>
+                </span>
+                
+                {/* Subtle Glow Effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#4585f4]/5 to-[#6B8AE6]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+              </button>
+            </div>
+            
+            <p className="text-sm text-gray-400 mt-6 font-normal font-archivo">
+              {isNL ? "Geen verplichtingen • 100% gratis • Direct inzicht" : "No obligations • 100% free • Immediate insights"}
+            </p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

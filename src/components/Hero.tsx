@@ -5,12 +5,14 @@ import { ShinyButton, ShinySecondaryButton } from "./ui/shiny-button";
 import "@/styles/shiny-button.css";
 import { useTranslations } from "@/hooks/useTranslations";
 import { useRouter } from "next/navigation";
-import { Timer } from "lucide-react";
+import { Timer, Rocket, Building2, CheckCircle } from "lucide-react";
 import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 import PriorityContent from "./PriorityContent";
-
-
+import GridBackground from "./ui/GridBackground";
 import { SGESummary } from './SGESummary';
+import { AudienceSelector } from './AudienceSelector';
+import { AudienceToggle } from './AudienceToggle';
+import { useAudienceSegmentation, trackCTAClick } from '@/hooks/useAudienceSegmentation';
 
 // Pre-define button styles to avoid runtime style calculations
 const PRIMARY_BUTTON_STYLES = `
@@ -89,7 +91,8 @@ const Hero = () => {
   const { t, getSection, language } = useTranslations();
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
-  const [GridBackground, setGridBackground] = useState<React.ComponentType | null>(null);
+  const { audience, setAudience, isFirstVisit, switchAudience } = useAudienceSegmentation();
+  const isNL = language === 'nl';
 
   // Get entire sections for better performance
   const heroSection = getSection('hero');
@@ -105,28 +108,6 @@ const Hero = () => {
     [router]
   );
 
-  // Load GridBackground after initial render (will be hidden on mobile via CSS)
-  useEffect(() => {
-    // Use requestIdleCallback to defer non-critical background loading
-    const loadBackground = () => {
-      // Use a different approach - load the module like normal but avoid props
-      import("./ui/GridBackground")
-        .then((mod) => {
-          setGridBackground(() => mod.default);
-        })
-        .catch((err) => {
-          console.error("Error loading GridBackground:", err);
-        });
-    };
-
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadBackground, { timeout: 2000 });
-    } else {
-      // Fallback for browsers without requestIdleCallback
-      setTimeout(loadBackground, 1000);
-    }
-  }, []); // Remove isLargeScreen dependency to prevent hydration issues
-
   return (
     <>
       <section
@@ -139,18 +120,22 @@ const Hero = () => {
         "
         suppressHydrationWarning
       >
-        {/* Background Grid - Only rendered on desktop */}
-        {GridBackground && (
-          <div className="absolute inset-0 z-0 pointer-events-none hidden lg:block">
-            <GridBackground />
+        {/* Interactive Background Grid with hover effects */}
+        {isLargeScreen && (
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <GridBackground 
+              className="pointer-events-none" 
+              highContrast={true}
+              showTechElements={false}
+            />
           </div>
         )}
 
 
 
         {/* Content Container */}
-        <div className="relative z-20 mx-auto w-full max-w-xl sm:max-w-4xl lg:max-w-7xl px-4 py-8 sm:py-12">
-          <div className="flex flex-col items-center text-center space-y-5 sm:space-y-6">
+        <div className="relative z-20 mx-auto w-full max-w-6xl px-6 py-16">
+          <div className="flex flex-col items-center text-center space-y-8">
             
             {/* Hidden SGE Summary for SEO */}
             <SGESummary
@@ -192,13 +177,15 @@ const Hero = () => {
               <h1
                 id="hero-heading"
                 className="
-                  text-4xl sm:text-6xl lg:text-[6.5rem]
-                  font-bold tracking-[0.02em] leading-[1.1]
+                  text-4xl sm:text-5xl lg:text-6xl xl:text-7xl
+                  font-bold tracking-[-0.03em] leading-[0.9]
                   text-white
+                  bg-gradient-to-b from-white to-gray-200
+                  bg-clip-text text-transparent
                 "
               >
                 <span className="block">{heroSection.title1}</span>
-                <span className="block mt-2 underline decoration-[#4585f4] decoration-4 underline-offset-8">
+                <span className="block mt-4 underline decoration-[#4585f4] decoration-4 underline-offset-8">
                   {heroSection.title2}
                 </span>
               </h1>
@@ -206,42 +193,74 @@ const Hero = () => {
 
             {/* Subtitle */}
             <PriorityContent priority="high" id="hero-subtitle">
-              <p className="text-base sm:text-lg text-gray-300 max-w-[540px] leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-300 max-w-[600px] leading-relaxed">
                 {heroSection.subtitle}
               </p>
             </PriorityContent>
 
-            {/* CTA Button */}
+            {/* Premium CTA Buttons */}
             <PriorityContent priority="high" id="hero-cta">
-              <div className="flex justify-center mt-6" role="region" aria-label="Call to action">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4" role="region" aria-label="Call to action">
                 <button
                   onClick={handleChatClick}
                   className="
-                    relative group
-                    bg-gradient-to-r from-[#4585f4] to-[#6366f1]
+                    relative group overflow-hidden
+                    bg-gradient-to-r from-[#4585f4] to-[#6B8AE6]
                     text-white font-semibold text-lg
-                    px-8 sm:px-10 py-4 rounded-lg
-                    shadow-lg shadow-[#4585f4]/25
-                    hover:shadow-xl hover:shadow-[#4585f4]/40
-                    transform hover:scale-105 
+                    px-10 py-4 rounded-xl
+                    shadow-2xl shadow-[#4585f4]/30
+                    hover:shadow-[#4585f4]/50 hover:scale-[1.02]
                     transition-all duration-300 ease-out
-                    border border-[#4585f4]/20
-                    w-full max-w-sm sm:min-w-[260px] sm:w-auto
+                    transform-gpu will-change-transform
+                    min-w-[240px]
+                    before:absolute before:inset-0 before:bg-gradient-to-r 
+                    before:from-white/0 before:via-white/20 before:to-white/0
+                    before:translate-x-[-100%] hover:before:translate-x-[100%]
+                    before:transition-transform before:duration-700 before:ease-out
                   "
-                  aria-label="Let's have a chat about your automation needs"
-                  data-cta="primary"
-                  data-action="lets-chat"
+                  aria-label="Book your automation strategy consultation"
+                  data-cta="hero-primary"
+                  data-action="book-consultation"
                 >
-                  <span className="relative z-10">{ctaSection.growthCall}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#5a95ff] to-[#7c7aff] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <span className="relative z-10 flex items-center gap-2">
+                    {ctaSection.growthCall}
+                    <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </button>
+                
+                <button
+                  onClick={() => {/* Add ROI calculator navigation */}}
+                  className="
+                    relative group
+                    bg-white/10 backdrop-blur-md border border-white/20
+                    text-white font-medium text-lg
+                    px-10 py-4 rounded-xl
+                    shadow-lg shadow-black/10
+                    hover:bg-white/20 hover:shadow-xl hover:shadow-black/20
+                    hover:scale-[1.02] transition-all duration-300 ease-out
+                    transform-gpu will-change-transform
+                    min-w-[240px]
+                  "
+                  aria-label="Calculate your automation ROI"
+                  data-cta="hero-secondary"
+                  data-action="calculate-roi"
+                >
+                  <span className="flex items-center gap-2">
+                    Calculate ROI
+                    <svg className="w-5 h-5 transform group-hover:rotate-12 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                  </span>
                 </button>
               </div>
             </PriorityContent>
 
             {/* Honest Value Proposition */}
             <PriorityContent priority="medium" id="hero-value">
-              <div className="mt-8 text-center">
-                <p className="text-xs text-gray-500 mb-3">
+              <div className="text-center">
+                <p className="text-xs text-gray-500 mb-4">
                   <a 
                     href="https://gdpr-info.eu/" 
                     target="_blank" 

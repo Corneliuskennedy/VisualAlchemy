@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import GridBackground from './ui/GridBackground';
 import { Settings, Brain, ArrowBigUp, Headphones } from 'lucide-react';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 interface Benefit {
   icon: React.ElementType;
@@ -32,8 +30,7 @@ const BenefitItem: React.FC<{ benefit: Benefit }> = ({ benefit }) => {
 const Benefits: React.FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { t } = useTranslations();
-  const isLargeScreen = useIsLargeScreen();
-
+  
   const benefits = useMemo((): Benefit[] => [
     {
       icon: Settings,
@@ -58,12 +55,8 @@ const Benefits: React.FC = () => {
   ], [t]);
 
   return (
-    <section className="py-24 relative bg-[#0A0A0A]">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <GridBackground className="pointer-events-none" />
-      </div>
-      
-      <div className="container mx-auto relative z-10">
+    <section className="py-16 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left side – Benefits content with your original heading styling */}
           <div className="lg:w-1/2 space-y-12">

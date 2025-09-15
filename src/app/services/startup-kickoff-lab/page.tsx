@@ -195,7 +195,7 @@ const StartupKickoffLabPage: React.FC = () => {
       bio: isNL 
         ? "Specialist in user research en rapid prototyping voor early-stage startups."
         : "Specialist in user research and rapid prototyping for early-stage startups.",
-      image: "/team/placeholder.webp", // Placeholder
+      image: "/team/kennet_timmers.webp",
       linkedin: "#"
     }
   ];

@@ -1,18 +1,14 @@
 import React from 'react';
 import { ArrowRight } from "lucide-react";
-import GridBackground from "./ui/GridBackground";
 import { useQuery } from "@tanstack/react-query";
 import { blogSupabase as supabase } from '@/lib/supabaseClients';
 import Link from "next/link";
 import { Skeleton } from "./ui/skeleton";
 import useLanguage from "@/contexts/LanguageContext";
 import { getBlogImageSrcSet, getBlogImageUrl } from '@/lib/image-utils';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 const BlogInsights = () => {
   const { language, t } = useLanguage();
-  const isLargeScreen = useIsLargeScreen();
-
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["published-blogs"],
     queryFn: async () => {
@@ -36,13 +32,8 @@ const BlogInsights = () => {
 
   if (isLoading) {
     return (
-      <section id="blog" className="py-16 relative overflow-hidden bg-[#0A0A0A]">
-        {isLargeScreen && (
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <GridBackground className="pointer-events-none" />
-          </div>
-        )}
-        <div className="container mx-auto px-4 relative z-10">
+      <section id="blog" className="py-16 relative overflow-hidden">
+        <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
           <div className="flex justify-between items-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold">
               <span className="text-[#4585f4]">Expert</span> insights & guides
@@ -93,13 +84,8 @@ const BlogInsights = () => {
   }
 
   return (
-    <section id="blog" className="py-16 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+    <section id="blog" className="py-16 relative overflow-hidden">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="flex justify-between items-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             <span className="text-[#4585f4]">Expert</span> insights & guides

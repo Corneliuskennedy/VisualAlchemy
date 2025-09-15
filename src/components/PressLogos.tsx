@@ -11,7 +11,7 @@ const PressLogos = () => {
 
   return (
     <div className="border-t border-b border-border/50 py-12 bg-background/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center mb-8">
           <p className="text-sm text-gray-400">Featured in</p>
         </div>

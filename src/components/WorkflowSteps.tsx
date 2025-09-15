@@ -1,8 +1,6 @@
 import React, { useMemo, memo } from 'react';
 import { Map, Cog, TrendingUp, ArrowRight, Shield } from "lucide-react";
-import GridBackground from './ui/GridBackground';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 import { useRouter } from "next/navigation";
 
 interface Step {
@@ -138,8 +136,7 @@ StepCard.displayName = 'StepCard';
 
 const WorkflowSteps = () => {
   const { t, language } = useTranslations();
-  const isLargeScreen = useIsLargeScreen();
-  const router = useRouter();
+    const router = useRouter();
 
   const handleButtonClick = (index: number) => {
     // Only Step 1 (index 0) will have a clickable button
@@ -174,14 +171,9 @@ const WorkflowSteps = () => {
   ], [t]);
 
   return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <section id="how-it-works" className="py-16 relative z-10 overflow-hidden">
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center mb-12 sm:mb-20">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-white leading-tight drop-shadow-sm">
             Simple process. <span className="text-[#6B8AE6] drop-shadow-[0_0_10px_rgba(107,138,230,0.3)]">Powerful results.</span>

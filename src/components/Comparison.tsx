@@ -3,8 +3,6 @@ import { Card } from "@/components/ui/card";
 import { Euro, Clock, Star, Calendar, XCircle, Check } from "lucide-react";
 import { useIsMobile, useIsTablet } from "@/hooks/use-mobile";
 import { useTranslations } from '@/hooks/useTranslations';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
-import GridBackground from './ui/GridBackground';
 
 interface ComparisonCardProps {
   title: string;
@@ -71,8 +69,7 @@ const ComparisonCard: React.FC<ComparisonCardProps> = ({ title, isHighlighted = 
 const Comparison = () => {
   const isTablet = useIsTablet();
   const { t } = useTranslations();
-  const isLargeScreen = useIsLargeScreen();
-  
+    
   const comparisonData = {
     freelancers: [
       { icon: <Euro />, value: t('comparison', 'freelancers.price') },
@@ -105,15 +102,8 @@ const Comparison = () => {
   };
 
   return (
-    <section id="comparison" className="py-24 relative overflow-hidden bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
-      
-      {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+    <section id="comparison" className="py-16 relative z-10 overflow-hidden">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center mb-16">
           <h2 
             className="text-4xl md:text-5xl font-bold mb-4 text-white leading-tight animate-fade-in-slow"

@@ -1,4 +1,4 @@
-'use client';
+  'use client';
 
 import type { Metadata } from "next";
 import { Inter, Archivo } from "next/font/google";
@@ -13,6 +13,7 @@ import CriticalContentPreloader from "@/components/SEO/CriticalContentPreloader"
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import WebVitalsMonitor from "@/components/WebVitalsMonitor";
+import GlobalInteractiveGrid from "@/components/ScrollBasedNightSky";
 
 const inter = Inter({ subsets: ["latin"] });
 const archivo = Archivo({ 
@@ -102,7 +103,7 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="en" href="https://octomatic.ai/" />
         <link rel="alternate" hrefLang="nl" href="https://octomatic.ai/nl" />
       </head>
-      <body className={`${inter.className} ${archivo.variable} bg-background text-foreground font-archivo`}>
+      <body className={`${inter.className} ${archivo.variable} text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
             <ThemeProvider
@@ -114,13 +115,14 @@ export default function RootLayout({
               <LanguageProvider>
                 <AuthProvider>
                   <WebVitalsMonitor />
-                  <div className="min-h-screen relative bg-[#0A0A0A]">
+                  <div className="min-h-screen relative overflow-x-hidden">
+                  <GlobalInteractiveGrid />
                     {/* Critical SEO components - render immediately */}
                     <HTMLLangUpdater />
                     <CriticalContentPreloader />
                     <SkipToContent contentId="main-content" />
 
-                    <header role="banner">
+                    <header role="banner" className="relative z-20">
                       <Suspense fallback={<NavbarFallback />}>
                         <Navbar />
                       </Suspense>
@@ -129,7 +131,7 @@ export default function RootLayout({
                     <main 
                       id="main-content" 
                       role="main" 
-                      className="relative main-content pt-0 md:pt-20"
+                      className="relative z-10 main-content pt-0 md:pt-20"
                       aria-label="Main content"
                     >
                       <Suspense fallback={<MainFallback />}>
@@ -137,7 +139,7 @@ export default function RootLayout({
                       </Suspense>
                     </main>
 
-                    <footer role="contentinfo">
+                    <footer role="contentinfo" className="relative z-10">
                       <Suspense fallback={<div className="h-[200px] bg-[#101112] border-t border-border/10" />}>
                         <Footer />
                       </Suspense>

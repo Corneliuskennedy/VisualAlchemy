@@ -56,5 +56,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  background-color: #0A0A0A;
+  /* background-color: #0A0A0A; - Removed for global animated background */
 } 

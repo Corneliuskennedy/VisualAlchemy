@@ -54,7 +54,7 @@
   }
 
   .dark {
-    --border: 240 3.7% 15.9%;
+    --border: 240 3.7% 25%;
     --background: 240 10% 3.9%;
     --primary: 217.2 91.2% 59.8%;
     --primary-foreground: 222.2 47.4% 11.2%;
@@ -67,7 +67,7 @@
   }
   body {
     @apply text-white;
-    background-color: #0A0A0A;
+    /* background-color: #0A0A0A; - Removed to allow global animated background */
   }
 }
 

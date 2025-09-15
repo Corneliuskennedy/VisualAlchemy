@@ -1191,10 +1191,10 @@ export const translations = {
       }
     },
     hero: {
-      kicker: "Bedrijfsproces Automatisering",
-      title1: "Stop met Geld Verspillen.",
-      title2: "Start met Automatiseren.",
-      subtitle: "Onze automatiseringssystemen elimineren 40-70% van het handmatige werk van uw team. We garanderen minimaal €15.000 aan jaarlijkse besparingen, of u betaalt niets."
+      kicker: "AI Automatisering voor Amsterdamse Bedrijven",
+      title1: "Bespaar €50.000+ per jaar",
+      title2: "met AI automatisering",
+      subtitle: "Verminder handmatig werk met 40-70% in 90 dagen. Nederlandse bedrijven besteden 23 uur per week aan repetitieve taken—wij elimineren ze met bewezen automatiseringssystemen."
     },
     cta: {
       growthCall: "Boek een Gratis Proces Audit",

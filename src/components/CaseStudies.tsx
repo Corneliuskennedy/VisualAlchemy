@@ -52,7 +52,7 @@ const CaseStudies = () => {
   ];
 
   return (
-    <section className="py-24 bg-black relative">
+    <section className="py-24 relative">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">

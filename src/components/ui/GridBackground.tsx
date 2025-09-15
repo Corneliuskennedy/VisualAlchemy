@@ -4,47 +4,32 @@ import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 // Lazy load tech elements
 const TechElements = lazy(() => import('./TechElements'));
 
-// Minimal static grid that only shows on interaction
+// Uniform static grid with consistent spacing and opacity
 const StaticGrid = ({ className = '', highContrast = false }: { className?: string, highContrast?: boolean }) => {
-  const largeGridRef = useRef<HTMLDivElement>(null);
-  const smallGridRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Set a visible base opacity for static grids (reduced for subtlety)
-    if (largeGridRef.current) {
-      largeGridRef.current.style.opacity = highContrast ? '0.35' : '0.25';
-    }
-    if (smallGridRef.current) {
-      smallGridRef.current.style.opacity = highContrast ? '0.2' : '0.15';
-    }
-  }, [highContrast]);
-
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
-      {/* Minimal static grid with subtle blue lines */}
+      {/* Main grid with uniform 60px spacing */}
       <div
-        ref={largeGridRef}
         className="
           absolute inset-0
-          bg-[linear-gradient(rgba(69,133,244,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(69,133,244,0.12)_1px,transparent_1px)]
-          bg-[size:75px_75px]
+          bg-[linear-gradient(rgba(69,133,244,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(69,133,244,0.15)_1px,transparent_1px)]
+          bg-[size:60px_60px]
           transition-opacity duration-500
           pointer-events-none
         "
-        style={{ opacity: highContrast ? 0.35 : 0.25 }}
+        style={{ opacity: highContrast ? 0.3 : 0.2 }}
       />
       
-      {/* Smaller grid for consistency with InteractiveGrid */}
+      {/* Subtle accent grid for depth */}
       <div
-        ref={smallGridRef}
         className="
           absolute inset-0
           bg-[linear-gradient(rgba(69,133,244,0.08)_1px,transparent_1px),linear-gradient(90deg,rgba(69,133,244,0.08)_1px,transparent_1px)]
-          bg-[size:15px_15px]
+          bg-[size:20px_20px]
           transition-opacity duration-500
           pointer-events-none
         "
-        style={{ opacity: highContrast ? 0.2 : 0.15 }}
+        style={{ opacity: highContrast ? 0.15 : 0.1 }}
       />
     </div>
   );
@@ -58,6 +43,7 @@ interface GridBackgroundProps {
   showTechElements?: boolean;
   techElementsDensity?: 'low' | 'medium' | 'high';
   highContrast?: boolean;
+  disableInteractive?: boolean;
 }
 
 /**
@@ -71,11 +57,13 @@ const GridBackground = ({
   className,
   showTechElements = false, // Set default to false for a more minimal look
   techElementsDensity = 'low',
-  highContrast = true // Default to high contrast for consistency
+  highContrast = true, // Default to high contrast for consistency
+  disableInteractive = false
 }: GridBackgroundProps) => {
   const isLargeScreen = useIsLargeScreen();
 
-  if (!isLargeScreen) {
+  // Use static grid if interactive is disabled or on small screens
+  if (disableInteractive || !isLargeScreen) {
     return <StaticGrid className={className} highContrast={highContrast} />;
   }
 

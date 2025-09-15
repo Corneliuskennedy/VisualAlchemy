@@ -1,9 +1,8 @@
 import React from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { useRouter } from "next/navigation";
+import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import { ShinyButton } from './ui/shiny-button';
-import GridBackground from './ui/GridBackground';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 const MobileButton = ({ onClick, children }: { onClick: () => void, children: React.ReactNode }) => (
   <button
@@ -21,19 +20,13 @@ const FinalCTA = () => {
   const { t, language } = useTranslations();
   const router = useRouter();
   const isLargeScreen = useIsLargeScreen();
-
   const handleClick = () => {
     router.push(language === 'nl' ? '/nl/get-started' : '/get-started');
   };
 
   return (
-    <section className="py-24 relative overflow-hidden bg-[#0A0A0A]" role="region" aria-label="Get started call to action">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 relative z-10 overflow-hidden" role="region" aria-label="Get started call to action">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center space-y-6">
           <h2 className="text-4xl md:text-5xl font-archivo font-[500] text-white">
             {t('finalCta', 'title')}

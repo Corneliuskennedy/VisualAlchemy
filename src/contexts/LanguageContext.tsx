@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useEffect, useState, useRef } from 'react';
 import Cookies from 'js-cookie';
 import { translations } from '@/translations/index';
@@ -77,27 +79,9 @@ function safeSetLanguagePreference(value: string): void {
 }
 
 function getInitialLanguage(): Language {
-  // Check URL path first
-  if (typeof window !== 'undefined') {
-    const path = window.location.pathname;
-    if (path.startsWith('/nl')) {
-      return 'nl';
-    }
-  }
-  
-  // Then check stored preference
-  const savedLang = safeGetLanguagePreference();
-  if (savedLang && (savedLang === 'en' || savedLang === 'nl')) {
-    return savedLang as Language;
-  }
-  
-  // Finally check browser language
-  try {
-    const browserLang = navigator.language.toLowerCase();
-    return browserLang.startsWith('nl') ? 'nl' : 'en';
-  } catch {
-    return 'en'; // Default fallback
-  }
+  // Always return 'en' as default to ensure server/client consistency
+  // The actual language will be set in useEffect after hydration
+  return 'en';
 }
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
@@ -108,9 +92,44 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const isUpdatingUrl = useRef(false);
   const isUpdatingLanguage = useRef(false);
 
+  // Set actual language after hydration to prevent hydration mismatch
+  useEffect(() => {
+    if (isInitialMount.current) {
+      // Check URL path first
+      if (typeof window !== 'undefined') {
+        const path = window.location.pathname;
+        if (path.startsWith('/nl')) {
+          setLanguage('nl');
+          return;
+        }
+      }
+      
+      // Then check stored preference
+      const savedLang = safeGetLanguagePreference();
+      if (savedLang && (savedLang === 'en' || savedLang === 'nl')) {
+        setLanguage(savedLang as Language);
+        return;
+      }
+      
+      // Finally check browser language
+      try {
+        if (typeof navigator !== 'undefined') {
+          const browserLang = navigator.language.toLowerCase();
+          if (browserLang.startsWith('nl')) {
+            setLanguage('nl');
+          }
+        }
+      } catch {
+        // Keep default 'en'
+      }
+      
+      isInitialMount.current = false;
+    }
+  }, []);
+
   // Persist language preference
   useEffect(() => {
-    if (!isUpdatingLanguage.current) {
+    if (!isUpdatingLanguage.current && !isInitialMount.current) {
       safeSetLanguagePreference(language);
     }
   }, [language]);

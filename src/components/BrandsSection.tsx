@@ -8,7 +8,7 @@ const BrandsSection = () => {
 
   return (
     <div className="py-8 bg-background/50 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <h2 className="text-sm md:text-base font-medium text-center mb-6 text-white/80">
           Trusted by businesses of all sizes
         </h2>

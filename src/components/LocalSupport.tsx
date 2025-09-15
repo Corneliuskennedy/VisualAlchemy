@@ -4,7 +4,6 @@ import React from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { MapPin, Users, GraduationCap, Phone, Clock, CheckCircle } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
-import GridBackground from './ui/GridBackground';
 import Image from 'next/image';
 
 const LocalSupport = () => {
@@ -65,14 +64,8 @@ const LocalSupport = () => {
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-[#0A0A0A] relative" aria-label="Local support and training">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none opacity-30" />
-        </div>
-      )}
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="py-16 relative z-10" aria-label="Local support and training">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-16">

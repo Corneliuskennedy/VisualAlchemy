@@ -1,11 +1,9 @@
 import React, { useMemo, useRef, useCallback, useEffect, useState, memo } from "react";
 import { Bot, LineChart, Users, Brain, BarChart3, FileText, ArrowRight, TrendingUp, Shield } from "lucide-react";
-import GridBackground from "./ui/GridBackground";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useTranslations } from '@/hooks/useTranslations';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useWindowSize } from '@/hooks/use-window-size';
-import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
 
 interface Service {
   id: string;
@@ -74,8 +72,7 @@ const Services = () => {
   const titleRef = useScrollAnimation();
   const { t, language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-
+  
   const services = useMemo<Service[]>(
     () => [
       {
@@ -131,14 +128,9 @@ const Services = () => {
   const bottomServices = services.slice(6, 7);
 
   return (
-    <section id="services" className="py-16 relative bg-[#0A0A0A]">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-30">
-          <GridBackground className="pointer-events-none" />
-        </div>
-      )}
+    <section id="services" className="py-16 relative">
       
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         {/* Top 6 services in 3x2 grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {topServices.map((service, index) => (

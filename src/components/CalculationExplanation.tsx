@@ -1,13 +1,10 @@
 import React from 'react';
 import { Calculator, Clock, Euro, TrendingUp, CheckCircle } from 'lucide-react';
 import { useTranslations } from '@/hooks/useTranslations';
-import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
-import GridBackground from '@/components/ui/GridBackground';
 
 export const CalculationExplanation: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
 
   const calculationSteps = [
     {
@@ -55,13 +52,8 @@ export const CalculationExplanation: React.FC = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#0A0A0A] relative">
-      {isLargeScreen && (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <GridBackground className="pointer-events-none opacity-30" />
-        </div>
-      )}
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+    <section className="py-16 relative z-10">
+      <div className="mx-auto px-6 w-full max-w-6xl relative z-10">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-[#4585f4]/10 border border-[#4585f4]/20 rounded-full px-4 py-2 mb-6">
             <Calculator className="w-4 h-4 text-[#4585f4]" />
