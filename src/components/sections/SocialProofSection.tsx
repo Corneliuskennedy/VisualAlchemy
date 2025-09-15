@@ -40,7 +40,7 @@ const SocialProofSection: React.FC<SocialProofSectionProps> = ({
             ? 'Van idee naar eerste €1.200 MRR in 28 dagen. De operationele automatisering gaf me de ruimte om me volledig te focussen op klanten.'
             : 'From idea to first €1,200 MRR in 28 days. The operational automation gave me space to focus entirely on customers.',
           outcome: isNL ? 'Eerste betalende klanten binnen 4 weken' : 'First paying customers within 4 weeks',
-          avatar: '/team/kennet_timmers.webp'
+          avatar: '/team/placeholder-founder-1.webp'
         },
         {
           founder: 'Marcus van der Berg',
@@ -49,7 +49,7 @@ const SocialProofSection: React.FC<SocialProofSectionProps> = ({
             ? 'Zonder Octomatic zou ik nog steeds bezig zijn met boekhouding in plaats van product development. Nu hebben we 15 betalende klanten.'
             : 'Without Octomatic I\'d still be doing bookkeeping instead of product development. Now we have 15 paying customers.',
           outcome: isNL ? '15 betalende klanten, €3.400 MRR' : '15 paying customers, €3,400 MRR',
-          avatar: '/team/kennet_timmers.webp'
+          avatar: '/team/placeholder-founder-2.webp'
         }
       ],
       metrics: {

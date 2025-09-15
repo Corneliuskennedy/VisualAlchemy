@@ -289,3 +289,4 @@ export default function StartupKickoffWorkshopSection() {
     </section>
   );
 }
+
