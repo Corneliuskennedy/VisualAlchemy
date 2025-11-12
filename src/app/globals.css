@@ -4,6 +4,44 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Premium Theme Transitions - Minimal, Professional, Expensive */
+/* Optimized for spring physics compatibility and 60fps performance */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Premium ease-out */
+  transition-duration: 600ms;
+}
+
+/* Enhanced transitions for key elements - synchronized with spring animations */
+body {
+  transition: background-color 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              color 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: background-color, color;
+}
+
+/* Smooth page transitions - premium feel */
+html {
+  transition: background-color 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: background-color;
+}
+
+/* Smooth transitions for cards and containers */
+[class*="bg-"], [class*="border-"], [class*="text-"] {
+  transition-duration: 700ms;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Exclude certain elements from transition for performance */
+img, svg, video, canvas, audio, iframe, embed, object {
+  transition-property: opacity;
+  transition-duration: 400ms;
+}
+
+/* Elegant gradient radial utility */
+.bg-gradient-radial {
+  background-image: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
 /* Grid Animation Keyframes */
 @keyframes grid-move {
   0%, 100% {

@@ -25,5 +25,5 @@ http://octomatic.ai/* https://www.octomatic.ai/:splat 301!
 /nl/services/automation-roi-consulting /nl/automation-strategy-workshop 301!
 /nl/services/gdpr-compliant-automation /nl/checklist 301!
 
-# SPA routing - serve index.html for all routes that don't match static files
-/*    /index.html   200 
+# DO NOT ADD SPA CATCH-ALL - Next.js handles routing server-side
+# Next.js App Router handles all routing, no client-side fallback needed 

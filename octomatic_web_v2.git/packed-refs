@@ -1,0 +1,5 @@
+# pack-refs with: peeled fully-peeled sorted 
+62cc14660e16998588193c7d16e8a064b0197563 refs/heads/feature/nextjs-15-upgrade
+62cc14660e16998588193c7d16e8a064b0197563 refs/heads/main
+046df2be6209014f552d0a43b85f7312efaee8cc refs/tags/v1.0-stable
+^061744827cdb558ae8c8f091952bc518533d038b

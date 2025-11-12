@@ -22,7 +22,9 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   }, []);
   
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    // Add a small delay to allow the animation to trigger
+    setTheme(newTheme);
   };
 
   // Don't render theme-dependent content until mounted

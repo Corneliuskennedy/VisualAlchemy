@@ -196,7 +196,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // Skip initial mount or if language is being updated by URL effect
     if (isInitialMount.current || isUpdatingLanguage.current) {
-      // console.log(`[Language Effect] Bailing out: InitialMount=${isInitialMount.current}, IsUpdatingLanguage=${isUpdatingLanguage.current}`);
       return;
     }
 
@@ -204,40 +203,52 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const shouldBeNL = language === 'nl';
     const isActuallyNL = currentPath.startsWith('/nl');
 
-    // Skip navigation for the checklist page to prevent redirects after login
-    if (currentPath === '/checklist' || currentPath === '/nl/checklist') {
-      // console.log(`[Language Effect] Skipping navigation for checklist page: ${currentPath}`);
+    // Skip navigation for pages that shouldn't redirect (checklist, auth pages)
+    const skipRedirectPages = ['/checklist', '/nl/checklist', '/auth', '/nl/auth'];
+    if (skipRedirectPages.some(page => currentPath === page || currentPath.startsWith(page + '/'))) {
       return;
     }
 
-    // If the desired language state doesn't match the URL prefix
+    // CRITICAL FIX: Prevent loop on homepage
+    // If we're on homepage (/) and language is NL, middleware handles it - don't navigate
+    if (currentPath === '/' && shouldBeNL && !isActuallyNL) {
+      console.log(`[LANGUAGE_CONTEXT] Skipping navigation - middleware handles /nl -> / rewrite`);
+      return;
+    }
+
+    // If the desired language state doesn't match the URL prefix, update URL
     if (shouldBeNL !== isActuallyNL) {
       // Calculate the correct new path
-      // Ensure base path is '/' if currentPath is '/nl' or '/nl/' when switching to 'en'
-      const basePath = isActuallyNL ? currentPath.substring(3) : currentPath;
-      const normalizedBasePath = basePath.startsWith('/') ? basePath : `/${basePath}`; // Ensure it starts with /
+      const basePath = isActuallyNL ? currentPath.substring(3) || '/' : currentPath;
+      const normalizedBasePath = basePath.startsWith('/') ? basePath : `/${basePath}`;
       
       const newPath = shouldBeNL
-        ? `/nl${normalizedBasePath}` // Add /nl prefix
-        : normalizedBasePath; // Use the base path directly
+        ? `/nl${normalizedBasePath === '/' ? '' : normalizedBasePath}`
+        : normalizedBasePath;
 
-      // Only navigate if the path actually needs to change
-      // Ensure newPath is treated correctly (e.g., /nl/ vs /nl) might need further refinement based on router behavior
-      const finalNewPath = newPath === '/nl' ? '/nl/' : (newPath === '' ? '/' : newPath); // Handle root paths explicitly
-      const finalCurrentPath = currentPath === '/nl' ? '/nl/' : currentPath; // Normalize current path for comparison
+      // Normalize paths for comparison (handle trailing slashes)
+      const normalizePath = (p: string) => p === '/nl' ? '/nl/' : (p === '' ? '/' : p);
+      const finalNewPath = normalizePath(newPath);
+      const finalCurrentPath = normalizePath(currentPath);
 
-
+      // Only navigate if path actually needs to change
       if (finalNewPath !== finalCurrentPath) {
-        // console.log(`[Language Effect] Language set to ${language}, mismatch with URL (${finalCurrentPath}). Navigating to ${finalNewPath}.`);
-        isUpdatingUrl.current = true; // Prevent URL change effect from resetting language
-        router.replace(finalNewPath); // Use finalNewPath
-      } else {
-        // console.log(`[Language Effect] Language set to ${language}, matches URL prefix (${finalCurrentPath}). No navigation needed.`);
+        console.log(`[LANGUAGE_CONTEXT] Language mismatch detected. Current: ${currentPath}, Language: ${language}, Should be NL: ${shouldBeNL}, Navigating to: ${finalNewPath}`);
+        
+        // Prevent infinite loops by setting flag before navigation
+        isUpdatingUrl.current = true;
+        
+        // Use replace to avoid adding to history
+        router.replace(finalNewPath);
+        
+        // Reset flag after navigation completes
+        setTimeout(() => {
+          isUpdatingUrl.current = false;
+          console.log(`[LANGUAGE_CONTEXT] Reset isUpdatingUrl flag after navigation`);
+        }, 100);
       }
-    } else {
-      // console.log(`[Language Effect] Language set to ${language}, matches URL prefix (${currentPath}). No navigation needed.`);
     }
-  }, [language, router, pathname]); // Dependencies remain the same
+  }, [language, router, pathname]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

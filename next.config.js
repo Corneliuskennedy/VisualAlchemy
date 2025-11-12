@@ -30,6 +30,47 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // 1. Redirect the old master "Services" page to the new Homepage Hub
+      {
+        source: '/services',
+        destination: '/',
+        permanent: true,
+      },
+      // 2. Redirect all old, granular service pages to the new "Optimize" Spoke
+      { source: '/services/ai-automation-amsterdam', destination: '/optimize', permanent: true },
+      { source: '/services/ai-service-fulfillment', destination: '/optimize', permanent: true },
+      { source: '/services/crm-buildouts', destination: '/optimize', permanent: true },
+      { source: '/services/lead-generation', destination: '/optimize', permanent: true },
+      { source: '/services/hiring-systems', destination: '/optimize', permanent: true },
+      { source: '/services/project-management', destination: '/optimize', permanent: true },
+      { source: '/services/sops-consulting', destination: '/optimize', permanent: true },
+      { source: '/services/startup-kickoff-lab', destination: '/build', permanent: true },
+      // 3. Redirect the old Segment pages to their new Spoke equivalents
+      {
+        source: '/startup-kickoff-lab',
+        destination: '/build',
+        permanent: true,
+      },
+      {
+        source: '/business-automation',
+        destination: '/optimize',
+        permanent: true,
+      },
+      // 4. Standardize old page names
+      {
+        source: '/projects',
+        destination: '/projecten',
+        permanent: true,
+      },
+      {
+        source: '/about',
+        destination: '/over-ons',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

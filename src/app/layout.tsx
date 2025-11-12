@@ -14,6 +14,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import WebVitalsMonitor from "@/components/WebVitalsMonitor";
 import GlobalInteractiveGrid from "@/components/ScrollBasedNightSky";
+import { ThemeTransition } from "@/components/ui/ThemeTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 const archivo = Archivo({ 
@@ -23,7 +24,7 @@ const archivo = Archivo({
 });
 
 // Lazy load all major components
-const Navbar = lazy(() => import("@/components/Navbar").then(module => ({ default: module.Navbar })));
+const NewNavbar = lazy(() => import("@/components/NewNavbar").then(module => ({ default: module.NewNavbar })));
 const Footer = lazy(() => import("@/components/Footer"));
 const MobileCTA = lazy(() => import("@/components/ui/MobileCTA").then(module => ({ default: module.MobileCTA })));
 const TranslationDebug = lazy(() => import("@/components/TranslationDebug").then(module => ({ 
@@ -60,11 +61,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={archivo.variable}>
       <head>
         {/* Font is loaded via next/font/google - no manual preload needed */}
-        {/* Favicon and app icons */}
+        {/* Favicon and app icons - Multiple formats for maximum compatibility */}
         <link rel="icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logo/octomatic-logo-192x192.png" />
-        <meta name="theme-color" content="#324c9e" />
-        <meta name="msapplication-TileColor" content="#324c9e" />
+        <link rel="icon" href="/logo/octomatic-200.png" type="image/png" sizes="200x200" />
+        <link rel="icon" href="/logo/octomatic-400.png" type="image/png" sizes="400x400" />
+        <link rel="shortcut icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/logo/octomatic-200.png" sizes="200x200" />
+        <link rel="apple-touch-icon" href="/logo/octomatic-400.png" sizes="400x400" />
+        <link rel="apple-touch-icon" href="/logo/octomatic-800.png" sizes="800x800" />
+        <meta name="theme-color" content="#FFFFFF" />
+        <meta name="msapplication-TileColor" content="#FFFFFF" />
+        <meta name="msapplication-TileImage" content="/logo/octomatic-200.png" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* SEO Meta Tags */}
@@ -108,36 +115,37 @@ export default function RootLayout({
           <HelmetProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
+              defaultTheme="light"
               enableSystem={false}
-              disableTransitionOnChange
+              enableColorScheme={true}
             >
               <LanguageProvider>
                 <AuthProvider>
                   <WebVitalsMonitor />
-                  <div className="min-h-screen relative overflow-x-hidden">
-                  <GlobalInteractiveGrid />
-                    {/* Critical SEO components - render immediately */}
-                    <HTMLLangUpdater />
-                    <CriticalContentPreloader />
-                    <SkipToContent contentId="main-content" />
+                  <ThemeTransition>
+                    <div className="min-h-screen relative overflow-x-hidden">
+                    <GlobalInteractiveGrid />
+                      {/* Critical SEO components - render immediately */}
+                      <HTMLLangUpdater />
+                      <CriticalContentPreloader />
+                      <SkipToContent contentId="main-content" />
 
-                    <header role="banner" className="relative z-20">
-                      <Suspense fallback={<NavbarFallback />}>
-                        <Navbar />
-                      </Suspense>
-                    </header>
+                      <header role="banner" className="relative z-20">
+                        <Suspense fallback={<NavbarFallback />}>
+                          <NewNavbar />
+                        </Suspense>
+                      </header>
 
-                    <main 
-                      id="main-content" 
-                      role="main" 
-                      className="relative z-10 main-content pt-0 md:pt-20"
-                      aria-label="Main content"
-                    >
-                      <Suspense fallback={<MainFallback />}>
-                        {children}
-                      </Suspense>
-                    </main>
+                      <main 
+                        id="main-content" 
+                        role="main" 
+                        className="relative z-10 main-content pt-0 md:pt-20"
+                        aria-label="Main content"
+                      >
+                        <Suspense fallback={<MainFallback />}>
+                          {children}
+                        </Suspense>
+                      </main>
 
                     <footer role="contentinfo" className="relative z-10">
                       <Suspense fallback={<div className="h-[200px] bg-secondary border-t border-border/10" />}>
@@ -159,7 +167,8 @@ export default function RootLayout({
                         <TranslationDebug />
                       </Suspense>
                     )}
-                  </div>
+                    </div>
+                  </ThemeTransition>
                 </AuthProvider>
               </LanguageProvider>
             </ThemeProvider>

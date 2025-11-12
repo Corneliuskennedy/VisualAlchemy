@@ -37,17 +37,17 @@ export default function SocialProofBridgeSection() {
       <div className="container mx-auto px-6 max-w-6xl">
         {/* Section Header - Minimal */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-archivo">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 font-archivo">
             Trusted by 200+ Dutch Companies
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto font-archivo">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-archivo">
             From Amsterdam startups to Utrecht enterprises, businesses trust Octomatic to transform their operations
           </p>
         </div>
 
         {/* Featured Testimonial - Hero Quote */}
         <div className="max-w-4xl mx-auto mb-16">
-          <div className="relative bg-white/5 border border-white/10 rounded-3xl p-8 md:p-12 text-center">
+          <div className="relative bg-card/50 border border-border rounded-3xl p-8 md:p-12 text-center">
             {/* Quote Icon */}
             <div className="absolute top-6 left-6">
               <Quote className="w-8 h-8 text-blue-400/30" />
@@ -127,6 +127,11 @@ export default function SocialProofBridgeSection() {
     </section>
   );
 }
+
+
+
+
+
 
 
 

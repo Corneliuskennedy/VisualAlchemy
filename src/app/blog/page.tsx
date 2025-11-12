@@ -80,7 +80,7 @@ const BlogPage = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((i) => (
-              <Card key={i} className="bg-secondary/20 backdrop-blur-sm">
+              <Card key={i} className="bg-card/50 backdrop-blur-sm border border-border">
                 <Skeleton className="h-48 w-full rounded-t-lg" />
                 <CardHeader>
                   <Skeleton className="h-6 w-3/4 mb-2" />
@@ -104,7 +104,7 @@ const BlogPage = () => {
         description={t('blogPage', 'subtitle')}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         <div className="min-h-screen pt-20">
           <div className="container mx-auto px-4">
             <Button 
@@ -117,8 +117,8 @@ const BlogPage = () => {
             </Button>
 
             <div className="text-center mb-16">
-              <h1 className="text-4xl font-bold mb-4 text-white">{t('blogPage', 'title')}</h1>
-              <p className="text-xl text-gray-400">
+              <h1 className="text-4xl font-bold mb-4 text-foreground">{t('blogPage', 'title')}</h1>
+              <p className="text-xl text-muted-foreground">
                 {t('blogPage', 'subtitle')}
               </p>
             </div>
@@ -130,8 +130,8 @@ const BlogPage = () => {
               if (blogsWithImages.length === 0) {
                 return (
                   <div className="text-center py-12">
-                    <h2 className="text-xl text-gray-400">No blog posts with images found</h2>
-                    <p className="text-gray-500 mt-2">Check back later for new content</p>
+                    <h2 className="text-xl text-muted-foreground">No blog posts with images found</h2>
+                    <p className="text-muted-foreground/70 mt-2">Check back later for new content</p>
                   </div>
                 );
               }
@@ -141,7 +141,7 @@ const BlogPage = () => {
                   {blogsWithImages.map((blog) => (
                 <Card 
                   key={blog.id} 
-                  className="bg-black/40 backdrop-blur-sm border border-gray-800 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
+                  className="bg-card/50 backdrop-blur-sm border border-border hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer group"
                   onClick={() => router.push(language === 'nl' ? `/nl/blog/${blog.slug}` : `/blog/${blog.slug}`)}
                 >
                   <div className="relative h-48 overflow-hidden rounded-t-lg">
@@ -169,7 +169,7 @@ const BlogPage = () => {
                   </div>
                   
                   <CardHeader className="space-y-2">
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         <time dateTime={blog.created_at}>
@@ -181,10 +181,10 @@ const BlogPage = () => {
                         <span>{blog.profiles?.display_name || blog.author || t('blogPage', 'author')}</span>
                       </div>
                     </div>
-                    <h2 className="text-xl font-semibold text-white leading-tight group-hover:text-primary transition-colors">
+                    <h2 className="text-xl font-semibold text-card-foreground leading-tight group-hover:text-primary transition-colors">
                       {blog.title}
                     </h2>
-                    <p className="text-gray-400 line-clamp-3">{blog.excerpt}</p>
+                    <p className="text-muted-foreground line-clamp-3">{blog.excerpt}</p>
                     <div className="pt-4">
                       <span className="text-primary hover:text-primary/80 transition-colors inline-flex items-center gap-2">
                         {t('blogPage', 'readMore')}

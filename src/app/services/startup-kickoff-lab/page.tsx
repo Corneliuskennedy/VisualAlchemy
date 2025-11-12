@@ -509,7 +509,7 @@ const StartupKickoffLabPage: React.FC = () => {
                       className="px-8 py-6 text-xl font-semibold border-[#4585f4] text-[#4585f4] hover:bg-[#4585f4] hover:text-white transition-all duration-300 group"
                       asChild
                     >
-                      <Link href="#" onClick={() => {/* TODO: Link to template download */}}>
+                      <Link href="#">
                         <Download className="mr-3 h-6 w-6" />
                         {isNL ? "Download Template" : "Download Template"}
                       </Link>

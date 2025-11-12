@@ -98,46 +98,54 @@ const FinalCTA: React.FC<FinalCTAProps> = ({
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
           </button>
         ) : (
-          <Link
-            href={primary.link || '#'}
-            className={`
-              group relative overflow-hidden inline-block
-              px-12 py-6 bg-gradient-to-r ${primaryGradient}
-              text-white font-bold text-xl rounded-2xl
-              transition-all duration-300 hover:shadow-2xl ${primaryShadow}
-              hover:scale-105 transform-gpu font-archivo
-              min-w-[320px] md:min-w-[400px] text-center
-            `}
+          <span
             onClick={onPrimaryClick}
+            className="inline-block"
           >
-            <span className="relative z-10 flex items-center justify-center gap-3">
-              <PrimaryIcon className="w-6 h-6" />
-              {primary.text}
-              <ArrowRight className="w-6 h-6" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-          </Link>
+            <Link
+              href={primary.link || '#'}
+              className={`
+                group relative overflow-hidden inline-block
+                px-12 py-6 bg-gradient-to-r ${primaryGradient}
+                text-white font-bold text-xl rounded-2xl
+                transition-all duration-300 hover:shadow-2xl ${primaryShadow}
+                hover:scale-105 transform-gpu font-archivo
+                min-w-[320px] md:min-w-[400px] text-center
+              `}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-3">
+                <PrimaryIcon className="w-6 h-6" />
+                {primary.text}
+                <ArrowRight className="w-6 h-6" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            </Link>
+          </span>
         )}
 
         {/* Secondary CTA */}
-        <Link
-          href={secondary.link || '#'}
-          className="
-            group relative overflow-hidden inline-block
-            px-12 py-6 bg-white/5 backdrop-blur-xl 
-            border border-white/10 text-white font-medium text-lg rounded-2xl
-            hover:bg-white/10 hover:border-white/20 hover:scale-105
-            transition-all duration-300 transform-gpu font-archivo
-            min-w-[320px] md:min-w-[400px] text-center
-          "
+        <span
           onClick={onSecondaryClick}
+          className="inline-block"
         >
-          <span className="relative z-10 flex items-center justify-center gap-3">
-            <SecondaryIcon className="w-5 h-5" />
-            {secondary.text}
-            <ExternalLink className="w-5 h-5" />
-          </span>
-        </Link>
+          <Link
+            href={secondary.link || '#'}
+            className="
+              group relative overflow-hidden inline-block
+              px-12 py-6 bg-white/5 backdrop-blur-xl 
+              border border-white/10 text-white font-medium text-lg rounded-2xl
+              hover:bg-white/10 hover:border-white/20 hover:scale-105
+              transition-all duration-300 transform-gpu font-archivo
+              min-w-[320px] md:min-w-[400px] text-center
+            "
+          >
+            <span className="relative z-10 flex items-center justify-center gap-3">
+              <SecondaryIcon className="w-5 h-5" />
+              {secondary.text}
+              <ExternalLink className="w-5 h-5" />
+            </span>
+          </Link>
+        </span>
       </div>
 
       {/* Trust Indicators */}
@@ -174,6 +182,11 @@ const FinalCTA: React.FC<FinalCTAProps> = ({
 };
 
 export default FinalCTA;
+
+
+
+
+
 
 
 

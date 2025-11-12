@@ -24,7 +24,7 @@ interface NavItemProps {
 }
 
 const NavItem = React.memo<NavItemProps>(({ item, isMobile, onItemClick }) => {
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
     if (item.onClick) {
       item.onClick();
     }
@@ -47,10 +47,10 @@ const NavItem = React.memo<NavItemProps>(({ item, isMobile, onItemClick }) => {
     );
   }
 
-  return (
+  // Only wrap with click handler if we have onClick handlers to call
+  const linkContent = (
     <Link
       href={item.to!}
-      onClick={handleClick}
       className={`text-gray-300 hover:text-white transition-colors relative z-50 flex items-center gap-1 ${
         isMobile ? "py-3 px-4 rounded-lg hover:bg-white/5 w-full" : "text-xs md:text-sm lg:text-base"
       }`}
@@ -59,6 +59,17 @@ const NavItem = React.memo<NavItemProps>(({ item, isMobile, onItemClick }) => {
       {item.label}
     </Link>
   );
+
+  // If we have click handlers, wrap in a span to handle them
+  if (item.onClick || onItemClick) {
+    return (
+      <span onClick={handleClick}>
+        {linkContent}
+      </span>
+    );
+  }
+
+  return linkContent;
 });
 
 NavItem.displayName = 'NavItem';

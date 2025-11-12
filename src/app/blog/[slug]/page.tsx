@@ -88,7 +88,7 @@ const BlogPostPage = () => {
         author={post.profiles?.display_name || post.author || 'Octomatic'}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         <article className="min-h-screen pt-20">
           <div className="container mx-auto px-4 max-w-4xl">
             {/* Back Button */}
@@ -128,7 +128,7 @@ const BlogPostPage = () => {
             )}
 
             {/* Blog Content */}
-            <div className="prose prose-invert prose-lg max-w-none mb-12">
+            <div className="prose prose-lg max-w-none mb-12 dark:prose-invert">
               <div 
                 dangerouslySetInnerHTML={{ __html: post.content }}
                 className="blog-content"
@@ -145,12 +145,12 @@ const BlogPostPage = () => {
             {/* Tags */}
             {post.blog_tags && post.blog_tags.length > 0 && (
               <div className="mb-12">
-                <h3 className="text-lg font-semibold text-white mb-4">Tags</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-4">Tags</h3>
                 <div className="flex flex-wrap gap-2">
                   {post.blog_tags.map((blogTag: any, index: number) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-sm hover:bg-gray-700 transition-colors"
+                      className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm hover:bg-secondary/80 transition-colors"
                     >
                       {blogTag.tags?.name}
                     </span>
@@ -160,7 +160,7 @@ const BlogPostPage = () => {
             )}
 
             {/* Navigation */}
-            <div className="border-t border-gray-800 pt-8">
+            <div className="border-t border-border pt-8">
               <Button 
                 variant="outline" 
                 onClick={() => router.push(isNL ? '/nl/blog' : '/blog')}
