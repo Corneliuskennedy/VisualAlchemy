@@ -176,22 +176,63 @@ export function MonopoGradient({
       return a + (b - a) * smoothT;
     };
     
-    // Get color from gradient position (0-1)
+    // Get color from gradient position (0-1) with colorSpread for blending
     const getColor = (t: number) => {
       t = ((t % 1) + 1) % 1; // Normalize to 0-1
       
+      // Apply colorSpread: wider blending area for smoother transitions
+      // Higher spread = more color mixing, smoother gradients
+      const spreadFactor = colorSpread / 10; // Normalize spread (Monopo uses 10)
+      const adjustedT = t * (1 + spreadFactor * 0.5); // Extend range for blending
+      
       // Map through 4 colors with Monopo's tight spacing
-      const segment = t * 4;
+      const segment = adjustedT * 4;
       const i = Math.floor(segment) % 4;
       const localT = segment - Math.floor(segment);
+      
+      // Smoothstep for smoother color transitions
+      const smoothT = localT < 0.5 
+        ? 2 * localT * localT 
+        : 1 - Math.pow(-2 * localT + 2, 2) / 2;
       
       const c1 = colors[i];
       const c2 = colors[(i + 1) % 4];
       
+      // Blend with adjacent colors for smoother transitions (colorSpread effect)
+      const c0 = colors[(i - 1 + 4) % 4];
+      const c3 = colors[(i + 2) % 4];
+      
+      // Multi-color blending for smoother gradients
+      let blendedColor;
+      if (localT < 0.3 && i > 0) {
+        // Blend with previous color
+        const blendT = localT / 0.3;
+        blendedColor = {
+          r: lerp(c0.r, c1.r, blendT),
+          g: lerp(c0.g, c1.g, blendT),
+          b: lerp(c0.b, c1.b, blendT),
+        };
+      } else if (localT > 0.7 && i < 3) {
+        // Blend with next color
+        const blendT = (localT - 0.7) / 0.3;
+        blendedColor = {
+          r: lerp(c1.r, c2.r, blendT),
+          g: lerp(c1.g, c2.g, blendT),
+          b: lerp(c1.b, c2.b, blendT),
+        };
+      } else {
+        // Standard interpolation
+        blendedColor = {
+          r: lerp(c1.r, c2.r, smoothT),
+          g: lerp(c1.g, c2.g, smoothT),
+          b: lerp(c1.b, c2.b, smoothT),
+        };
+      }
+      
       return {
-        r: Math.round(lerp(c1.r, c2.r, localT)),
-        g: Math.round(lerp(c1.g, c2.g, localT)),
-        b: Math.round(lerp(c1.b, c2.b, localT)),
+        r: Math.round(blendedColor.r),
+        g: Math.round(blendedColor.g),
+        b: Math.round(blendedColor.b),
       };
     };
 
