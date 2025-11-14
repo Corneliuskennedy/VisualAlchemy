@@ -14,7 +14,7 @@ import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
 import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
-import { HeroWebGLBackground } from '@/components/ui/HeroWebGLBackground';
+import { MonopoHeroCircle } from '@/components/ui/MonopoHeroCircle';
 import { HeroTextReveal } from '@/components/ui/HeroTextReveal';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
@@ -84,14 +84,14 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Section 1: Hero with Technical Visual Effects */}
+      {/* Section 1: Hero with Monopo-Inspired Circular Gradient */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10 overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10 overflow-hidden bg-[#0a0a0a]"
       >
-        {/* Gladeye-Inspired Organic Growth Background - WebGL Canvas */}
-        <HeroWebGLBackground />
+        {/* Monopo-Inspired Circular Gradient Background */}
+        <MonopoHeroCircle />
         
         <motion.div
           initial="hidden"
