@@ -112,10 +112,10 @@ const LeadGenerationPage: React.FC = () => {
         keywords={isNL ? "lead generatie, automatisering, sales pipeline, Amsterdam, B2B leads" : "lead generation, automation, sales pipeline, Amsterdam, B2B leads"}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
           {/* Hero Section */}
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -153,13 +153,13 @@ const LeadGenerationPage: React.FC = () => {
                       <div className="text-red-400 font-semibold mb-6 text-lg">
                         {isNL ? "Inconsistente lead flow" : "Inconsistent lead flow"}
                       </div>
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                         {isNL ? "Een voorspelbaar lead generatie systeem" : "A predictable lead generation system"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
                     </div>
                     
-                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed max-w-lg">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed max-w-lg">
                       {isNL ? (
                         "Een voorspelbare pijplijn van gekwalificeerde leads, zodat uw sales team kan focussen op het sluiten van deals, niet op het najagen ervan."
                       ) : (
@@ -170,7 +170,7 @@ const LeadGenerationPage: React.FC = () => {
                     <div className="flex flex-col sm:flex-row gap-4 pt-6">
                       <Button 
                         size="lg" 
-                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                         data-cal-namespace="automation-strategy-workshop"
                         data-cal-link="kennet-timmers/workshop"
                         data-cal-config='{"layout":"month_view"}'
@@ -183,17 +183,17 @@ const LeadGenerationPage: React.FC = () => {
 
                   {/* Right Column - Visual Element */}
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center">
                             <LineChart className="h-6 w-6 text-[#4585f4]" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-semibold text-white">
+                            <h3 className="text-xl font-semibold text-heading dark:text-white">
                               {isNL ? "Resultaat" : "Result"}
                             </h3>
-                            <p className="text-gray-400">
+                            <p className="text-muted-foreground dark:text-gray-400">
                               {isNL ? "Meer gekwalificeerde leads" : "More qualified leads"}
                             </p>
                           </div>
@@ -202,13 +202,13 @@ const LeadGenerationPage: React.FC = () => {
                         <div className="grid grid-cols-2 gap-4 pt-4">
                           <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                             <div className="text-2xl font-bold text-[#4585f4]">3x</div>
-                            <div className="text-sm text-gray-400">
+                            <div className="text-sm text-muted-foreground dark:text-gray-400">
                               {isNL ? "Meer leads" : "More leads"}
                             </div>
                           </div>
                           <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                             <div className="text-2xl font-bold text-[#4585f4]">60%</div>
-                            <div className="text-sm text-gray-400">
+                            <div className="text-sm text-muted-foreground dark:text-gray-400">
                               {isNL ? "Lagere kosten" : "Lower costs"}
                             </div>
                           </div>
@@ -222,7 +222,7 @@ const LeadGenerationPage: React.FC = () => {
           </section>
 
           {/* Benefits Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -230,10 +230,10 @@ const LeadGenerationPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Waarom bedrijven kiezen voor onze lead generatie" : "Why businesses choose our lead generation"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Van chaos naar voorspelbaarheid in uw sales pipeline"
                     : "From chaos to predictability in your sales pipeline"
@@ -245,12 +245,12 @@ const LeadGenerationPage: React.FC = () => {
                 {benefits.map((benefit, index) => {
                   const Icon = benefit.icon;
                   return (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300">
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                       <div className="w-16 h-16 bg-[#4585f4]/10 rounded-2xl flex items-center justify-center mb-6">
                         <Icon className="w-8 h-8 text-[#4585f4]" />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">{benefit.title}</h3>
-                      <p className="text-gray-300 leading-relaxed">{benefit.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{benefit.title}</h3>
+                      <p className="text-foreground dark:text-gray-300 leading-relaxed">{benefit.description}</p>
                     </div>
                   );
                 })}
@@ -259,13 +259,13 @@ const LeadGenerationPage: React.FC = () => {
           </section>
 
           {/* Process Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Ons bewezen 4-stappen proces" : "Our proven 4-step process"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Van onbekende prospects naar warme, gekwalificeerde leads"
                     : "From unknown prospects to warm, qualified leads"
@@ -277,11 +277,11 @@ const LeadGenerationPage: React.FC = () => {
                 {processSteps.map((step, index) => (
                   <div key={index} className="flex gap-6 items-start">
                     <div className="w-16 h-16 bg-[#4585f4] rounded-2xl flex items-center justify-center flex-shrink-0">
-                      <span className="text-2xl font-bold text-white">{step.step}</span>
+                      <span className="text-2xl font-bold text-heading dark:text-white">{step.step}</span>
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-2xl font-bold text-white mb-4">{step.title}</h3>
-                      <p className="text-lg text-gray-300 leading-relaxed">{step.description}</p>
+                      <h3 className="text-2xl font-bold text-heading dark:text-white mb-4">{step.title}</h3>
+                      <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
                 ))}
@@ -290,11 +290,11 @@ const LeadGenerationPage: React.FC = () => {
           </section>
 
           {/* CTA Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar voor voorspelbare groei?" : "Ready for predictable growth?"}
                   </h2>
                   <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
@@ -307,7 +307,7 @@ const LeadGenerationPage: React.FC = () => {
                   <div className="mb-6">
                     <Button 
                       size="lg" 
-                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                       data-cal-namespace="automation-strategy-workshop"
                       data-cal-link="kennet-timmers/workshop"
                       data-cal-config='{"layout":"month_view"}'
@@ -317,7 +317,7 @@ const LeadGenerationPage: React.FC = () => {
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground dark:text-gray-500">
                     {isNL ? "30 minuten sessie • Gratis analyse • Directe inzichten" : "30-minute session • Free analysis • Immediate insights"}
                   </p>
                 </div>
