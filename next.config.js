@@ -13,6 +13,17 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
+  // Performance budgets to catch regressions early
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.performance = {
+        maxAssetSize: 250000, // 250 kB
+        maxEntrypointSize: 250000, // 250 kB
+        hints: 'warning', // Warn instead of error to not break builds
+      };
+    }
+    return config;
+  },
   // Turbopack configuration (Next.js 15 format)
   turbopack: {
     resolveExtensions: [

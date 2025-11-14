@@ -215,6 +215,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        
+        {/* Font Preloading - Critical fonts for FCP improvement */}
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@100..900&family=Inter:wght@100..900&display=swap"
+          as="style"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`${inter.className} ${archivo.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
