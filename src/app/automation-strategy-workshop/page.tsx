@@ -267,8 +267,8 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                         </h3>
                         <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed mb-4">
                           {isNL 
-                            ? <>Wij faciliteren, maar <strong className="text-white">uw team zijn de experts.</strong> We creëren een sfeer van psychologische veiligheid waarin iedereen openlijk kan delen hoe het werk <em>echt</em> wordt gedaan, zonder angst voor kritiek. Dit is de basis voor echte verbetering.</>
-                            : <>We facilitate, but <strong className="text-white">your team are the experts.</strong> We create an atmosphere of psychological safety where everyone can openly share how work <em>really</em> gets done, without fear of criticism. This is the foundation for real improvement.</>
+                            ? <>Wij faciliteren, maar <strong className="text-heading dark:text-white">uw team zijn de experts.</strong> We creëren een sfeer van psychologische veiligheid waarin iedereen openlijk kan delen hoe het werk <em>echt</em> wordt gedaan, zonder angst voor kritiek. Dit is de basis voor echte verbetering.</>
+                            : <>We facilitate, but <strong className="text-heading dark:text-white">your team are the experts.</strong> We create an atmosphere of psychological safety where everyone can openly share how work <em>really</em> gets done, without fear of criticism. This is the foundation for real improvement.</>
                           }
                         </p>
                         <div className="bg-[#4585f4]/10 border border-[#4585f4]/20 rounded-xl p-4">
@@ -298,8 +298,8 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                         </h3>
                         <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed mb-4">
                           {isNL 
-                            ? <>Samen identificeren we de taken die het meest frustrerend en tijdrovend zijn—de "robot-taken". We kwantificeren niet alleen de kosten, maar ook de <strong className="text-white">impact op het werkplezier en de focus</strong> van uw team.</>
-                            : <>Together we identify the tasks that are the most frustrating and time-consuming—the "robot tasks". We quantify not just the costs, but also the <strong className="text-white">impact on your team's job satisfaction and focus</strong>.</>
+                            ? <>Samen identificeren we de taken die het meest frustrerend en tijdrovend zijn—de "robot-taken". We kwantificeren niet alleen de kosten, maar ook de <strong className="text-heading dark:text-white">impact op het werkplezier en de focus</strong> van uw team.</>
+                            : <>Together we identify the tasks that are the most frustrating and time-consuming—the "robot tasks". We quantify not just the costs, but also the <strong className="text-heading dark:text-white">impact on your team's job satisfaction and focus</strong>.</>
                           }
                         </p>
                         <div className="bg-[#4585f4]/10 border border-[#4585f4]/20 rounded-xl p-4">
@@ -329,8 +329,8 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                         </h3>
                         <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed mb-4">
                           {isNL 
-                            ? <>Het team brainstormt over oplossingen die hen niet vervangen, maar juist <strong className="text-white">meer tijd geven voor creativiteit, klantcontact en strategisch denken.</strong> We prioriteren de "quick wins" die het team het snelst de voordelen van slimmere samenwerking laat ervaren.</>
-                            : <>The team brainstorms solutions that don't replace them, but instead <strong className="text-white">give them more time for creativity, customer interaction, and strategic thinking.</strong> We prioritize the "quick wins" that most quickly let the team experience the benefits of smarter collaboration.</>
+                            ? <>Het team brainstormt over oplossingen die hen niet vervangen, maar juist <strong className="text-heading dark:text-white">meer tijd geven voor creativiteit, klantcontact en strategisch denken.</strong> We prioriteren de "quick wins" die het team het snelst de voordelen van slimmere samenwerking laat ervaren.</>
+                            : <>The team brainstorms solutions that don't replace them, but instead <strong className="text-heading dark:text-white">give them more time for creativity, customer interaction, and strategic thinking.</strong> We prioritize the "quick wins" that most quickly let the team experience the benefits of smarter collaboration.</>
                           }
                         </p>
                         <div className="bg-[#4585f4]/10 border border-[#4585f4]/20 rounded-xl p-4">
