@@ -360,7 +360,7 @@ const AIServiceFulfillmentPage: React.FC = () => {
 
               <div className="space-y-8">
                 {useCases.map((useCase, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                       <div>
                         <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{useCase.industry}</h3>
