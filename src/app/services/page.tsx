@@ -117,7 +117,7 @@ const ServicesPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4 pt-6">
                     <Button 
                       size="lg" 
-                      className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                      className="px-8 py-4 text-lg font-semibold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                       data-cal-namespace="automation-strategy-workshop"
                       data-cal-link="kennet-timmers/workshop"
                       data-cal-config='{"layout":"month_view"}'
@@ -137,7 +137,7 @@ const ServicesPage: React.FC = () => {
                           <BarChart3 className="h-6 w-6 text-[#4585f4]" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-semibold text-white">
+                          <h3 className="text-xl font-semibold text-heading dark:text-white">
                             {isNL ? "Strategische focus" : "Strategic focus"}
                           </h3>
                           <p className="text-muted-foreground dark:text-gray-400">
