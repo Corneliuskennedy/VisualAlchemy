@@ -35,15 +35,15 @@ export function FadeInUp({
   const variants: any = {
     hidden: { 
       opacity: 0, 
-      y: 40,
+      y: 20, // More subtle: reduced from 40 to 20
     },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
-        duration,
+        duration: duration || 0.4, // Default to 0.4s (was 0.6s)
         delay,
-        ease: [0.4, 0, 0.2, 1]
+        ease: [0.4, 0, 0.2, 1] // Smooth easing
       }
     }
   };
@@ -53,7 +53,7 @@ export function FadeInUp({
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.08, // More subtle: reduced from 0.15 to 0.08
         delayChildren: delay
       }
     }

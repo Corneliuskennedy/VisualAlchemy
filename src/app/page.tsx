@@ -14,7 +14,6 @@ import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
 import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
-import { MonopoGradient } from '@/components/ui/MonopoGradient';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
 
@@ -89,16 +88,6 @@ function HomeContent() {
         aria-labelledby="hero-heading"
         className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-10 overflow-hidden"
       >
-        {/* Monopo-style Gradient Background */}
-        <MonopoGradient
-          color1="#0ea5e9"
-          color2="#0284c7"
-          color3="#0369a1"
-          color4="#00d9ff"
-          parallax={true}
-          grain={true}
-          className="absolute inset-0"
-        />
         <motion.div
           initial="hidden"
           animate="visible"
@@ -166,7 +155,7 @@ function HomeContent() {
       {/* Section 3: Clean Social Proof */}
       <section 
         aria-labelledby="social-proof-heading"
-        className="py-24 md:py-32 px-4 relative z-10"
+        className="py-32 md:py-40 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -174,7 +163,7 @@ function HomeContent() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={containerVariants}
-            className="space-y-8"
+            className="space-y-12"
           >
             {/* Section Header */}
             <motion.h2
@@ -186,16 +175,15 @@ function HomeContent() {
               {homepage.socialProof.headline}
             </motion.h2>
 
-            {/* Clean Logo Grid */}
-            <div className="max-w-7xl mx-auto border border-border/20 py-16 px-8">
+            {/* Clean Logo Grid - Subtle Hover Only */}
+            <div className="max-w-7xl mx-auto border border-border/10 py-16 px-8">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-12 items-center justify-items-center">
                 {clientLogos.map((logo, index) => (
                   <motion.div
                     key={logo.name}
                     variants={itemVariants}
-                    className="grayscale hover:grayscale-0 transition-all duration-500 opacity-50 hover:opacity-100 hover:scale-110 drop-shadow-md hover:drop-shadow-lg dark:drop-shadow-none"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
+                    className="grayscale transition-all duration-300 opacity-50 hover:opacity-100"
+                    whileHover={{ opacity: 1 }}
                   >
                     <img
                       src={logo.image}
@@ -216,7 +204,7 @@ function HomeContent() {
       {/* Section 4: Clean Why Us - Asymmetrical Layout */}
       <section 
         aria-labelledby="why-us-heading"
-        className="py-24 md:py-32 px-4 relative z-10"
+        className="py-32 md:py-40 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -279,10 +267,10 @@ function HomeContent() {
                     key={index}
                     variants={cardVariants}
                     className="group relative p-10 lg:p-12 
-                             border border-border/20
+                             border border-border/10
                              transition-all duration-300 ease-out
                              bg-card
-                             hover:border-border/40
+                             hover:border-border/30
                              hover:-translate-y-1
                              transform-gpu"
                   >

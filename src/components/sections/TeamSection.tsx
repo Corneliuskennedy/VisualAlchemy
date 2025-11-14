@@ -48,7 +48,26 @@ export const TeamSection: React.FC<TeamSectionProps> = ({ className = '' }) => {
       email: 'kennet@octomatic.ai',
       expertise: ['Cursor AI', 'Next.js', 'TypeScript', 'Web Development'],
     },
-    // Add more team members as needed
+    {
+      name: 'Timo',
+      role: 'UI/UX Designer',
+      bio: 'Creating intuitive and beautiful user experiences that delight users and drive conversions. Expert in user research, interface design, and design systems.',
+      image: '/team/timo.webp', // Update path when photo is added
+      linkedin: undefined, // Add LinkedIn URL if available
+      github: undefined,
+      email: undefined, // Add email if available
+      expertise: ['UI Design', 'UX Research', 'Design Systems', 'User Testing'],
+    },
+    {
+      name: 'Boris',
+      role: 'Meta & Marketing Specialist',
+      bio: 'Driving growth through strategic marketing campaigns and Meta advertising. Expert in paid social, conversion optimization, and data-driven marketing.',
+      image: '/team/boris.webp', // Update path when photo is added
+      linkedin: undefined, // Add LinkedIn URL if available
+      github: undefined,
+      email: undefined, // Add email if available
+      expertise: ['Meta Ads', 'Marketing Strategy', 'Conversion Optimization', 'Paid Social'],
+    },
   ];
 
   // Generate Person schemas for Entity-First SEO (E-E-A-T signals)

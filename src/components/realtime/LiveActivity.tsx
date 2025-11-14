@@ -52,34 +52,45 @@ export const LiveActivity: React.FC<LiveActivityProps> = ({
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    // Simulate WebSocket connection (in production, connect to real WebSocket server)
-    // For now, use simulated data with realistic updates
+    // TODO: Connect to real analytics API (Google Analytics Real-Time API or custom WebSocket)
+    // For now, hide component if no real data source available
+    // This prevents showing fake numbers
     
-    const simulateActivity = () => {
-      // Simulate realistic activity
-      const baseViewers = 3 + Math.floor(Math.random() * 5); // 3-7 viewers
-      const recentBookings = Math.floor(Math.random() * 3); // 0-2 recent bookings
-
-      setActivity({
-        viewers: baseViewers,
-        recentBookings,
-        lastUpdated: Date.now(),
-      });
-      setIsConnected(true);
-    };
-
-    // Initial load
-    simulateActivity();
-
-    // Update every 5-10 seconds (realistic interval)
-    const interval = setInterval(() => {
-      simulateActivity();
-    }, 5000 + Math.random() * 5000);
-
-    return () => clearInterval(interval);
+    // Option 1: Hide component entirely until real data source is connected
+    // Option 2: Connect to Google Analytics Real-Time API
+    // Option 3: Use server-side analytics endpoint
+    
+    // TEMPORARY: Hide until real data source is implemented
+    // Remove this when real analytics are connected
+    setIsConnected(false);
+    return;
+    
+    // Future implementation:
+    // const connectToAnalytics = async () => {
+    //   try {
+    //     // Connect to Google Analytics Real-Time API
+    //     // or custom WebSocket server
+    //     const realTimeData = await fetchRealTimeAnalytics(page);
+    //     setActivity({
+    //       viewers: realTimeData.activeUsers,
+    //       recentBookings: realTimeData.recentConversions,
+    //       lastUpdated: Date.now(),
+    //     });
+    //     setIsConnected(true);
+    //   } catch (error) {
+    //     console.error('Failed to fetch real-time analytics:', error);
+    //     setIsConnected(false);
+    //   }
+    // };
+    // 
+    // connectToAnalytics();
+    // const interval = setInterval(connectToAnalytics, 10000); // Update every 10s
+    // return () => clearInterval(interval);
   }, [page]);
 
-  if (!showViewers && !showRecentActivity) return null;
+  // Hide component if no real data source is connected
+  // This prevents showing fake numbers
+  if (!isConnected || (!showViewers && !showRecentActivity)) return null;
 
   return (
     <div className="flex flex-wrap items-center justify-center gap-4 

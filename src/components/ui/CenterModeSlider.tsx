@@ -178,8 +178,8 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                       : '34rem',
                   }}
                   transition={{
-                    duration: 0.8,
-                    ease: [0.4, 0, 0.2, 1],
+                    duration: 0.6, // More subtle: reduced from 0.8s to 0.6s
+                    ease: [0.4, 0, 0.2, 1], // Smooth easing
                   }}
                   className={`
                     relative flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer
@@ -206,7 +206,7 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                       opacity: isActive ? 1 : 0.6,
                     }}
                     transition={{
-                      duration: 0.8,
+                      duration: 0.5, // More subtle: reduced from 0.8s to 0.5s
                       ease: [0.4, 0, 0.2, 1],
                     }}
                   />
@@ -218,7 +218,7 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                       opacity: isActive ? 1 : 0.8,
                     }}
                     transition={{
-                      duration: 0.8,
+                      duration: 0.5, // More subtle: reduced from 0.8s to 0.5s
                       ease: [0.4, 0, 0.2, 1],
                     }}
                   />
@@ -239,7 +239,7 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                         opacity: isActive ? 1 : 0.9,
                       }}
                       transition={{
-                        duration: 0.6,
+                        duration: 0.4, // More subtle: reduced from 0.6s to 0.4s
                         ease: [0.4, 0, 0.2, 1],
                       }}
                       className={`
@@ -266,7 +266,7 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                           transition={{ 
-                            duration: 0.6,
+                            duration: 0.4, // More subtle: reduced from 0.6s to 0.4s
                             ease: [0.4, 0, 0.2, 1],
                           }}
                           className={`flex-1 ${isMobile ? 'space-y-8' : 'space-y-8 max-w-lg'}`}
@@ -274,11 +274,11 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                           <motion.p 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ 
-                              duration: 0.6,
-                              delay: 0.2,
-                              ease: [0.4, 0, 0.2, 1],
-                            }}
+                          transition={{ 
+                            duration: 0.4, // More subtle: reduced from 0.6s to 0.4s
+                            delay: 0.15, // More subtle: reduced from 0.2s to 0.15s
+                            ease: [0.4, 0, 0.2, 1],
+                          }}
                             className="text-white/95 text-xl md:text-2xl leading-relaxed"
                           >
                             {card.description}
@@ -288,8 +288,8 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ 
-                              duration: 0.6,
-                              delay: 0.3,
+                              duration: 0.4, // More subtle: reduced from 0.6s to 0.4s
+                              delay: 0.25, // More subtle: reduced from 0.3s to 0.25s
                               ease: [0.4, 0, 0.2, 1],
                             }}
                           >

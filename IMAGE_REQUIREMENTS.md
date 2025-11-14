@@ -51,7 +51,64 @@
 ---
 
 ### 3. Social Proof / Client Logos
-**Status:** ✅ Complete (SVG logos exist)   
+**Status:** ✅ Complete (SVG logos exist)
+
+---
+
+### **Team Photos** (Priority: HIGH)
+
+**Location:** `/public/team/`
+
+**Required Images:**
+1. **Kennet Timmers** (`kennet_timmers.webp`)
+   - **Dimensions:** 400x400px (square)
+   - **Format:** WebP (with fallback)
+   - **Style:** Professional headshot, consistent lighting
+   - **Status:** ⏳ Pending
+
+2. **Timo** (`timo.webp`) - NEW
+   - **Dimensions:** 400x400px (square)
+   - **Format:** WebP (with fallback)
+   - **Style:** Professional headshot, consistent lighting
+   - **Role:** UI/UX Designer
+   - **Status:** ⏳ Pending
+
+3. **Boris** (`boris.webp`) - NEW
+   - **Dimensions:** 400x400px (square)
+   - **Format:** WebP (with fallback)
+   - **Style:** Professional headshot, consistent lighting
+   - **Role:** Meta & Marketing Specialist
+   - **Status:** ⏳ Pending
+
+**Notes:**
+- All team photos should have consistent lighting and background
+- Square format works best for the card layout
+- Component shows initials placeholder until photos are added
+
+---
+
+### 4. Team Section (Updated)
+**Status:** ⚠️ Needs professional photos  
+**Location:** `/public/team/`  
+**Specs:**
+- **Type:** Professional headshots
+- **Dimensions:** 400x400px (square, 1:1)
+- **Format:** WebP
+- **Style:** Professional, consistent lighting, clean background
+- **Quantity:** 3 (Kennet Timmers, Timo, Boris)
+
+**Current:** `/team/kennet_timmers.webp` exists but may need update
+
+**Requirements:**
+- Professional headshot
+- Consistent style across all team members
+- Clean, neutral background
+- High quality (for retina displays)
+
+---
+
+### 5. Social Proof / Client Logos
+**Status:** ✅ Complete (SVG logos exist)  
 **Location:** `/public/logo/`  
 **Current Logos:**
 - Monuta.svg ✅

@@ -6,14 +6,15 @@ import "@/styles/loading.css";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
-import { Suspense, lazy } from "react";
+import React, { Suspense, lazy } from "react";
 import { SkipToContent } from "@/components/A11y/SkipToContent";
 import { HTMLLangUpdater } from "@/components/SEO/HTMLLangUpdater";
 import CriticalContentPreloader from "@/components/SEO/CriticalContentPreloader";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import WebVitalsMonitor from "@/components/WebVitalsMonitor";
-import GlobalInteractiveGrid from "@/components/ScrollBasedNightSky";
+// Lazy load GlobalInteractiveGrid - only needed on homepage
+const GlobalInteractiveGrid = lazy(() => import("@/components/ScrollBasedNightSky"));
 import { ThemeTransition } from "@/components/ui/ThemeTransition";
 import InstallPrompt from "@/lib/pwa/InstallPrompt";
 import { usePrefetcher } from "@/lib/performance/Prefetcher";
@@ -61,6 +62,20 @@ const AccessibilityControls = lazy(() => import("@/components/A11y/Accessibility
 const TranslationDebug = lazy(() => import("@/components/TranslationDebug").then(module => ({ 
   default: module.TranslationDebug 
 })));
+
+// Conditional GlobalInteractiveGrid - only on homepage (lazy loaded)
+function ConditionalGlobalGrid() {
+  const [isHomepage, setIsHomepage] = React.useState(false);
+  
+  React.useEffect(() => {
+    const pathname = window.location.pathname;
+    setIsHomepage(pathname === '/' || pathname === '/nl');
+  }, []);
+  
+  if (!isHomepage) return null;
+  
+  return <GlobalInteractiveGrid />;
+}
 
 // Loading fallbacks
 const NavbarFallback = () => (
@@ -247,7 +262,10 @@ export default function RootLayout({
                   <HydrationHandler />
                   <ThemeTransition>
                     <div className="min-h-screen relative overflow-x-hidden">
-                    <GlobalInteractiveGrid />
+                    {/* GlobalInteractiveGrid - Only load on homepage, lazy loaded */}
+                    <Suspense fallback={null}>
+                      <ConditionalGlobalGrid />
+                    </Suspense>
                       {/* Critical SEO components - render immediately */}
                       <HTMLLangUpdater />
                       <CriticalContentPreloader />

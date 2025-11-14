@@ -71,7 +71,7 @@ const ServicesPage: React.FC = () => {
       
       <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         {/* Hero Section */}
-        <section className="py-16 md:py-20 relative bg-background">
+        <section className="py-32 md:py-40 relative bg-background">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <GridBackground className="pointer-events-none" />
           </div>

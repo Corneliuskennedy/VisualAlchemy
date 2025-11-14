@@ -24,8 +24,8 @@ export function useOptimizedAnimations() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: prefersReducedMotion ? 0 : 0.12,
-        delayChildren: prefersReducedMotion ? 0 : 0.08,
+        staggerChildren: prefersReducedMotion ? 0 : 0.08, // More subtle: reduced from 0.12 to 0.08
+        delayChildren: prefersReducedMotion ? 0 : 0.05, // More subtle: reduced from 0.08 to 0.05
       },
     },
   }), [prefersReducedMotion]);
@@ -33,13 +33,13 @@ export function useOptimizedAnimations() {
   const itemVariants = useMemo<Variants>(() => ({
     hidden: { 
       opacity: 0, 
-      y: prefersReducedMotion ? 0 : 25,
+      y: prefersReducedMotion ? 0 : 12, // More subtle: reduced from 25 to 12
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: prefersReducedMotion ? 0 : 0.5,
+        duration: prefersReducedMotion ? 0 : 0.4, // Slightly faster: 0.4s instead of 0.5s
         ease: PREMIUM_EASE,
       },
     },
@@ -48,13 +48,13 @@ export function useOptimizedAnimations() {
   const heroTitleVariants = useMemo<Variants>(() => ({
     hidden: { 
       opacity: 0, 
-      y: prefersReducedMotion ? 0 : 30,
+      y: prefersReducedMotion ? 0 : 20, // More subtle: reduced from 30 to 20
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: prefersReducedMotion ? 0 : 0.7,
+        duration: prefersReducedMotion ? 0 : 0.6, // Slightly faster: 0.6s instead of 0.7s
         ease: PREMIUM_EASE,
       },
     },
@@ -63,20 +63,20 @@ export function useOptimizedAnimations() {
   const cardVariants = useMemo<Variants>(() => ({
     hidden: { 
       opacity: 0, 
-      y: prefersReducedMotion ? 0 : 30,
-      scale: prefersReducedMotion ? 1 : 0.96,
+      y: prefersReducedMotion ? 0 : 16, // More subtle: reduced from 30 to 16
+      scale: prefersReducedMotion ? 1 : 0.98, // More subtle: reduced from 0.96 to 0.98
     },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: prefersReducedMotion ? 0 : 0.5,
+        duration: prefersReducedMotion ? 0 : 0.4, // Slightly faster: 0.4s instead of 0.5s
         ease: PREMIUM_EASE,
       },
     },
     hover: prefersReducedMotion ? {} : {
-      y: -6,
+      y: -4, // More subtle: reduced from -6 to -4
       scale: 1.01,
       transition: {
         type: 'spring',
@@ -90,13 +90,13 @@ export function useOptimizedAnimations() {
   const fadeInUp = useMemo<Variants>(() => ({
     hidden: { 
       opacity: 0, 
-      y: prefersReducedMotion ? 0 : 25,
+      y: prefersReducedMotion ? 0 : 12, // More subtle: reduced from 25 to 12
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: prefersReducedMotion ? 0 : 0.5,
+        duration: prefersReducedMotion ? 0 : 0.4, // Slightly faster: 0.4s instead of 0.5s
         ease: PREMIUM_EASE,
       },
     },

@@ -134,9 +134,22 @@ export const InstallPrompt: React.FC = () => {
     }
   };
 
-  // Don't show if installed, dismissed, or no prompt available
+  // Don't show if installed, dismissed, no prompt available, or not actually installable
+  // Only show when browser actually supports PWA installation
   if (isInstalled || isDismissed || !showPrompt || !deferredPrompt) {
     return null;
+  }
+
+  // Additional check: Only show on mobile/tablet or when PWA criteria are met
+  // Desktop browsers rarely show install prompts, so hide on desktop unless criteria met
+  if (typeof window !== 'undefined') {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    
+    // Hide on desktop unless it's actually a PWA-ready environment
+    if (!isMobile && !isStandalone && !deferredPrompt) {
+      return null;
+    }
   }
 
   return (

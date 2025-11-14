@@ -251,7 +251,7 @@ export function MonopoGradient({
         return;
       }
       
-      time += 0.008; // Faster, more organic movement
+      time += 0.003; // Slow, subtle, premium movement
       
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
@@ -282,19 +282,16 @@ export function MonopoGradient({
           const px = rx + position[0] + colorOffset[0];
           const py = ry + position[1] + colorOffset[1];
           
-          // Create wave patterns (Monopo's approach) - More organic movement
+          // Create subtle wave patterns - Premium, elegant movement
           const wave1 = Math.sin(px * spacing + time) * 0.5 + 0.5;
           const wave2 = Math.sin(py * spacing * 0.7 + time * 0.8) * 0.5 + 0.5;
           const wave3 = Math.sin((px + py) * spacing * 0.5 + time * 1.2) * 0.5 + 0.5;
-          const wave4 = Math.sin((px - py) * spacing * 0.9 + time * 0.6) * 0.5 + 0.5;
           
-          // Combine waves with varied weights for more organic feel
-          const pattern = wave1 * 0.3 + wave2 * 0.25 + wave3 * 0.25 + wave4 * 0.2;
+          // Combine waves smoothly
+          const pattern = (wave1 + wave2 + wave3) / 3;
           
-          // Add displacement/noise (Monopo's high displacement) - More dynamic
-          const noiseX = Math.sin(px * displacement * 8 + time * 0.5) * 0.05;
-          const noiseY = Math.cos(py * displacement * 8 + time * 0.7) * 0.05;
-          const noise = noiseX + noiseY;
+          // Subtle displacement/noise - Less chaotic
+          const noise = (Math.sin(px * displacement * 6) + Math.cos(py * displacement * 6)) * 0.03;
           const finalT = Math.max(0, Math.min(1, pattern + noise));
           
           // Get gradient color
@@ -381,31 +378,21 @@ export function MonopoGradient({
         zIndex: 0,
       }}
     >
-      {/* Main gradient canvas - Oversized like Monopo (3x width, centered) */}
+      {/* Main gradient canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute"
+        className="absolute inset-0 w-full h-full"
         style={{
-          width: '300%',  // 3x wider like Monopo
-          height: '100%',
-          left: '50%',
-          top: 0,
-          transform: 'translate3d(-50%, 0, 0)',  // Center the oversized gradient
           mixBlendMode: 'normal',
         }}
       />
       
-      {/* Grain texture overlay - Also oversized to match gradient */}
+      {/* Grain texture overlay */}
       {grain && (
         <canvas
           ref={grainCanvasRef}
-          className="absolute opacity-40"
+          className="absolute inset-0 w-full h-full opacity-20"
           style={{
-            width: '300%',  // Match gradient size
-            height: '100%',
-            left: '50%',
-            top: 0,
-            transform: 'translate3d(-50%, 0, 0)',  // Center like gradient
             mixBlendMode: 'overlay',
             pointerEvents: 'none',
           }}

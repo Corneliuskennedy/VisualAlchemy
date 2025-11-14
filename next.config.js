@@ -11,7 +11,7 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'framer-motion'],
   },
   // Performance budgets to catch regressions early
   webpack: (config, { isServer }) => {

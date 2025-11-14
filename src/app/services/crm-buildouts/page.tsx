@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { UnifiedSEO } from '@/components/SEO';
 import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
-import { Brain, Database, Users, TrendingUp, CheckCircle, ArrowRight, ArrowLeft, Zap, Shield } from 'lucide-react';
+import { Brain, Database, Users, TrendingUp, CheckCircle, ArrowRight, ArrowLeft, Zap, Shield, Calendar } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import { useCalWorkshop } from '@/hooks/use-cal';
@@ -123,7 +123,7 @@ const CRMBuildoutsPage: React.FC = () => {
       <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         <div className="min-h-screen bg-background">
           {/* Hero Section */}
-          <section className="py-16 md:py-20 relative bg-background">
+          <section className="py-32 md:py-40 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -183,8 +183,20 @@ const CRMBuildoutsPage: React.FC = () => {
                         data-cal-link="kennet-timmers/workshop"
                         data-cal-config='{"layout":"month_view"}'
                       >
-                        {isNL ? "Boek CRM Analyse" : "Book CRM Analysis"}
+                        <Calendar className="mr-2 h-5 w-5" />
+                        {isNL ? "Krijg Je Gratis CRM Audit" : "Get Your Free CRM Audit"}
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                      <Button 
+                        variant="outline"
+                        size="lg" 
+                        className="px-8 py-4 text-lg font-semibold border-2 border-[#4585f4] text-[#4585f4] hover:bg-[#4585f4]/10 transition-all duration-300 group"
+                        onClick={() => {
+                          const element = document.getElementById('benefits');
+                          element?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        {isNL ? "Zie Hoeveel Je Kunt Besparen" : "See How Much You Can Save"}
                       </Button>
                     </div>
                   </div>
@@ -230,7 +242,7 @@ const CRMBuildoutsPage: React.FC = () => {
           </section>
 
           {/* Benefits Section */}
-          <section className="py-24 bg-background relative">
+          <section id="benefits" className="py-32 md:py-40 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -267,7 +279,7 @@ const CRMBuildoutsPage: React.FC = () => {
           </section>
 
           {/* Features Section */}
-          <section className="py-24 bg-background relative">
+          <section className="py-32 md:py-40 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
@@ -300,7 +312,7 @@ const CRMBuildoutsPage: React.FC = () => {
           </section>
 
           {/* CTA Section */}
-          <section className="py-24 bg-background relative">
+          <section className="py-32 md:py-40 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
@@ -322,13 +334,29 @@ const CRMBuildoutsPage: React.FC = () => {
                       data-cal-link="kennet-timmers/workshop"
                       data-cal-config='{"layout":"month_view"}'
                     >
-                      {isNL ? "Boek Gratis CRM Audit" : "Book Free CRM Audit"}
+                      <Calendar className="mr-3 h-6 w-6" />
+                      {isNL ? "Krijg Je Gratis CRM Audit" : "Get Your Free CRM Audit"}
                       <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground dark:text-gray-500">
-                    {isNL ? "45 minuten sessie • Gratis analyse • Implementatie roadmap" : "45-minute session • Free analysis • Implementation roadmap"}
+                  <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground dark:text-gray-500 mb-4">
+                    <span className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-[#4585f4]" />
+                      {isNL ? "45 minuten sessie" : "45-minute session"}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-[#4585f4]" />
+                      {isNL ? "Gratis analyse" : "Free analysis"}
+                    </span>
+                    <span className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-[#4585f4]" />
+                      {isNL ? "Implementatie roadmap" : "Implementation roadmap"}
+                    </span>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground dark:text-gray-500 italic">
+                    {isNL ? "Beperkte plekken deze maand • Volgende beschikbaar: binnen 48 uur" : "Limited spots this month • Next available: within 48 hours"}
                   </p>
                 </div>
               </div>

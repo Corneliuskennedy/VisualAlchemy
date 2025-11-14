@@ -281,7 +281,7 @@ export default function OptimizePage() {
       />
       <div className="min-h-screen relative font-archivo bg-background">
         {/* Hero */}
-        <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-20">
+        <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-32 md:py-40">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -323,7 +323,7 @@ export default function OptimizePage() {
 
       {/* Problem Section */}
       {content.problem && (
-        <section className="py-24 px-4 bg-secondary/30 dark:bg-gray-900/30">
+        <section className="py-32 md:py-40 px-4 bg-secondary/30 dark:bg-gray-900/30">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial="hidden"
@@ -370,7 +370,7 @@ export default function OptimizePage() {
 
       {/* Solutions Section */}
       {content.solutions && (
-        <section className="py-24 px-4">
+        <section className="py-32 md:py-40 px-4">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial="hidden"

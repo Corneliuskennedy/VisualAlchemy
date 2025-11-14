@@ -173,7 +173,7 @@ export default function BuildPage() {
       />
       <div className="min-h-screen relative font-archivo bg-background">
         {/* Hero */}
-        <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-20">
+        <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-32 md:py-40">
           <motion.div
             initial="hidden"
             animate="visible"

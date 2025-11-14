@@ -181,7 +181,7 @@ export default function CreatePage() {
       />
       <div className="min-h-screen relative font-archivo bg-[#0A0A0A]">
         {/* Hero with Video Reel */}
-        <section className="relative min-h-[70vh] flex flex-col justify-center items-center px-4 py-20 overflow-hidden">
+        <section className="relative min-h-[70vh] flex flex-col justify-center items-center px-4 py-32 md:py-40 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-transparent" />
           <motion.div
             initial="hidden"
@@ -226,7 +226,7 @@ export default function CreatePage() {
         </section>
 
       {/* Portfolio */}
-      <section id="portfolio" className="py-24 px-4">
+      <section id="portfolio" className="py-32 md:py-40 px-4">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -268,7 +268,7 @@ export default function CreatePage() {
       </section>
 
       {/* Process */}
-      <section className="py-24 px-4 bg-gray-900/30">
+      <section className="py-32 md:py-40 px-4 bg-gray-900/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -309,7 +309,7 @@ export default function CreatePage() {
 
       {/* Testimonial Section */}
       {content.testimonial && (
-        <section className="py-24 px-4">
+        <section className="py-32 md:py-40 px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial="hidden"
