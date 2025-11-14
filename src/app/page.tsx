@@ -14,8 +14,6 @@ import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
 import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
-import { MonopoHeroCircle } from '@/components/ui/MonopoHeroCircle';
-import { HeroTextReveal } from '@/components/ui/HeroTextReveal';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
 
@@ -84,29 +82,28 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Section 1: Hero with Monopo-Inspired Circular Gradient */}
+      {/* Section 1: Clean Hero - Simple & Well-Spaced */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10 overflow-hidden bg-[#0a0a0a]"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10"
       >
-        {/* Monopo-Inspired Circular Gradient Background */}
-        <MonopoHeroCircle />
-        
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
           className="max-w-5xl mx-auto text-center space-y-10 md:space-y-12 relative z-10"
         >
-          {/* Character-by-Character Text Reveal - Gladeye-Inspired */}
-          <HeroTextReveal
-            text={homepage.hero.headline}
+          {/* Clean Typography */}
+          <motion.h1
             id="hero-heading"
+            variants={heroTitleVariants}
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-archivo font-bold leading-[1.05] tracking-tight
                      text-heading dark:text-white"
             aria-label={homepage.hero.headline}
-          />
+          >
+            {homepage.hero.headline}
+          </motion.h1>
 
           {/* Clean Subheadline */}
           <motion.p
