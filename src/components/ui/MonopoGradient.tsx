@@ -12,6 +12,8 @@ export interface MonopoGradientProps {
   colorSize?: number;
   colorSpacing?: number;
   colorRotation?: number;
+  colorSpread?: number; // NEW: Controls color blending/spreading (Monopo: 10)
+  colorOffset?: [number, number]; // NEW: Offsets color pattern origin (Monopo: [-0.97, -0.76])
   displacement?: number;
   seed?: number;
   position?: [number, number];
@@ -42,7 +44,9 @@ export function MonopoGradient({
   colorSize = 0.8,
   colorSpacing = 0.33, // Monopo's tight spacing
   colorRotation = 1.24840734641021, // Monopo's rotation
-  displacement = 2.378571428571429, // Monopo's high displacement for grain
+  colorSpread = 10, // Monopo's color spread for blending
+  colorOffset = [-0.973876953125, -0.755390625], // Monopo's color offset
+  displacement = 3.5585714285714367, // Monopo's displacement (updated to match)
   seed = 3915.38625,
   position = [-1.8283292510943407, 1.3235562192065857],
   zoom = 0.75, // Monopo's zoom
@@ -233,9 +237,9 @@ export function MonopoGradient({
           const rx = zx * cos - zy * sin;
           const ry = zx * sin + zy * cos;
           
-          // Apply position offset
-          const px = rx + position[0];
-          const py = ry + position[1];
+          // Apply position offset + colorOffset (Monopo's color pattern offset)
+          const px = rx + position[0] + colorOffset[0];
+          const py = ry + position[1] + colorOffset[1];
           
           // Create wave patterns (Monopo's approach)
           const wave1 = Math.sin(px * spacing + time) * 0.5 + 0.5;
