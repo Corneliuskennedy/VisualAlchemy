@@ -155,7 +155,7 @@ const GetStartedPage: React.FC = () => {
 
               <div className="max-w-7xl mx-auto text-center">
                 <div className="space-y-6 mb-16">
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                     {isNL ? "Start uw automatiseringsreis" : "Start your automation journey"}
                   </h1>
                   <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full mx-auto"></div>
@@ -198,7 +198,7 @@ const GetStartedPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Ons 3-stappen proces" : "Our 3-step process"}
                 </h2>
                 <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
@@ -215,11 +215,11 @@ const GetStartedPage: React.FC = () => {
                     <div className="flex flex-col lg:flex-row gap-8 items-center">
                       <div className="flex items-center gap-6 lg:w-2/3">
                         <div className="w-16 h-16 bg-[#4585f4] rounded-2xl flex items-center justify-center flex-shrink-0">
-                          <span className="text-2xl font-bold text-white">{step.step}</span>
+                          <span className="text-2xl font-bold text-white dark:text-white">{step.step}</span>
                         </div>
                         <div className="flex-1 text-center lg:text-left">
                           <div className="flex items-center gap-3 justify-center lg:justify-start mb-2">
-                            <h3 className="text-2xl font-bold text-white">{step.title}</h3>
+                            <h3 className="text-2xl font-bold text-heading dark:text-white">{step.title}</h3>
                             <span className="bg-[#4585f4]/20 text-[#4585f4] px-3 py-1 rounded-full text-sm font-medium">
                               {step.duration}
                             </span>
@@ -258,7 +258,7 @@ const GetStartedPage: React.FC = () => {
           <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Onze garanties" : "Our guarantees"}
                 </h2>
                 <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
@@ -277,7 +277,7 @@ const GetStartedPage: React.FC = () => {
                       <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <Icon className="w-8 h-8 text-green-400" />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">{guarantee.title}</h3>
+                      <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{guarantee.title}</h3>
                       <p className="text-foreground dark:text-gray-300 leading-relaxed">{guarantee.description}</p>
                     </div>
                   );
@@ -295,7 +295,7 @@ const GetStartedPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Transparante prijzen" : "Transparent pricing"}
                 </h2>
                 <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
@@ -318,7 +318,7 @@ const GetStartedPage: React.FC = () => {
                     )}
                     
                     <div className="text-center mb-8">
-                      <h3 className="text-2xl font-bold text-white mb-4">{plan.title}</h3>
+                      <h3 className="text-2xl font-bold text-heading dark:text-white mb-4">{plan.title}</h3>
                       <div className="text-4xl font-bold text-[#4585f4] mb-2">{plan.price}</div>
                       <div className="text-muted-foreground dark:text-gray-400">{plan.duration}</div>
                     </div>
@@ -339,7 +339,7 @@ const GetStartedPage: React.FC = () => {
                       className={`w-full px-8 py-4 text-lg font-semibold transition-all duration-300 hover:shadow-xl group ${
                         plan.popular 
                           ? 'bg-[#4585f4] hover:bg-[#4585f4]/90 text-white hover:shadow-[#4585f4]/25' 
-                          : 'bg-gray-800 hover:bg-gray-700 text-white'
+                          : 'bg-secondary dark:bg-gray-800 hover:bg-secondary/80 dark:hover:bg-gray-700 text-white'
                       }`}
                       data-cal-namespace={index === 0 ? "intro-call" : "automation-strategy-workshop"}
                       data-cal-link={`kennet-timmers/${index === 0 ? 'intro-call' : 'workshop'}`}
@@ -360,7 +360,7 @@ const GetStartedPage: React.FC = () => {
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar om te beginnen?" : "Ready to get started?"}
                   </h2>
                   <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
