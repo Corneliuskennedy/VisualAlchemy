@@ -14,7 +14,7 @@ interface Particle {
 
 export function HeroVisualBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const [mounted, setMounted] = useState(false);

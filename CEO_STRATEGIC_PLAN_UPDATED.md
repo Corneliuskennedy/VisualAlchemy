@@ -197,10 +197,11 @@
 
 **New Optimization Opportunities Identified:**
 
-1. **Font Preloading** (Quick Win - 30 min)
-   - Add `<link rel="preload">` for critical fonts
+1. **Font Preloading** ✅ COMPLETE
+   - ✅ Font CSS preload implemented
+   - ✅ `@next/font/google` handles font file optimization automatically
    - Impact: Improve FCP by 0.1-0.2s
-   - Priority: Medium
+   - Status: ✅ Done
 
 2. **Bundle Size Optimization** (Medium Priority - 2-3 hours)
    - Optimize `/over-ons` (217 kB → target: <200 kB)
@@ -217,25 +218,24 @@
    - Priority: Low
 
 4. **Third-Party Scripts Audit** (Medium Priority - 1 hour)
-   - Audit all external scripts
-   - Defer non-critical scripts
-   - Optimize script loading
+   - ✅ Cal.com: Already lazy-loaded via `useCal` hook
+   - ✅ Google Analytics: DNS prefetch configured
+   - ⏳ Verify scripts are async/deferred
    - Impact: Improve TTI, reduce blocking
    - Priority: Medium
 
-5. **Performance Budget Setup** (Quick Win - 30 min)
-   - Add webpack performance budgets
-   - Set bundle size limits
-   - Monitor in CI/CD
+5. **Performance Budget Setup** ✅ COMPLETE
+   - ✅ Webpack performance budgets configured (250 kB limit)
+   - ✅ Warnings enabled to catch regressions
    - Impact: Catch regressions early
-   - Priority: Medium
+   - Status: ✅ Done
 
 **Tasks:**
 - ⏳ Run production build Lighthouse audit
-- ⏳ Implement font preloading
+- ✅ Implement font preloading
 - ⏳ Optimize largest page bundles
-- ⏳ Audit third-party scripts
-- ⏳ Set up performance budgets
+- 🚧 Audit third-party scripts (in progress)
+- ✅ Set up performance budgets
 - ⏳ Optimize images (WebP/AVIF)
 - ⏳ Achieve Core Web Vitals targets
 
