@@ -151,6 +151,65 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="en" href="https://octomatic.ai/" />
         <link rel="alternate" hrefLang="nl" href="https://octomatic.ai/nl" />
         
+        {/* Structured Data - Server-side rendered for Google crawler */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://www.octomatic.ai/#organization",
+              "name": "Octomatic",
+              "url": "https://www.octomatic.ai",
+              "logo": "https://www.octomatic.ai/logo/octomatic-800.png",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Nieuwe haven 27A",
+                "addressLocality": "Naarden",
+                "postalCode": "1411 SG",
+                "addressCountry": "NL"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+316-46402090",
+                "email": "kennet@octomatic.ai"
+              }
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "@id": "https://www.octomatic.ai/#localbusiness",
+              "name": "Octomatic Amsterdam",
+              "url": "https://www.octomatic.ai",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Nieuwe haven 27A",
+                "addressLocality": "Naarden",
+                "postalCode": "1411 SG",
+                "addressCountry": "NL"
+              }
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "@id": "https://www.octomatic.ai/#website",
+              "url": "https://www.octomatic.ai",
+              "name": "Octomatic",
+              "publisher": { "@id": "https://www.octomatic.ai/#organization" }
+            }),
+          }}
+        />
+        
         {/* Performance: Resource Hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
