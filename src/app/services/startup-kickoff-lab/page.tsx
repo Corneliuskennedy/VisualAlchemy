@@ -211,9 +211,9 @@ const StartupKickoffLabPage: React.FC = () => {
         priceRange="€399-€4500"
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -248,13 +248,13 @@ const StartupKickoffLabPage: React.FC = () => {
                         </span>
                       </div>
                       
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                         {isNL ? "Van idee naar eerste gebruikers in 30 dagen — samen" : "From idea to first users in 30 days — together"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
                     </div>
                     
-                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed">
                       {isNL ? (
                         "Een 4-weken MVP sprint voor pre-seed founders (jij + Kennet als co-pilots)"
                       ) : (
@@ -265,7 +265,7 @@ const StartupKickoffLabPage: React.FC = () => {
                     <div className="flex flex-col sm:flex-row gap-4 pt-6">
                       <Button 
                         size="lg" 
-                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                         data-cal-namespace="intro-call"
                         data-cal-link="kennet-timmers/intro-call"
                         data-cal-config='{"layout":"month_view"}'
@@ -277,17 +277,17 @@ const StartupKickoffLabPage: React.FC = () => {
                   </div>
 
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center">
                             <Zap className="h-6 w-6 text-[#4585f4]" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-semibold text-white">
+                            <h3 className="text-xl font-semibold text-heading dark:text-white">
                               {isNL ? "Bewezen resultaten" : "Proven results"}
                             </h3>
-                            <p className="text-gray-400">
+                            <p className="text-muted-foreground dark:text-gray-400">
                               {isNL ? "12 startups gelanceerd" : "12 startups launched"}
                             </p>
                           </div>
@@ -298,8 +298,8 @@ const StartupKickoffLabPage: React.FC = () => {
                             <div key={index} className="flex items-center gap-3">
                               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
                               <div>
-                                <span className="text-white font-medium">{proof.outcome}</span>
-                                <div className="text-gray-400 text-sm">{proof.description}</div>
+                                <span className="text-heading dark:text-white font-medium">{proof.outcome}</span>
+                                <div className="text-muted-foreground dark:text-gray-400 text-sm">{proof.description}</div>
                               </div>
                             </div>
                           ))}
@@ -313,7 +313,7 @@ const StartupKickoffLabPage: React.FC = () => {
           </section>
 
           {/* How it Works */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -321,10 +321,10 @@ const StartupKickoffLabPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Hoe het werkt" : "How it works"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Ons bewezen 4-stappen proces van idee tot werkend product"
                     : "Our proven 4-step process from idea to working product"
@@ -334,9 +334,9 @@ const StartupKickoffLabPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {howItWorks.map((step, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 text-center hover:bg-gray-800/40 transition-all duration-300">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 text-center hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                     <div className="w-16 h-16 bg-[#4585f4] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                      <span className="text-2xl font-bold text-white">{step.step}</span>
+                      <span className="text-2xl font-bold text-heading dark:text-white">{step.step}</span>
                     </div>
                     <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
                     <div className="text-[#4585f4] font-medium text-sm mb-4">{step.duration}</div>
@@ -348,13 +348,13 @@ const StartupKickoffLabPage: React.FC = () => {
           </section>
 
           {/* Packages */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Pakketten" : "Packages"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Kies het niveau van ondersteuning dat bij uw startup past"
                     : "Choose the level of support that fits your startup"
@@ -364,7 +364,7 @@ const StartupKickoffLabPage: React.FC = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {packages.map((pkg, index) => (
-                  <div key={index} className={`relative bg-gray-900/20 border rounded-3xl p-8 ${pkg.popular ? 'border-[#4585f4] bg-[#4585f4]/5' : 'border-gray-800/50'} hover:bg-gray-800/40 transition-all duration-300`}>
+                  <div key={index} className={`relative bg-secondary/20 dark:bg-gray-900/20 border rounded-3xl p-8 ${pkg.popular ? 'border-[#4585f4] bg-[#4585f4]/5 dark:bg-[#4585f4]/5' : 'border-border/50 dark:border-gray-800/50'} hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300`}>
                     {pkg.popular && (
                       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                         <div className="bg-[#4585f4] text-white px-6 py-2 rounded-full text-sm font-semibold flex items-center gap-2">
@@ -385,7 +385,7 @@ const StartupKickoffLabPage: React.FC = () => {
                       {pkg.features.map((feature, idx) => (
                         <div key={idx} className="flex items-start gap-3">
                           <CheckCircle className="w-5 h-5 text-[#4585f4] flex-shrink-0 mt-0.5" />
-                          <p className="text-gray-300">{feature}</p>
+                          <p className="text-foreground dark:text-gray-300">{feature}</p>
                         </div>
                       ))}
                     </div>
@@ -394,8 +394,8 @@ const StartupKickoffLabPage: React.FC = () => {
                       size="lg" 
                       className={`w-full px-8 py-4 text-lg font-semibold transition-all duration-300 hover:shadow-xl group ${
                         pkg.popular 
-                          ? 'bg-[#4585f4] hover:bg-[#4585f4]/90 text-white hover:shadow-[#4585f4]/25' 
-                          : 'bg-gray-800 hover:bg-gray-700 text-white'
+                          ? 'bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25' 
+                          : 'bg-secondary dark:bg-gray-800 hover:bg-secondary/80 dark:hover:bg-gray-700 text-white'
                       }`}
                       data-cal-namespace={pkg.calNamespace}
                       data-cal-link={`kennet-timmers/${pkg.calNamespace === 'intro-call' ? 'intro-call' : 'workshop'}`}
@@ -411,7 +411,7 @@ const StartupKickoffLabPage: React.FC = () => {
           </section>
 
           {/* FAQ */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -419,16 +419,16 @@ const StartupKickoffLabPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Veelgestelde vragen" : "Frequently asked questions"}
                 </h2>
               </div>
 
               <div className="max-w-4xl mx-auto space-y-8">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8">
-                    <h3 className="text-xl font-bold text-white mb-4">{faq.question}</h3>
-                    <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8">
+                    <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{faq.question}</h3>
+                    <p className="text-foreground dark:text-gray-300 leading-relaxed">{faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -436,13 +436,13 @@ const StartupKickoffLabPage: React.FC = () => {
           </section>
 
           {/* Team */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Over het team" : "About the team"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Ervaren co-pilots die uw startup succes maken"
                     : "Experienced co-pilots who make your startup successful"
@@ -452,7 +452,7 @@ const StartupKickoffLabPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {team.map((member, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 text-center">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 text-center">
                     <div className="w-32 h-32 relative mx-auto mb-6">
                       <Image
                         src={member.image}
@@ -461,7 +461,7 @@ const StartupKickoffLabPage: React.FC = () => {
                         className="object-cover rounded-2xl"
                       />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{member.name}</h3>
+                    <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{member.name}</h3>
                     <div className="text-[#4585f4] font-medium mb-4">{member.role}</div>
                     <p className="text-gray-300 leading-relaxed mb-6">{member.bio}</p>
                     <Button variant="outline" asChild>
@@ -477,11 +477,11 @@ const StartupKickoffLabPage: React.FC = () => {
           </section>
 
           {/* Lead Magnet CTA */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Start met onze MVP roadmap template" : "Start with our MVP roadmap template"}
                   </h2>
                   <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
