@@ -103,8 +103,8 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
     'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
   ];
 
-  return (
-    <section className="py-40 md:py-48 px-4 relative z-10">
+        return (
+          <section className="py-24 md:py-32 px-4 relative z-10">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16 md:mb-20">

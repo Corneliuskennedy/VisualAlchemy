@@ -82,17 +82,17 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Section 1: Clean Hero - Generously Spaced */}
+      {/* Section 1: Clean Hero - Balanced Spacing */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-32 md:py-48 lg:py-64 z-10"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-10"
       >
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="max-w-5xl mx-auto text-center space-y-16 md:space-y-20 lg:space-y-24 relative z-10"
+          className="max-w-5xl mx-auto text-center space-y-8 md:space-y-10 lg:space-y-12 relative z-10"
         >
           {/* Clean Typography */}
           <motion.h1
@@ -115,10 +115,10 @@ function HomeContent() {
             {homepage.hero.subline}
           </motion.p>
 
-          {/* AI-Powered Smart CTA - Generous Spacing */}
+          {/* AI-Powered Smart CTA */}
           <motion.div 
             variants={itemVariants} 
-            className="pt-8 md:pt-12"
+            className="pt-4 md:pt-6"
           >
             <SmartCTA 
               section="hero"
@@ -127,10 +127,10 @@ function HomeContent() {
             />
           </motion.div>
 
-          {/* Live Activity Indicator - Well-Spaced */}
+          {/* Live Activity Indicator */}
           <motion.div 
             variants={itemVariants} 
-            className="pt-12 md:pt-16 flex justify-center"
+            className="pt-6 md:pt-8 flex justify-center"
           >
             <LiveActivity 
               page="homepage"
@@ -155,7 +155,7 @@ function HomeContent() {
       {/* Section 3: Clean Social Proof */}
       <section 
         aria-labelledby="social-proof-heading"
-        className="py-32 md:py-40 px-4 relative z-10"
+        className="py-24 md:py-32 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -205,7 +205,7 @@ function HomeContent() {
       {/* Section 4: Clean Why Us - Asymmetrical Layout */}
       <section 
         aria-labelledby="why-us-heading"
-        className="py-40 md:py-48 px-4 relative z-10"
+        className="py-24 md:py-32 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
