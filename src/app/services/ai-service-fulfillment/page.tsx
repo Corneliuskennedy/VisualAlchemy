@@ -310,7 +310,7 @@ const AIServiceFulfillmentPage: React.FC = () => {
                 {fulfillmentAreas.map((area, index) => {
                   const Icon = area.icon;
                   return (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300">
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                       <div className="flex items-start gap-4 mb-6">
                         <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Icon className="w-6 h-6 text-[#4585f4]" />
@@ -397,11 +397,11 @@ const AIServiceFulfillmentPage: React.FC = () => {
           <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
+                <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar voor geautomatiseerde service delivery?" : "Ready for automated service delivery?"}
                   </h2>
-                  <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                     {isNL 
                       ? "Laat ons uw huidige service delivery processen analyseren en ontdekken waar AI automatisering de grootste impact kan hebben."
                       : "Let us analyze your current service delivery processes and discover where AI automation can have the biggest impact."
