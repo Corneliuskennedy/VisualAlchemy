@@ -17,32 +17,35 @@ export interface MonopoGradientProps {
   zoom?: number;
   spacing?: number;
   parallax?: boolean;
+  grain?: boolean;
   className?: string;
 }
 
 /**
- * Premium Monopo-style Gradient
+ * Premium Monopo-style Gradient with Grain Texture
  * 
- * Creates a beautiful, expensive-looking gradient background.
- * Uses optimized canvas rendering for smooth, visible gradients.
+ * Creates a beautiful, expensive-looking gradient with subtle grain texture.
+ * Smooth, visible gradients that look premium and professional.
  */
 export function MonopoGradient({
-  color1 = '#80f6ff',
-  color2 = '#3b488c',
-  color3 = '#884ef4',
-  color4 = '#d73c3c',
+  color1 = '#0ea5e9',
+  color2 = '#0284c7',
+  color3 = '#0369a1',
+  color4 = '#075985',
   colorSize = 0.8,
-  colorSpacing = 1.0,
-  colorRotation = 0.5,
-  displacement = 1.0,
+  colorSpacing = 1.5,
+  colorRotation = 0.8,
+  displacement = 0.5,
   seed = 3915.38625,
   position = [0, 0],
   zoom = 1.0,
-  spacing = 2.0,
+  spacing = 1.8,
   parallax = true,
+  grain = true,
   className = '',
 }: MonopoGradientProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const grainCanvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -59,6 +62,65 @@ export function MonopoGradient({
     setMounted(true);
   }, []);
 
+  // Generate grain texture
+  useEffect(() => {
+    if (!mounted || !grainCanvasRef.current || !grain) return;
+
+    const canvas = grainCanvasRef.current;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
+    const updateGrainSize = () => {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
+    };
+
+    updateGrainSize();
+
+    // Create grain texture
+    const generateGrain = () => {
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      
+      const imageData = ctx.createImageData(width, height);
+      const data = imageData.data;
+      
+      // Simple random function
+      let seedValue = seed;
+      const random = () => {
+        seedValue = (seedValue * 9301 + 49297) % 233280;
+        return (seedValue / 233280) * 2 - 1; // -1 to 1
+      };
+      
+      for (let i = 0; i < data.length; i += 4) {
+        const value = random() * 30; // Grain intensity
+        data[i] = value;     // R
+        data[i + 1] = value; // G
+        data[i + 2] = value; // B
+        data[i + 3] = 15;    // Low opacity for subtle grain
+      }
+      
+      ctx.putImageData(imageData, 0, 0);
+    };
+
+    generateGrain();
+
+    const handleResize = () => {
+      updateGrainSize();
+      generateGrain();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [mounted, grain, seed]);
+
+  // Main gradient rendering
   useEffect(() => {
     if (!mounted || !canvasRef.current) return;
 
@@ -68,7 +130,7 @@ export function MonopoGradient({
 
     const updateCanvasSize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
@@ -88,17 +150,20 @@ export function MonopoGradient({
 
     const colors = [color1, color2, color3, color4].map(hexToRgb);
 
-    // Smooth color interpolation
+    // Smooth interpolation
     const lerp = (a: number, b: number, t: number) => {
-      const smoothT = t * t * (3 - 2 * t); // Smoothstep
+      // Ease in-out for smoother transitions
+      const smoothT = t < 0.5 
+        ? 2 * t * t 
+        : 1 - Math.pow(-2 * t + 2, 2) / 2;
       return a + (b - a) * smoothT;
     };
     
-    // Get color from gradient (0-1 maps through all 4 colors)
+    // Get color from gradient position (0-1)
     const getColor = (t: number) => {
       t = ((t % 1) + 1) % 1; // Normalize to 0-1
       
-      // Map to 4-color gradient
+      // Map through 4 colors
       const segment = t * 4;
       const i = Math.floor(segment) % 4;
       const localT = segment - Math.floor(segment);
@@ -128,16 +193,15 @@ export function MonopoGradient({
         return;
       }
       
-      time += 0.005; // Slow animation
+      time += 0.003; // Very slow, smooth animation
       
-      // Create image data
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
       
-      // Render with optimized algorithm
+      // Render gradient
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-          // Normalized coordinates centered at origin
+          // Normalized coordinates
           const nx = (x / width - 0.5) * 2;
           const ny = (y / height - 0.5) * 2;
           
@@ -151,22 +215,23 @@ export function MonopoGradient({
           const rx = zx * cos - zy * sin;
           const ry = zx * sin + zy * cos;
           
-          // Create beautiful wave pattern
-          // Multiple frequencies for complex, organic look
-          const wave1 = Math.sin(rx * spacing * 2 + time) * 0.5 + 0.5;
-          const wave2 = Math.sin(ry * spacing * 1.5 + time * 0.7) * 0.5 + 0.5;
-          const wave3 = Math.sin((rx + ry) * spacing + time * 1.2) * 0.5 + 0.5;
+          // Create beautiful, visible wave patterns
+          // Multiple frequencies for rich, organic gradients
+          const wave1 = Math.sin(rx * spacing * 1.5 + time) * 0.5 + 0.5;
+          const wave2 = Math.sin(ry * spacing * 1.2 + time * 0.6) * 0.5 + 0.5;
+          const wave3 = Math.sin((rx + ry) * spacing * 0.8 + time * 1.1) * 0.5 + 0.5;
+          const wave4 = Math.sin((rx - ry) * spacing * 1.1 + time * 0.9) * 0.5 + 0.5;
           
-          // Combine waves with different weights for organic feel
-          const pattern = wave1 * 0.4 + wave2 * 0.35 + wave3 * 0.25;
+          // Combine with weighted average for rich, visible gradients
+          const pattern = wave1 * 0.3 + wave2 * 0.25 + wave3 * 0.25 + wave4 * 0.2;
           
-          // Add subtle noise for texture
-          const noise = (Math.sin(rx * displacement * 8) + Math.cos(ry * displacement * 8)) * 0.05;
+          // Subtle displacement for texture
+          const noise = (Math.sin(rx * displacement * 6) + Math.cos(ry * displacement * 6)) * 0.03;
           
-          // Final value for color lookup
+          // Final value
           const finalT = Math.max(0, Math.min(1, pattern + noise));
           
-          // Map to color gradient
+          // Get color
           const color = getColor(finalT * colorSpacing);
           
           // Write pixel
@@ -223,6 +288,7 @@ export function MonopoGradient({
         zIndex: 0,
       }}
     >
+      {/* Main gradient canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
@@ -230,6 +296,18 @@ export function MonopoGradient({
           mixBlendMode: 'normal',
         }}
       />
+      
+      {/* Grain texture overlay */}
+      {grain && (
+        <canvas
+          ref={grainCanvasRef}
+          className="absolute inset-0 w-full h-full opacity-30"
+          style={{
+            mixBlendMode: 'overlay',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
     </motion.div>
   );
 }
