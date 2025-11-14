@@ -115,11 +115,11 @@ function HomeContent() {
           variants={containerVariants}
           className="max-w-6xl mx-auto text-center space-y-8 md:space-y-10 relative z-10"
         >
-          {/* Premium Typography with Refined Scale - Enhanced Contrast & Emotional Impact */}
+          {/* Premium Typography with Serif Elegance - Editorial Foundation */}
           <motion.h1
             id="hero-heading"
             variants={heroTitleVariants}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[1.1] tracking-[-0.02em]
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif font-bold leading-[1.1] tracking-[-0.02em]
                      text-heading dark:text-white
                      dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-gray-300 dark:bg-clip-text dark:text-transparent
                      drop-shadow-sm dark:drop-shadow-none
@@ -203,7 +203,7 @@ function HomeContent() {
       <section 
         id="segmentation-engine" 
         aria-labelledby="segmentation-heading"
-        className="py-32 px-4 relative z-10"
+        className="py-32 md:py-40 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -218,7 +218,7 @@ function HomeContent() {
               <motion.h2
                 id="segmentation-heading"
                 variants={fadeInUp}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold 
+                className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold 
                            text-heading dark:text-white"
               >
                 {homepage.segmentation.headline}
@@ -262,14 +262,26 @@ function HomeContent() {
                                  backdrop-blur-sm 
                                  shadow-xl hover:shadow-2xl 
                                  hover:shadow-[#4585f4]/20 dark:hover:shadow-[#4585f4]/20
-                                 hover:-translate-y-1
-                                 transform-gpu"
+                                 hover:-translate-y-2 hover:scale-[1.02]
+                                 transform-gpu group"
                         aria-label={`${card.title} - ${card.description}`}
+                        data-cursor="hover"
+                        data-cursor-label="Explore"
                       >
                         {/* Subtle gradient overlay - Enhanced without placeholder images */}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#4585f4]/0 via-transparent to-[#6B8AE6]/0
                                       group-hover:from-[#4585f4]/8 group-hover:via-transparent group-hover:to-[#6B8AE6]/8
                                       transition-all duration-700 pointer-events-none" />
+                        
+                        {/* Image zoom effect on hover - Tactile Layer */}
+                        {card.href in iconMap && (
+                          <motion.div
+                            className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none"
+                            initial={{ scale: 1 }}
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        )}
                         
                         <div className="space-y-6 relative z-10">
                           {/* Premium Icon with Enhanced Effects */}
@@ -295,9 +307,8 @@ function HomeContent() {
                             )}
                           </motion.div>
 
-                          {/* Premium Title */}
-                          <h3 className="text-2xl md:text-3xl lg:text-4xl 
-                                       font-bold 
+                          {/* Premium Title - Serif Headlines */}
+                          <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold
                                        transition-all duration-300
                                        text-heading dark:text-white
                                        group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6]
@@ -387,50 +398,80 @@ function HomeContent() {
         </div>
       </section>
 
-      {/* Section 4: Premium Why Us - Compelling Value Proposition */}
+      {/* Section 4: Premium Why Us - Asymmetrical Editorial Layout */}
       <section 
         aria-labelledby="why-us-heading"
-        className="py-32 px-4 relative z-10"
+        className="py-32 md:py-40 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '-100px' }}
             variants={containerVariants}
-            className="space-y-16"
+            className="space-y-20 md:space-y-24"
           >
-            {/* Section Header */}
-            <motion.div variants={itemVariants} className="text-center space-y-6 max-w-4xl mx-auto">
-              <motion.h2
-                id="why-us-heading"
-                variants={fadeInUp}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold 
-                         text-heading dark:text-white"
+            {/* Asymmetrical Layout: Narrower text column (2/5), Wider visual column (3/5) */}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-16 items-start">
+              {/* Left Column - Narrower Text Block (2 columns) */}
+              <motion.div 
+                variants={itemVariants} 
+                className="md:col-span-2 space-y-8 md:pt-8"
               >
-                {homepage.whyUs.headline}
-              </motion.h2>
-              <motion.p
-                variants={fadeInUp}
-                className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed 
-                         text-body dark:text-gray-300"
-              >
-                {homepage.whyUs.description}
-              </motion.p>
-            </motion.div>
+                <motion.h2
+                  id="why-us-heading"
+                  variants={fadeInUp}
+                  className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold 
+                           text-heading dark:text-white leading-[1.1] tracking-tight"
+                >
+                  {homepage.whyUs.headline}
+                </motion.h2>
+              </motion.div>
 
-            {/* Premium Feature Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+              {/* Right Column - Wider Description (3 columns) */}
+              <motion.div 
+                variants={itemVariants}
+                className="md:col-span-3 space-y-6"
+              >
+                <motion.p
+                  variants={fadeInUp}
+                  className="text-lg md:text-xl lg:text-2xl leading-relaxed 
+                           text-body dark:text-gray-300 max-w-none"
+                >
+                  {homepage.whyUs.description}
+                </motion.p>
+              </motion.div>
+            </div>
+
+            {/* Premium Feature Cards - Staggered Grid Animation */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.15,
+                    delayChildren: 0.2,
+                  },
+                },
+              }}
+            >
               {homepage.whyUs.points.map((point, index) => {
                 const Icon = Object.values(featureIcons)[index];
                 return (
                   <motion.div
                     key={index}
                     variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    whileHover={{ y: -8 }}
+                    whileHover={{ 
+                      y: -12,
+                      scale: 1.02,
+                      transition: {
+                        type: 'spring',
+                        stiffness: 400,
+                        damping: 25,
+                      }
+                    }}
                     className="group relative p-8 lg:p-10 
                              rounded-2xl 
                              border-2 
@@ -440,9 +481,12 @@ function HomeContent() {
                              border-border/50 dark:border-border/50
                              hover:border-[#4585f4]/50 dark:hover:border-[#4585f4]/50
                              backdrop-blur-sm 
-                             shadow-xl hover:shadow-2xl 
-                             hover:shadow-[#4585f4]/20 dark:hover:shadow-[#4585f4]/20
-                             transform-gpu"
+                             shadow-xl hover:shadow-2xl hover:shadow-[#4585f4]/30
+                             dark:hover:shadow-[#4585f4]/30
+                             transform-gpu
+                             cursor-pointer"
+                    data-cursor="hover"
+                    data-cursor-label="Learn more"
                   >
                     {/* Premium Icon */}
                     <motion.div
@@ -467,8 +511,8 @@ function HomeContent() {
                       )}
                     </motion.div>
 
-                    {/* Premium Content */}
-                    <h3 className="text-2xl md:text-3xl font-bold mb-4 
+                    {/* Premium Content - Serif Headlines */}
+                    <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6 
                                  text-heading dark:text-white
                                  group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6] 
                                  transition-colors duration-300
@@ -477,7 +521,8 @@ function HomeContent() {
                     </h3>
                     <p className="text-base md:text-lg leading-relaxed 
                                 text-body dark:text-gray-300
-                                transition-colors duration-300">
+                                transition-colors duration-300
+                                space-y-4">
                       {point.description}
                     </p>
 
@@ -492,7 +537,7 @@ function HomeContent() {
                   </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
 
             {/* Final CTA - Smart CTA for better conversion */}
             <motion.div

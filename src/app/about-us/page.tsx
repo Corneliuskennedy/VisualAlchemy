@@ -11,6 +11,7 @@ import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import { useCalIntroCall } from '@/hooks/use-cal';
 import Image from 'next/image';
+import { ParallaxImage } from '@/components/motion/ParallaxImage';
 
 const AboutUsPage: React.FC = () => {
   const { language } = useTranslations();
@@ -164,13 +165,13 @@ const AboutUsPage: React.FC = () => {
                 </Link>
               </Button>
 
-              {/* Hero Content */}
+              {/* Hero Content - Asymmetrical Layout with Overlap */}
               <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                  {/* Left Column - Content */}
-                  <div className="space-y-8">
-                    <div className="space-y-6">
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                  {/* Left Column - Content with Serif Headline */}
+                  <div className="space-y-10 lg:pt-8">
+                    <div className="space-y-8">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-heading dark:text-white leading-[0.95] tracking-tight">
                         {isNL ? "Wij helpen Nederlandse bedrijven schalen" : "We help Dutch businesses scale"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
@@ -184,13 +185,17 @@ const AboutUsPage: React.FC = () => {
                       )}
                     </h2>
                     
-                    <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                    <div className="flex flex-col sm:flex-row gap-4 pt-8">
                       <Button 
                         size="lg" 
-                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white 
+                                 transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 
+                                 group transform hover:scale-105 hover:-translate-y-1"
                         data-cal-namespace="intro-call"
                         data-cal-link="kennet-timmers/intro-call"
                         data-cal-config='{"layout":"month_view"}'
+                        data-cursor="hover"
+                        data-cursor-label="Book call"
                       >
                         {isNL ? "Kennismakingsgesprek" : "Get to Know Us"}
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -198,23 +203,25 @@ const AboutUsPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Right Column - Team Photo */}
-                  <div className="relative">
+                  {/* Right Column - Founder Profile with Overlap (Desktop only) */}
+                  <div className="relative lg:-ml-16 z-10">
                     <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6 text-center">
                         <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-[#4585f4]/20">
-                          <Image
+                          <ParallaxImage
                             src="/team/kennet_timmers.webp"
                             alt="Kennet Timmers - Founder of Octomatic"
                             width={128}
                             height={128}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover rounded-full"
+                            containerClassName="h-full w-full"
+                            fill
                             priority
                           />
                         </div>
                         
                         <div>
-                          <h3 className="text-2xl font-bold text-heading dark:text-white mb-2">Kennet Timmers</h3>
+                          <h3 className="text-2xl font-serif font-bold text-heading dark:text-white mb-2">Kennet Timmers</h3>
                           <p className="text-[#4585f4] font-semibold mb-4">
                             {isNL ? "Oprichter & AI Automatisering Expert" : "Founder & AI Automation Expert"}
                           </p>

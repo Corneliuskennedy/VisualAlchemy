@@ -75,7 +75,9 @@ const config = {
                 sm: "calc(var(--radius) - 4px)",
             },
             fontFamily: {
-                archivo: ["Archivo", ...fontFamily.sans],
+                sans: ["var(--font-sans)", ...fontFamily.sans], // Inter for body & UI
+                serif: ["var(--font-serif)", ...fontFamily.serif], // Playfair Display for headlines
+                archivo: ["Archivo", ...fontFamily.sans], // Keep for backward compatibility
             },
             keyframes: {
                 "accordion-down": {

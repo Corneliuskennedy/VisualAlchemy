@@ -1,6 +1,6 @@
 'use client';
 
-import { Inter, Archivo } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import "@/styles/loading.css";
 import { ThemeProvider } from "next-themes";
@@ -19,11 +19,21 @@ import InstallPrompt from "@/lib/pwa/InstallPrompt";
 import { usePrefetcher } from "@/lib/performance/Prefetcher";
 import PerformanceMonitor from "@/components/performance/Monitor";
 import HydrationHandler from "@/components/loading/HydrationHandler";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
-const inter = Inter({ subsets: ["latin"] });
-const archivo = Archivo({ 
+// Editorial Foundation: Premium Typography System
+// Playfair Display for headlines (serif elegance)
+const playfairDisplay = Playfair_Display({ 
   subsets: ["latin"],
-  variable: "--font-archivo",
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+// Inter for body & UI (hyper-readable sans-serif)
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -98,7 +108,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={archivo.variable}>
+    <html lang="en" suppressHydrationWarning className={`${playfairDisplay.variable} ${inter.variable}`}>
       <head>
         {/* Font is loaded via next/font/google - no manual preload needed */}
         {/* Favicon and app icons - Multiple formats for maximum compatibility */}
@@ -224,7 +234,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.className} ${archivo.variable} bg-background text-foreground font-archivo`}>
+      <body className={`${inter.className} ${playfairDisplay.variable} ${inter.variable} bg-background text-foreground font-sans`}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
             <ThemeProvider
@@ -240,6 +250,8 @@ export default function RootLayout({
                   <ThemeTransition>
                     <div className="min-h-screen relative overflow-x-hidden">
                     <GlobalInteractiveGrid />
+                      {/* Premium Experience: Custom Cursor */}
+                      {typeof window !== 'undefined' && <CustomCursor />}
                       {/* Critical SEO components - render immediately */}
                       <HTMLLangUpdater />
                       <CriticalContentPreloader />
