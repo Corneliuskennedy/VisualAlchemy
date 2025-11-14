@@ -355,7 +355,7 @@ function HomeContent() {
               id="social-proof-heading"
               variants={itemVariants}
               className="text-center text-sm uppercase tracking-wider font-semibold 
-                         text-[#475569] dark:text-gray-400"
+                         text-subtle dark:text-gray-400"
             >
               {homepage.socialProof.headline}
             </motion.h2>
