@@ -1,5 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { generateFAQSchema, homepageFAQs } from '@/lib/seo/GEOSEO';
+import { generateKnowledgeGraphConnections } from '@/lib/seo/EntityFirstSEO';
+import { MultiSchemaInjector } from './StructuredDataInjector';
 
 interface AdvancedStructuredDataProps {
   pageType: string;
@@ -327,20 +330,43 @@ export function AdvancedStructuredData({
     getPageSpecificSchema()
   ];
 
-  // Add FAQ schema for homepage and service pages
+  // Add FAQ schema for homepage and service pages (GEO optimization)
   if (pageType === 'home' || pageType === 'service') {
     schemas.push(faqSchema);
   }
 
+  // Add FAQ schema for GEO (Generative Engine Optimization) - 2025 SEO standard
+  if (pageType === 'home') {
+    const geoFAQSchema = generateFAQSchema(homepageFAQs, url);
+    schemas.push(geoFAQSchema);
+  }
+
+  // Add Knowledge Graph connections for Entity-First SEO
+  if (pageType === 'home') {
+    const knowledgeGraphSchemas = generateKnowledgeGraphConnections();
+    schemas.push(...knowledgeGraphSchemas);
+  }
+
   return (
-    <Helmet>
-      {schemas.map((schema, index) => (
-        <script 
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
-    </Helmet>
+    <>
+      {/* Direct injection for App Router compatibility */}
+      <MultiSchemaInjector 
+        schemas={schemas.map((schema, index) => ({
+          id: `advanced-${index}`,
+          data: schema,
+        }))}
+      />
+      
+      {/* Fallback: Helmet (may not work in App Router but doesn't hurt) */}
+      <Helmet>
+        {schemas.map((schema, index) => (
+          <script 
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
+      </Helmet>
+    </>
   );
 } 

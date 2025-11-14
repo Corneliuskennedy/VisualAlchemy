@@ -307,7 +307,7 @@ const AboutPage: React.FC = () => {
                           <h4 className="text-white font-semibold">
                             {isNL ? "Kantoor Locatie" : "Office Location"}
                           </h4>
-                          <p className="text-gray-400">Naarden, Nederland</p>
+                          <p className="text-gray-200">Naarden, Nederland</p>
                         </div>
                       </div>
                       
@@ -319,7 +319,7 @@ const AboutPage: React.FC = () => {
                           <h4 className="text-white font-semibold">
                             {isNL ? "Service Gebied" : "Service Area"}
                           </h4>
-                          <p className="text-gray-400">
+                          <p className="text-gray-200">
                             {isNL ? "Nederland, focus op Amsterdam en omgeving" : "Netherlands, focus on Amsterdam and surrounding areas"}
                           </p>
                         </div>

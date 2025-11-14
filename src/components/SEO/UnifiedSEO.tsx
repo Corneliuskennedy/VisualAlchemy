@@ -4,6 +4,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePathname } from 'next/navigation';
 import { AdvancedStructuredData } from './AdvancedStructuredData';
+import { StructuredDataInjector } from './StructuredDataInjector';
 
 const BASE_URL = 'https://www.octomatic.ai';
 
@@ -201,7 +202,9 @@ export function UnifiedSEO({
               "name": title,
               "description": description,
               "publisher": { "@id": `${BASE_URL}/#organization` },
-              "inLanguage": detectedLanguage === 'nl' ? 'nl-NL' : 'en-US'
+              "inLanguage": detectedLanguage === 'nl' ? 'nl-NL' : 'en-US',
+              "dateModified": modifiedTime || new Date().toISOString(),
+              "datePublished": publishedTime || "2019-01-01"
             },
             organizationData
           ]
@@ -244,11 +247,16 @@ export function UnifiedSEO({
           "author": { 
             "@type": author ? "Person" : "Organization", 
             "name": author || "Octomatic Team",
-            "url": BASE_URL
+            "url": BASE_URL,
+            "worksFor": {
+              "@type": "Organization",
+              "@id": `${BASE_URL}/#organization`,
+              "name": "Octomatic"
+            }
           },
           "publisher": organizationData,
           "datePublished": publishedTime,
-          "dateModified": modifiedTime || publishedTime,
+          "dateModified": modifiedTime || publishedTime || new Date().toISOString(),
           "inLanguage": detectedLanguage === 'nl' ? 'nl-NL' : 'en-US',
           "keywords": keywords,
           "wordCount": wordCount,
@@ -333,11 +341,17 @@ export function UnifiedSEO({
         <meta name="geo.position" content="52.3676;4.9041" />
         <meta name="ICBM" content="52.3676, 4.9041" />
 
-        {/* Structured data */}
+        {/* Structured data - Note: Helmet may not inject this in App Router */}
         <script type="application/ld+json">
           {JSON.stringify(generateStructuredData())}
         </script>
       </Helmet>
+      
+      {/* Direct structured data injection (works in App Router) */}
+      <StructuredDataInjector 
+        data={generateStructuredData()} 
+        id={`structured-data-${pageType}-${pathname.replace(/\//g, '-')}`}
+      />
       
       {/* Enhanced structured data component */}
       <AdvancedStructuredData 

@@ -11,53 +11,53 @@ export const ContactInfo = () => {
       </h2>
       
       <div className="space-y-4">
-        <div className="flex items-start space-x-3 text-gray-400">
-          <Mail className="h-4 w-4 mt-1" />
+        <div className="flex items-start space-x-3">
+          <Mail className="h-4 w-4 mt-1 text-gray-300" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-gray-300">{t('contactPage', 'info.email')}</p>
+            <p className="text-sm font-medium text-gray-200">{t('contactPage', 'info.email')}</p>
             <a
               href="mailto:kennet@octomatic.ai"
-              className="text-sm hover:text-electric-blue transition-colors"
+              className="text-sm text-gray-100 hover:text-electric-blue transition-colors"
             >
               kennet@octomatic.ai
             </a>
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 text-gray-400">
-          <Phone className="h-4 w-4 mt-1" />
+        <div className="flex items-start space-x-3">
+          <Phone className="h-4 w-4 mt-1 text-gray-300" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-gray-300">{t('contactPage', 'info.phone')}</p>
+            <p className="text-sm font-medium text-gray-200">{t('contactPage', 'info.phone')}</p>
             <a
               href={`tel:${t('contactPage', 'info.phoneNumber').replace(/\s/g, '')}`}
-              className="text-sm hover:text-electric-blue transition-colors"
+              className="text-sm text-gray-100 hover:text-electric-blue transition-colors"
             >
               {t('contactPage', 'info.phoneNumber')}
             </a>
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 text-gray-400">
-          <MapPin className="h-4 w-4 mt-1" />
+        <div className="flex items-start space-x-3">
+          <MapPin className="h-4 w-4 mt-1 text-gray-300" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-gray-300">{t('contactPage', 'info.address')}</p>
-            <p className="text-sm">{t('contactPage', 'info.addressValue')}</p>
+            <p className="text-sm font-medium text-gray-200">{t('contactPage', 'info.address')}</p>
+            <p className="text-sm text-gray-200">{t('contactPage', 'info.addressValue')}</p>
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 text-gray-400">
-          <Briefcase className="h-4 w-4 mt-1" />
+        <div className="flex items-start space-x-3">
+          <Briefcase className="h-4 w-4 mt-1 text-gray-300" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-gray-300">{t('contactPage', 'info.kvk')}</p>
-            <p className="text-sm">{t('contactPage', 'info.kvkNumber')}</p>
+            <p className="text-sm font-medium text-gray-200">{t('contactPage', 'info.kvk')}</p>
+            <p className="text-sm text-gray-200">{t('contactPage', 'info.kvkNumber')}</p>
           </div>
         </div>
         
-        <div className="flex items-start space-x-3 text-gray-400">
-          <Clock className="h-4 w-4 mt-1" />
+        <div className="flex items-start space-x-3">
+          <Clock className="h-4 w-4 mt-1 text-gray-300" aria-hidden="true" />
           <div>
-            <p className="text-sm font-medium text-gray-300">{t('contactPage', 'info.hours')}</p>
-            <p className="text-sm">{t('contactPage', 'info.hoursValue')}</p>
+            <p className="text-sm font-medium text-gray-200">{t('contactPage', 'info.hours')}</p>
+            <p className="text-sm text-gray-200">{t('contactPage', 'info.hoursValue')}</p>
           </div>
         </div>
       </div>

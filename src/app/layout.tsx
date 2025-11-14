@@ -1,8 +1,8 @@
-  'use client';
+'use client';
 
-import type { Metadata } from "next";
 import { Inter, Archivo } from "next/font/google";
 import "./globals.css";
+import "@/styles/loading.css";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { HelmetProvider } from 'react-helmet-async';
@@ -15,6 +15,10 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import WebVitalsMonitor from "@/components/WebVitalsMonitor";
 import GlobalInteractiveGrid from "@/components/ScrollBasedNightSky";
 import { ThemeTransition } from "@/components/ui/ThemeTransition";
+import InstallPrompt from "@/lib/pwa/InstallPrompt";
+import { usePrefetcher } from "@/lib/performance/Prefetcher";
+import PerformanceMonitor from "@/components/performance/Monitor";
+import HydrationHandler from "@/components/loading/HydrationHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 const archivo = Archivo({ 
@@ -24,9 +28,28 @@ const archivo = Archivo({
 });
 
 // Lazy load all major components
-const NewNavbar = lazy(() => import("@/components/NewNavbar").then(module => ({ default: module.NewNavbar })));
+const NavbarV2 = lazy(() => import("@/components/NavbarV2/index").then(module => ({ 
+  default: module.NavbarV2 
+})));
 const Footer = lazy(() => import("@/components/Footer"));
-const MobileCTA = lazy(() => import("@/components/ui/MobileCTA").then(module => ({ default: module.MobileCTA })));
+const MobileCTA = lazy(() => import("@/components/ui/MobileCTA").then(module => ({ 
+  default: module.MobileCTA || module.default 
+})));
+const FloatingCTA = lazy(() => import("@/components/conversion/FloatingCTA").then(module => ({ 
+  default: module.FloatingCTA || module.default 
+})));
+const ExitIntentPopup = lazy(() => import("@/components/conversion/ExitIntentPopup").then(module => ({ 
+  default: module.ExitIntentPopup || module.default 
+})));
+const BehaviorTracker = lazy(() => import("@/components/BehaviorTracker").then(module => ({ 
+  default: module.BehaviorTracker || module.default 
+})));
+const AIChatbot = lazy(() => import("@/components/chatbot/AIChatbot").then(module => ({ 
+  default: module.AIChatbot || module.default 
+})));
+const AccessibilityControls = lazy(() => import("@/components/a11y/AccessibilityControls").then(module => ({ 
+  default: module.AccessibilityControls || module.default 
+})));
 const TranslationDebug = lazy(() => import("@/components/TranslationDebug").then(module => ({ 
   default: module.TranslationDebug 
 })));
@@ -52,6 +75,23 @@ const queryClient = new QueryClient({
   },
 });
 
+function LayoutContent({ children }: { children: React.ReactNode }) {
+  // Initialize prefetcher
+  usePrefetcher({
+    enabled: true,
+    delay: 100,
+    maxConcurrent: 3,
+    priorityRoutes: ['/contact', '/services', '/about'],
+  });
+
+  return (
+    <>
+      {children}
+      <PerformanceMonitor show={process.env.NODE_ENV === 'development'} />
+    </>
+  );
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -62,10 +102,11 @@ export default function RootLayout({
       <head>
         {/* Font is loaded via next/font/google - no manual preload needed */}
         {/* Favicon and app icons - Multiple formats for maximum compatibility */}
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
         <link rel="icon" href="/logo/octomatic-200.png" type="image/png" sizes="200x200" />
         <link rel="icon" href="/logo/octomatic-400.png" type="image/png" sizes="400x400" />
-        <link rel="shortcut icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/logo/octomatic-200.png" sizes="200x200" />
         <link rel="apple-touch-icon" href="/logo/octomatic-400.png" sizes="400x400" />
         <link rel="apple-touch-icon" href="/logo/octomatic-800.png" sizes="800x800" />
@@ -109,6 +150,12 @@ export default function RootLayout({
         <link rel="canonical" href="https://octomatic.ai/" />
         <link rel="alternate" hrefLang="en" href="https://octomatic.ai/" />
         <link rel="alternate" hrefLang="nl" href="https://octomatic.ai/nl" />
+        
+        {/* Performance: Resource Hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body className={`${inter.className} ${archivo.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
@@ -122,6 +169,7 @@ export default function RootLayout({
               <LanguageProvider>
                 <AuthProvider>
                   <WebVitalsMonitor />
+                  <HydrationHandler />
                   <ThemeTransition>
                     <div className="min-h-screen relative overflow-x-hidden">
                     <GlobalInteractiveGrid />
@@ -130,28 +178,28 @@ export default function RootLayout({
                       <CriticalContentPreloader />
                       <SkipToContent contentId="main-content" />
 
-                      <header role="banner" className="relative z-20">
+                      <div className="relative z-20">
                         <Suspense fallback={<NavbarFallback />}>
-                          <NewNavbar />
+                          <NavbarV2 />
                         </Suspense>
-                      </header>
+                      </div>
 
                       <main 
                         id="main-content" 
                         role="main" 
-                        className="relative z-10 main-content pt-0 md:pt-20"
+                        className="relative z-10 main-content min-h-[calc(100vh-5rem)]"
                         aria-label="Main content"
                       >
-                        <Suspense fallback={<MainFallback />}>
+                        <LayoutContent>
                           {children}
-                        </Suspense>
+                        </LayoutContent>
                       </main>
 
-                    <footer role="contentinfo" className="relative z-10">
+                    <div className="relative z-10">
                       <Suspense fallback={<div className="h-[200px] bg-secondary border-t border-border/10" />}>
                         <Footer />
                       </Suspense>
-                    </footer>
+                    </div>
 
                     {/* Mobile CTA - Only shows on mobile */}
                     <Suspense fallback={null}>
@@ -162,11 +210,50 @@ export default function RootLayout({
                       />
                     </Suspense>
 
+                    {/* Floating CTA - Desktop only */}
+                    <Suspense fallback={null}>
+                      {typeof window !== 'undefined' && (
+                        <FloatingCTA 
+                          showAfterScroll={300}
+                          audience="universal"
+                        />
+                      )}
+                    </Suspense>
+
+                    {/* Exit Intent Popup */}
+                    <Suspense fallback={null}>
+                      <ExitIntentPopup 
+                        showOnPages={['/build', '/optimize', '/create', '/get-started']}
+                        audience="universal"
+                        delay={500}
+                      />
+                    </Suspense>
+
+                    {/* Behavior Tracker - AI Personalization */}
+                    <Suspense fallback={null}>
+                      <BehaviorTracker />
+                    </Suspense>
+
                     {process.env.NODE_ENV === 'development' && (
                       <Suspense fallback={null}>
                         <TranslationDebug />
                       </Suspense>
                     )}
+
+                    {/* PWA Install Prompt */}
+                    <Suspense fallback={null}>
+                      <InstallPrompt />
+                    </Suspense>
+
+                    {/* AI Chatbot */}
+                    <Suspense fallback={null}>
+                      <AIChatbot position="bottom-right" />
+                    </Suspense>
+
+                    {/* Accessibility Controls */}
+                    <Suspense fallback={null}>
+                      <AccessibilityControls position="bottom-left" />
+                    </Suspense>
                     </div>
                   </ThemeTransition>
                 </AuthProvider>

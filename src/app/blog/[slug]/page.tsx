@@ -24,7 +24,7 @@ const BlogPostPage = () => {
   const { t, language } = useTranslations();
   const isNL = language === 'nl';
 
-  const { data: post, isLoading, isError } = useQuery({
+  const { data: post, isLoading, isError, error: queryError } = useQuery({
     queryKey: ["blog-post", slug],
     queryFn: async () => {
       if (!slug) {
@@ -34,20 +34,84 @@ const BlogPostPage = () => {
         .from("blogs")
         .select(`
           *,
+          html,
+          content,
           profiles ( display_name ),
           blog_tags ( tags ( name, slug ) )
         `)
         .eq("slug", slug)
         .maybeSingle();
 
+      // Check if blogError exists - Supabase returns error object even if empty sometimes
       if (blogError) {
-        console.error("Error fetching blog post:", blogError);
-        throw blogError;
+        // Safely extract error properties - handle empty objects and different error structures
+        const errorMessage = 
+          blogError?.message || 
+          (typeof blogError === 'string' ? blogError : null) ||
+          'Unknown error';
+        
+        const errorCode = blogError?.code || null;
+        const errorDetails = blogError?.details || null;
+        const errorHint = blogError?.hint || null;
+        
+        // Log raw error first to see structure (dev only)
+        if (process.env.NODE_ENV === 'development') {
+          console.error("Raw blogError object:", blogError);
+          console.error("blogError type:", typeof blogError);
+          console.error("blogError keys:", Object.keys(blogError || {}));
+          try {
+            console.error("blogError JSON:", JSON.stringify(blogError, null, 2));
+          } catch (e) {
+            console.error("blogError JSON stringify failed:", e);
+            console.error("blogError toString:", String(blogError));
+          }
+        }
+        
+        // Create structured error details - always include all info even if null
+        const errorInfo: Record<string, any> = {
+          message: errorMessage,
+          code: errorCode,
+          details: errorDetails,
+          hint: errorHint,
+          slug: slug,
+        };
+        
+        // Add raw error in dev mode for debugging
+        if (process.env.NODE_ENV === 'development') {
+          errorInfo.rawError = blogError;
+          errorInfo.errorType = typeof blogError;
+          errorInfo.errorConstructor = blogError?.constructor?.name || 'Unknown';
+        }
+        
+        // Use console.error with multiple arguments to ensure proper serialization
+        console.error("Error fetching blog post:", errorInfo);
+        console.error("Error message:", errorMessage);
+        console.error("Error code:", errorCode);
+        console.error("Slug:", slug);
+        
+        // Create a more informative error
+        const error = new Error(`Failed to fetch blog post "${slug}": ${errorMessage}`);
+        if (errorCode) (error as any).code = errorCode;
+        if (errorDetails) (error as any).details = errorDetails;
+        if (errorHint) (error as any).hint = errorHint;
+        throw error;
       }
       
       if (!blogData) {
         console.warn(`Blog post not found for slug: ${slug}`);
         return null;
+      }
+
+      // Debug: Log available fields to help diagnose content issues
+      if (process.env.NODE_ENV === 'development') {
+        console.log('📝 Blog post fields:', {
+          hasHtml: !!blogData.html,
+          hasContent: !!blogData.content,
+          htmlLength: blogData.html?.length || 0,
+          contentLength: blogData.content?.length || 0,
+          htmlPreview: blogData.html?.substring(0, 100) || 'N/A',
+          contentPreview: blogData.content?.substring(0, 100) || 'N/A',
+        });
       }
 
       return blogData;
@@ -68,6 +132,15 @@ const BlogPostPage = () => {
 
   // Handle error or not found
   if (isError || !post) {
+    // Log query error if present (from React Query)
+    if (queryError && process.env.NODE_ENV === 'development') {
+      console.error("React Query error:", {
+        message: queryError?.message || 'Unknown query error',
+        name: queryError?.name || 'Error',
+        stack: queryError?.stack || null,
+        raw: queryError,
+      });
+    }
     notFound();
   }
 
@@ -130,7 +203,7 @@ const BlogPostPage = () => {
             {/* Blog Content */}
             <div className="prose prose-lg max-w-none mb-12 dark:prose-invert">
               <div 
-                dangerouslySetInnerHTML={{ __html: post.content }}
+                dangerouslySetInnerHTML={{ __html: post.html || post.content || '' }}
                 className="blog-content"
               />
             </div>

@@ -1,10 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Globe } from 'lucide-react';
 import useLanguage from '@/contexts/LanguageContext';
-import { usePathname, useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 
 interface LanguageSwitcherProps {
@@ -12,39 +9,31 @@ interface LanguageSwitcherProps {
   variant?: 'default' | 'compact';
 }
 
+// Flag emoji components - Using American flag for English
+const FlagIcon: React.FC<{ code: 'nl' | 'us'; className?: string }> = ({ code, className }) => {
+  const flag = code === 'nl' ? '🇳🇱' : '🇺🇸';
+  return (
+    <span className={cn("text-lg leading-none", className)} role="img" aria-label={code === 'nl' ? 'Dutch flag' : 'American flag'}>
+      {flag}
+    </span>
+  );
+};
+
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ 
   className = '', 
   variant = 'compact' 
 }) => {
   const { language, setLanguage } = useLanguage();
-  const { theme } = useTheme();
-  const pathname = usePathname();
-  const router = useRouter();
-  const isDark = theme === 'dark';
 
-  const handleLanguageSwitch = () => {
+  const handleLanguageSwitch = (e: React.MouseEvent) => {
+    e.preventDefault();
     const newLanguage = language === 'nl' ? 'en' : 'nl';
-    
-    // Get current path without language prefix
-    let basePath = pathname;
-    if (basePath.startsWith('/nl')) {
-      basePath = basePath.slice(3) || '/';
-    }
-    if (!basePath.startsWith('/')) {
-      basePath = '/' + basePath;
-    }
-    
-    // Build new path with correct language prefix
-    const newPath = newLanguage === 'nl' 
-      ? `/nl${basePath === '/' ? '' : basePath}`
-      : basePath;
-    
-    // Update language context
+    // LanguageContext handles navigation automatically
     setLanguage(newLanguage);
-    
-    // Navigate to new path
-    router.replace(newPath);
   };
+
+  const currentFlag = language === 'nl' ? 'nl' : 'us';
+  const nextLanguage = language === 'nl' ? 'English' : 'Dutch';
 
   if (variant === 'compact') {
     return (
@@ -52,17 +41,14 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
         onClick={handleLanguageSwitch}
         className={cn(
           "p-2 rounded-lg border transition-all duration-300 hover:scale-105",
-          isDark
-            ? "bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20"
-            : "bg-gray-100 hover:bg-gray-200 border-gray-300 hover:border-gray-400",
+          "bg-glass hover:bg-accent/10 border-glass hover:border-border",
+          "flex items-center justify-center",
           className
         )}
-        aria-label={`Switch to ${language === 'nl' ? 'English' : 'Dutch'}`}
+        aria-label={`Switch to ${nextLanguage}`}
+        type="button"
       >
-        <Globe className={cn(
-          "w-4 h-4",
-          isDark ? "text-gray-300" : "text-gray-700"
-        )} />
+        <FlagIcon code={currentFlag} />
         <span className="sr-only">{language === 'nl' ? 'EN' : 'NL'}</span>
       </button>
     );
@@ -73,21 +59,14 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
       onClick={handleLanguageSwitch}
       className={cn(
         "flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-300",
-        isDark
-          ? "bg-white/5 hover:bg-white/10 border-white/10 hover:border-white/20"
-          : "bg-gray-100 hover:bg-gray-200 border-gray-300 hover:border-gray-400",
+        "bg-glass hover:bg-accent/10 border-glass hover:border-border",
         className
       )}
-      aria-label={`Switch to ${language === 'nl' ? 'English' : 'Dutch'}`}
+      aria-label={`Switch to ${nextLanguage}`}
+      type="button"
     >
-      <Globe className={cn(
-        "w-4 h-4",
-        isDark ? "text-gray-300" : "text-gray-700"
-      )} />
-      <span className={cn(
-        "text-sm font-medium",
-        isDark ? "text-gray-300" : "text-gray-700"
-      )}>
+      <FlagIcon code={currentFlag} />
+      <span className="text-sm font-medium text-body">
         {language === 'nl' ? 'EN' : 'NL'}
       </span>
     </button>

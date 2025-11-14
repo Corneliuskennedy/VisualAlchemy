@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useReducedMotion } from 'framer-motion';
 
 interface ThemeSwitcherProps {
   className?: string;
@@ -15,17 +16,59 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const isTransitioningRef = useRef(false);
+  const prefersReducedMotion = useReducedMotion();
   
   // Prevent hydration mismatch by not rendering until mounted
   useEffect(() => {
     setMounted(true);
   }, []);
-  
-  const toggleTheme = () => {
+
+  // Debounced theme toggle with transition state
+  const toggleTheme = useCallback(() => {
+    // Prevent rapid clicks during transition
+    if (isTransitioningRef.current) {
+      console.log('[ThemeSwitcher] Toggle blocked - already transitioning');
+      return;
+    }
+    
     const newTheme = theme === 'dark' ? 'light' : 'dark';
-    // Add a small delay to allow the animation to trigger
+    console.log('[ThemeSwitcher] Toggling theme', {
+      from: theme,
+      to: newTheme,
+      duration: prefersReducedMotion ? 150 : 400,
+      timestamp: new Date().toISOString(),
+    });
+    
+    setIsTransitioning(true);
+    isTransitioningRef.current = true;
+    
     setTheme(newTheme);
-  };
+    
+    // Reset transition state after animation completes
+    const duration = prefersReducedMotion ? 150 : 400;
+    setTimeout(() => {
+      console.log('[ThemeSwitcher] Transition state reset', {
+        theme: newTheme,
+        timestamp: new Date().toISOString(),
+      });
+      setIsTransitioning(false);
+      isTransitioningRef.current = false;
+    }, duration);
+  }, [theme, setTheme, prefersReducedMotion]);
+
+  // Keyboard navigation handler
+  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleTheme();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      // Arrow keys toggle theme
+      toggleTheme();
+    }
+  }, [toggleTheme]);
 
   // Don't render theme-dependent content until mounted
   if (!mounted) {
@@ -34,25 +77,25 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
         <button
           className={`
             p-2 rounded-lg
-            bg-white/5 
-            border border-white/10
+            bg-glass 
+            border border-glass
             transition-all duration-300
             ${className}
           `}
           disabled
         >
-          <Sun className="w-4 h-4 text-gray-400" />
+          <Sun className="w-4 h-4 text-subtle" />
         </button>
       );
     }
     
     return (
       <div className={`flex items-center gap-3 ${className}`}>
-        <span className="text-sm font-medium text-gray-400">
+        <span className="text-sm font-medium text-subtle">
           Theme
         </span>
-        <div className="relative w-12 h-6 rounded-full p-1 bg-slate-700">
-          <div className="w-4 h-4 rounded-full bg-slate-300" />
+        <div className="relative w-12 h-6 rounded-full p-1 bg-muted">
+          <div className="w-4 h-4 rounded-full bg-card" />
         </div>
       </div>
     );
@@ -62,20 +105,27 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     return (
       <button
         onClick={toggleTheme}
+        onKeyDown={handleKeyDown}
+        disabled={isTransitioning}
         className={`
           p-2 rounded-lg
-          bg-white/5 hover:bg-white/10
-          border border-white/10 hover:border-white/20
+          bg-glass hover:bg-accent/10
+          border border-glass hover:border-border
           transition-all duration-300
           group
+          focus:outline-none focus:ring-2 focus:ring-button-primary focus:ring-offset-2
+          disabled:opacity-50 disabled:cursor-not-allowed
           ${className}
         `}
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        aria-checked={theme === 'dark'}
+        role="switch"
+        tabIndex={0}
       >
         {theme === 'dark' ? (
-          <Sun className="w-4 h-4 text-yellow-400 group-hover:text-yellow-300 transition-colors" />
+          <Sun className="w-4 h-4 text-button-primary group-hover:text-button-primary-hover transition-colors" />
         ) : (
-          <Moon className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
+          <Moon className="w-4 h-4 text-button-primary group-hover:text-button-primary-hover transition-colors" />
         )}
       </button>
     );
@@ -83,22 +133,26 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <span className="text-sm font-medium text-gray-400">
+      <span className="text-sm font-medium text-subtle">
         {theme === 'dark' ? 'Dark' : 'Light'}
       </span>
       
       <button
         onClick={toggleTheme}
+        onKeyDown={handleKeyDown}
+        disabled={isTransitioning}
         className={`
           relative w-12 h-6 rounded-full p-1
           transition-all duration-300 ease-out
-          ${theme === 'dark' 
-            ? 'bg-slate-700 hover:bg-slate-600' 
-            : 'bg-blue-200 hover:bg-blue-300'
-          }
+          focus:outline-none focus:ring-2 focus:ring-button-primary focus:ring-offset-2
+          disabled:opacity-50 disabled:cursor-not-allowed
+          bg-muted hover:bg-accent/20
           group
         `}
         aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        aria-checked={theme === 'dark'}
+        role="switch"
+        tabIndex={0}
       >
         {/* Toggle Circle */}
         <div
@@ -107,16 +161,16 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
             transition-all duration-300 ease-out
             flex items-center justify-center
             ${theme === 'dark' 
-              ? 'bg-slate-300 translate-x-0' 
-              : 'bg-white translate-x-6 shadow-sm'
+              ? 'bg-card translate-x-0' 
+              : 'bg-card translate-x-6 shadow-sm'
             }
             group-hover:scale-110
           `}
         >
           {theme === 'dark' ? (
-            <Moon className="w-2.5 h-2.5 text-slate-600" />
+            <Moon className="w-2.5 h-2.5 text-button-primary" />
           ) : (
-            <Sun className="w-2.5 h-2.5 text-yellow-500" />
+            <Sun className="w-2.5 h-2.5 text-button-primary" />
           )}
         </div>
       </button>

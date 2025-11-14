@@ -11,7 +11,15 @@
     "lint": "next lint",
     "preview": "next build && next start",
     "type-check": "tsc --noEmit",
-    "generate-sitemap": "next build && node scripts/generate-sitemap.js"
+    "generate-sitemap": "next build && node scripts/generate-sitemap.js",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:accessibility": "playwright test tests/e2e/accessibility.spec.ts",
+    "test:performance": "RUN_PERFORMANCE_TESTS=true playwright test tests/performance/lighthouse.spec.ts",
+    "test:structured-data": "node scripts/validate-structured-data.js",
+    "test:structured-data-dom": "node scripts/test-structured-data-dom.js",
+    "audit:theme": "node scripts/theme-audit-helper.js"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
@@ -79,6 +87,8 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/typography": "^0.5.16",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash.throttle": "^4.1.9",
@@ -86,8 +96,10 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "autoprefixer": "^10.4.20",
+    "axe-playwright": "^2.2.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.18",
+    "playwright-lighthouse": "^4.0.0",
     "postcss": "^8.5.2",
     "sharp": "^0.33.5",
     "tailwindcss": "^3.4.0",

@@ -49,9 +49,9 @@ export default function NotFound() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
           <div className="p-6 bg-card border border-border rounded-lg">
-            <h3 className="font-semibold text-foreground mb-2">Services</h3>
-            <Link href="/services" className="text-primary hover:underline text-sm">
-              View All Services →
+            <h3 className="font-semibold text-foreground mb-2">Solutions</h3>
+            <Link href="/optimize" className="text-primary hover:underline text-sm">
+              Optimize Your Business →
             </Link>
           </div>
           

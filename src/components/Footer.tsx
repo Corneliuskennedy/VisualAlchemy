@@ -3,19 +3,15 @@
 import React from 'react';
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useTranslations } from "@/hooks/useTranslations";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
+import { useFooter } from "@/hooks/useContent";
 
 const Footer = () => {
-  const { t, getSection } = useTranslations();
   const { language } = useLanguage();
+  const footer = useFooter();
   const currentYear = new Date().getFullYear();
   const isNL = language === 'nl';
-
-  // Get sections for better performance
-  const footerSection = getSection('footer');
-  const contactPageSection = getSection('contactPage');
 
   const handleLinkClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -32,157 +28,141 @@ const Footer = () => {
 
   const links = {
     company: [
-      { label: footerSection.company.about, href: '/about' },
-      { label: footerSection.company.careers, href: '/careers' },
-      { label: footerSection.company.contact, href: '/contact' }
+      { label: footer.company.about, href: '/about-us' },
+      { label: footer.company.ourWork, href: '/our-work' },
+      { label: footer.company.contact, href: '/contact' },
+      { label: footer.company.blog, href: '/blog' }
+    ],
+    services: [
+      { label: footer.services.optimize, href: '/optimize' },
+      { label: footer.services.build, href: '/build' },
+      { label: footer.services.create, href: '/create' }
     ],
     legal: [
-      { label: footerSection.legal.privacy, href: '/privacy' },
-      { label: footerSection.legal.terms, href: '/terms' },
-      { label: footerSection.legal.cookies, href: '/cookies' }
+      { label: footer.legal.privacy, href: '/privacy-policy' },
+      { label: footer.legal.terms, href: '/terms-of-service' },
+      { label: footer.legal.cookies, href: '/cookies' }
     ],
     social: [
-      { label: footerSection.social.linkedin, href: 'https://linkedin.com/in/kennet-timmers' },
-      { label: footerSection.social.twitter, href: 'https://twitter.com/octomaticai' },
-      { label: footerSection.social.instagram, href: 'https://instagram.com/octomaticai' }
+      { label: footer.social.linkedin, href: 'https://linkedin.com/in/kennet-timmers' },
+      { label: footer.social.twitter, href: 'https://twitter.com/octomaticai' },
+      { label: footer.social.instagram, href: 'https://instagram.com/octomaticai' }
     ]
   };
 
   return (
-    <footer className="relative" style={{ borderTop: '1px solid #4a5568' }}>
+    <footer className="relative border-t border-border bg-background">
 
       <div className="container relative mx-auto px-4 py-16 z-[1]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 gap-12">
-          {/* Company Info */}
-          <div className="lg:col-span-4 space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Column 1: Company Info */}
+          <div className="space-y-6">
             <Logo variant="footer" />
-            <p className="text-gray-400 text-sm leading-relaxed">
-              {footerSection.description}
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              {footer.description}
             </p>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3 text-gray-400">
+              <div className="flex items-center space-x-3 text-muted-foreground">
                 <Mail className="h-4 w-4" />
                 <a
-                  href="mailto:kennet@octomatic.ai?subject=Business Optimization Inquiry"
-                  className="text-sm hover:text-electric-blue transition-colors mobile-contact-link"
+                  href={`mailto:${footer.contact.email}?subject=Business Optimization Inquiry`}
+                  className="text-sm hover:text-button-primary transition-colors mobile-contact-link"
                 >
-                  kennet@octomatic.ai
+                  {footer.contact.email}
                 </a>
               </div>
-              <div className="flex items-center space-x-3 text-gray-400">
+              <div className="flex items-center space-x-3 text-muted-foreground">
                 <Phone className="h-4 w-4" />
                 <a
-                  href={`tel:${contactPageSection.info.phoneNumber.replace(/\s/g, '')}`}
-                  className="text-sm hover:text-electric-blue transition-colors mobile-contact-link"
+                  href={`tel:${footer.contact.phoneNumber.replace(/\s/g, '')}`}
+                  className="text-sm hover:text-button-primary transition-colors mobile-contact-link"
                 >
-                  {contactPageSection.info.phoneNumber}
+                  {footer.contact.phoneNumber}
                 </a>
               </div>
-              <div className="flex items-start space-x-3 text-gray-400">
+              <div className="flex items-start space-x-3 text-muted-foreground">
                 <MapPin className="h-4 w-4 mt-1" />
-                <span className="text-sm">{contactPageSection.info.addressValue}</span>
+                <span className="text-sm">{footer.contact.address}</span>
               </div>
-              <div className="flex items-start space-x-3 text-gray-400">
-                <span className="text-sm">{contactPageSection.info.kvk}: {contactPageSection.info.kvkNumber}</span>
+              <div className="flex items-start space-x-3 text-muted-foreground">
+                <span className="text-sm">{footer.contact.kvk}: {footer.contact.kvkNumber}</span>
               </div>
             </div>
           </div>
 
-          {/* Services section removed to maintain strategy-first focus */}
-
-          {/* Company */}
-          <div className="lg:col-span-2 space-y-6">
-            <h4 className="font-semibold text-white/90 text-lg">{footerSection.company.title}</h4>
+          {/* Column 2: Company */}
+          <div className="space-y-6">
+            <h4 className="font-semibold text-foreground text-lg">{footer.company.title}</h4>
             <ul className="space-y-3">
-              <li>
-                <button
-                  onClick={scrollToSolutions}
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {footerSection.company.about}
-                </button>
-              </li>
-              <li>
-                <span className="text-gray-500 text-sm cursor-not-allowed">
-                  {footerSection.company.careers}
-                </span>
-              </li>
-              <li>
-                <Link
-                  href={(isNL ? '/nl/services' : '/services').replace(/\/$/, "")}
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {isNL ? 'Strategische Oplossingen' : 'Strategic Solutions'}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={(isNL ? '/nl/blog' : '/blog').replace(/\/$/, "")}
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {footerSection.company.blog}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={(isNL ? '/nl/contact' : '/contact').replace(/\/$/, "")}
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {footerSection.company.contact}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={(isNL ? '/nl/checklist' : '/checklist').replace(/\/$/, "")}
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {isNL ? 'GDPR Checklist' : 'GDPR Checklist'}
-                </Link>
-              </li>
+              {links.company.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
+                    onClick={handleLinkClick}
+                    className="text-muted-foreground hover:text-button-primary text-sm transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Legal */}
-          <div className="lg:col-span-2 space-y-6">
-            <h4 className="font-semibold text-white/90 text-lg">{footerSection.legal.title}</h4>
+          {/* Column 3: Services */}
+          <div className="space-y-6">
+            <h4 className="font-semibold text-foreground text-lg">
+              {isNL ? 'Diensten' : 'Services'}
+            </h4>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  href={(isNL ? '/nl/privacy' : '/privacy').replace(/\/$/, "")}
-                  // onClick={handleLinkClick} // Temporarily remove onClick for testing
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {footerSection.legal.privacy}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={(isNL ? '/nl/terms' : '/terms').replace(/\/$/, "")}
-                  // onClick={handleLinkClick} // Temporarily remove onClick for testing
-                  className="text-gray-400 hover:text-electric-blue text-sm transition-colors duration-200"
-                >
-                  {footerSection.legal.terms}
-                </Link>
-              </li>
-              <li>
-                <span className="text-gray-500 text-sm cursor-not-allowed">
-                  {footerSection.legal.cookies}
-                </span>
-              </li>
+              {links.services.map((link, index) => (
+                <li key={index}>
+                  <Link
+                    href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
+                    onClick={handleLinkClick}
+                    className="text-muted-foreground hover:text-button-primary text-sm transition-colors duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Column 4: Legal */}
+          <div className="space-y-6">
+            <h4 className="font-semibold text-foreground text-lg">{footer.legal.title}</h4>
+            <ul className="space-y-3">
+              {links.legal.map((link, index) => (
+                <li key={index}>
+                  {link.href === '/cookies' ? (
+                    <span className="text-muted-foreground/80 text-sm cursor-not-allowed">
+                      {link.label}
+                    </span>
+                  ) : (
+                    <Link
+                      href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
+                      onClick={handleLinkClick}
+                      className="text-muted-foreground hover:text-button-primary text-sm transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         {/* Bottom section */}
-        <div className="mt-12 pt-8" style={{ borderTop: '1px solid #4a5568' }}>
+        <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-4 text-gray-400 text-sm">
-              <span>© {currentYear} Octomatic. {footerSection.copyright}</span>
+            <div className="flex items-center space-x-4 text-muted-foreground text-sm">
+              <span>© {currentYear} Octomatic. {footer.copyright}</span>
             </div>
             
             {/* Social Links */}
             <div className="flex items-center space-x-6">
-              <h5 className="text-white/90 text-sm font-medium">{footerSection.social.title}</h5>
+              <h5 className="text-foreground text-sm font-medium">{footer.social.title}</h5>
               <div className="flex items-center space-x-4">
                 {links.social.map((social, index) => (
                   <a
@@ -190,7 +170,7 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-electric-blue transition-colors duration-200 text-sm"
+                    className="text-muted-foreground hover:text-button-primary transition-colors duration-200 text-sm"
                   >
                     {social.label}
                   </a>

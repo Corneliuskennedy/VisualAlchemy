@@ -212,6 +212,7 @@ const KennetTimmersPage: React.FC = () => {
                           src="/team/kennet_timmers.webp"
                           alt="Kennet Timmers"
                           fill
+                          sizes="(max-width: 768px) 200px, 300px"
                           className="object-cover rounded-2xl"
                           priority
                         />

@@ -26,54 +26,56 @@ export default function GlobalInteractiveGrid() {
     setMounted(true);
   }, []);
 
-  // Set up event listeners once when mounted
+  // Set up smooth mouse interaction for elegant grid reveal
   useEffect(() => {
     const grid = gridRef.current;
     const smallGrid = smallGridRef.current;
     if (!grid || !smallGrid || !mounted) return;
 
+    let rafId: number | null = null;
+    let lastX = 0;
+    let lastY = 0;
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = grid.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+      // Throttle with requestAnimationFrame for smooth performance
+      if (rafId) return;
       
-      // Larger radius for more dramatic effect
-      const radius = 300;
-      
-      // Set the position for both grids
-      grid.style.setProperty('--mouse-x', `${mouseX}px`);
-      grid.style.setProperty('--mouse-y', `${mouseY}px`);
-      grid.style.setProperty('--radius', `${radius}px`);
-      smallGrid.style.setProperty('--mouse-x', `${mouseX}px`);
-      smallGrid.style.setProperty('--mouse-y', `${mouseY}px`);
-      smallGrid.style.setProperty('--radius', `${radius}px`);
-      
-      // Increase opacity when mouse is over the area - use ref for current theme
-      const hoverOpacity = isDarkRef.current ? '0.4' : '0.15';
-      const hoverOpacitySmall = isDarkRef.current ? '0.25' : '0.1';
-      grid.style.opacity = hoverOpacity;
-      smallGrid.style.opacity = hoverOpacitySmall;
-    };
-    
-    const handleMouseLeave = () => {
-      // When mouse leaves, return to base opacity - use ref for current theme
-      const baseOpacity = isDarkRef.current ? '0.15' : '0.08';
-      const baseOpacitySmall = isDarkRef.current ? '0.1' : '0.05';
-      grid.style.opacity = baseOpacity;
-      smallGrid.style.opacity = baseOpacitySmall;
+      rafId = requestAnimationFrame(() => {
+        const rect = grid.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        
+        // Smooth interpolation for buttery movement
+        const smoothX = lastX + (mouseX - lastX) * 0.3;
+        const smoothY = lastY + (mouseY - lastY) * 0.3;
+        lastX = smoothX;
+        lastY = smoothY;
+        
+        // Optimal radius for visible, elegant reveal
+        const radius = 350;
+        
+        // Set the position for both grids with smooth interpolation
+        grid.style.setProperty('--mouse-x', `${smoothX}px`);
+        grid.style.setProperty('--mouse-y', `${smoothY}px`);
+        grid.style.setProperty('--radius', `${radius}px`);
+        smallGrid.style.setProperty('--mouse-x', `${smoothX}px`);
+        smallGrid.style.setProperty('--mouse-y', `${smoothY}px`);
+        smallGrid.style.setProperty('--radius', `${radius}px`);
+        
+        rafId = null;
+      });
     };
 
-    // Add listeners to the document for global effect
-    document.addEventListener("mousemove", handleMouseMove);
-    grid.addEventListener("mouseleave", handleMouseLeave);
+    // Add listener to document for global effect
+    document.addEventListener("mousemove", handleMouseMove, { passive: true });
     
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      if (grid) {
-        grid.removeEventListener("mouseleave", handleMouseLeave);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
       }
     };
-  }, [mounted]); // Only depend on mounted - set up listeners once
+  }, [mounted]);
 
   // Update opacity when theme changes (separate effect)
   useEffect(() => {
@@ -100,41 +102,43 @@ export default function GlobalInteractiveGrid() {
         isDark ? 'bg-[#0A0A0A]' : 'bg-white'
       }`} />
       
-      {/* Large grid - 75px */}
+      {/* Large grid - 75px - Beautiful hexagonal pattern reveal */}
       <div
         ref={gridRef}
         className="
           absolute inset-0
           bg-[size:75px_75px]
-          [mask-image:radial-gradient(circle_var(--radius)_at_var(--mouse-x)_var(--mouse-y),#fff_20%,transparent_80%)]
-          transition-opacity duration-300 ease-in-out
           z-10
         "
         style={{
           '--mouse-x': '50%',
           '--mouse-y': '50%',
-          '--radius': '300px',
-          opacity: isDark ? 0.15 : 0.15,
+          '--radius': '350px',
+          opacity: isDark ? 0.18 : 0.22,
           backgroundImage: `linear-gradient(${gridColorLarge} 1px, transparent 1px), linear-gradient(90deg, ${gridColorLarge} 1px, transparent 1px)`,
+          maskImage: 'radial-gradient(circle var(--radius) at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 25%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.1) 65%, transparent 85%)',
+          WebkitMaskImage: 'radial-gradient(circle var(--radius) at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.5) 25%, rgba(255,255,255,0.25) 45%, rgba(255,255,255,0.1) 65%, transparent 85%)',
+          transition: 'mask-image 0.1s ease-out',
         } as React.CSSProperties}
       />
       
-      {/* Small grid - 15px */}
+      {/* Small grid - 15px - Subtle detail layer */}
       <div
         ref={smallGridRef}
         className="
           absolute inset-0
           bg-[size:15px_15px]
-          [mask-image:radial-gradient(circle_var(--radius)_at_var(--mouse-x)_var(--mouse-y),#fff_20%,transparent_80%)]
-          transition-opacity duration-300 ease-in-out
           z-5
         "
         style={{
           '--mouse-x': '50%',
           '--mouse-y': '50%',
-          '--radius': '300px',
-          opacity: isDark ? 0.1 : 0.1,
+          '--radius': '350px',
+          opacity: isDark ? 0.12 : 0.15,
           backgroundImage: `linear-gradient(${gridColorSmall} 1px, transparent 1px), linear-gradient(90deg, ${gridColorSmall} 1px, transparent 1px)`,
+          maskImage: 'radial-gradient(circle var(--radius) at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.4) 25%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.08) 65%, transparent 85%)',
+          WebkitMaskImage: 'radial-gradient(circle var(--radius) at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.4) 25%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.08) 65%, transparent 85%)',
+          transition: 'mask-image 0.1s ease-out',
         } as React.CSSProperties}
       />
     </div>

@@ -84,6 +84,10 @@ export interface SiteContent {
   buildPage: {
     meta: PageMeta;
     hero: HeroData;
+    problem?: {
+      headline: string;
+      description: string;
+    };
     process: {
       headline: string;
       steps: ProcessStep[];
@@ -103,11 +107,14 @@ export interface SiteContent {
   optimizePage: {
     meta: PageMeta;
     hero: HeroData;
-    problemSolution: {
+    problem: {
       headline: string;
-      problem: string;
-      solution: string;
-      features: Array<{
+      description: string;
+      calculatorCta?: string;
+    };
+    solutions: {
+      headline: string;
+      items: Array<{
         title: string;
         description: string;
       }>;
@@ -135,6 +142,12 @@ export interface SiteContent {
       headline: string;
       steps: ProcessStep[];
     };
+    testimonial?: {
+      headline: string;
+      quote: string;
+      author: string;
+      authorTitle?: string;
+    };
     pricing: {
       headline: string;
       tiers: PricingTier[];
@@ -150,9 +163,19 @@ export interface SiteContent {
     meta: PageMeta;
     headline: string;
     description: string;
+    projects?: Array<{
+      clientName: string;
+      resultTagline: string;
+      category: 'build' | 'optimize' | 'create';
+      slug: string;
+    }>;
   };
   overOnsPage: {
     meta: PageMeta;
+    hero?: {
+      headline: string;
+      subline: string;
+    };
     founderStory: {
       headline: string;
       content: string;
@@ -228,272 +251,366 @@ export const siteContent: SiteContent = {
   },
   buildPage: {
     meta: {
-      title: 'Een Nieuw Systeem Bouwen | Octomatic',
-      description: 'Van idee naar volledig geautomatiseerd platform in 30 dagen. MVP Sprint voor founders die snel willen valideren en lanceren.',
+      title: 'Build a New System | Octomatic',
+      description: 'We de-risk your journey from concept to launch with a proven, 30-day sprint that delivers a fully automated platform, ready for your first users.',
     },
     hero: {
-      headline: 'Van Idee naar Werkend Systeem',
-      subline: 'We bouwen de volledige architectuur en automatisering die je nieuwe platform, product of bedrijf nodig heeft.',
-      ctaText: 'Plan een Project Scoping Call',
+      // Alternative headlines:
+      // Option 1: 'Your Vision, Architected.'
+      // Option 2: 'From Idea to Impact, Intelligently.'
+      // Option 3: 'Build the System. Streamline the Process. Create the Impact.'
+      headline: 'From Idea to Impact, Intelligently.',
+      subline: 'We de-risk your journey from concept to launch with a proven, 30-day sprint that delivers a fully automated platform, ready for your first users.',
+      ctaText: 'Discover How It Works',
+    },
+    problem: {
+      headline: 'The Race Against The Clock.',
+      description: 'Every founder faces the same dilemma: launch quickly and risk building something nobody wants, or take your time and watch competitors beat you to market. The pressure is real. Investors want traction. Customers want solutions. You need validation—fast. But building the wrong thing costs more than time. It costs opportunity, momentum, and sometimes, your entire vision.',
     },
     process: {
-      headline: 'Ons Build Proces',
+      headline: 'Our 30-Day MVP Sprint.',
       steps: [
         {
-          step: '1',
-          title: 'Kickoff & Validatie',
-          description: 'Idee validatie, marktonderzoek en MVP scope definitie samen met het team',
+          step: 'Week 1',
+          title: 'Deep Dive & Strategy',
+          description: 'We define your core value and map the path to revenue.',
         },
         {
-          step: '2',
-          title: 'Prototype & Development',
-          description: 'Rapid prototyping en eerste versie bouwen met user feedback loops',
+          step: 'Week 2',
+          title: 'System Architecture & Design',
+          description: 'We build the robust, scalable foundation.',
         },
         {
-          step: '3',
-          title: 'Test & Iterate',
-          description: 'User testing, data verzameling en product-market fit validatie',
+          step: 'Week 3',
+          title: 'Core Feature Implementation',
+          description: 'We bring your vision to life with intelligent automation.',
         },
         {
-          step: '4',
-          title: 'Launch & Scale',
-          description: 'Feedback implementatie, launch voorbereiding en next steps planning',
+          step: 'Week 4',
+          title: 'Launch & First User Onboarding',
+          description: 'We get you to market and start the feedback loop.',
         },
       ],
     },
     caseStudies: [
       {
-        title: 'Startup MVP in 30 Dagen',
-        description: 'Van concept naar werkend platform met 37 signups in 2 weken',
+        title: 'Case Study: How TechFlow launched their platform and secured pre-seed funding in 45 days',
+        description: 'From concept to working product in 30 days, with 150+ beta users and a clear path to revenue.',
         category: 'build',
-        metrics: '37 signups in 2 weken',
-        slug: 'startup-mvp-30-days',
+        metrics: '150+ beta users • Pre-seed funding secured',
+        slug: 'techflow-launch',
       },
     ],
     pricing: {
-      headline: 'Build Pricing',
+      headline: 'Your Investment in Speed & Validation.',
       tiers: [
         {
-          name: 'MVP Sprint',
-          price: '€4.500',
-          description: 'Volledige MVP ontwikkeling van idee tot werkend product',
+          name: '90-Minute Validation Session',
+          price: '€399',
+          description: 'The perfect first step to de-risk an idea. We analyze your concept, identify potential pitfalls, and provide a clear roadmap forward.',
           features: [
-            'Idee validatie framework',
-            'Hands-on development',
-            'User testing & feedback',
-            'Launch ondersteuning',
-            '2 maanden follow-up',
+            'Idea validation framework',
+            'Market opportunity analysis',
+            'Technical feasibility assessment',
+            'Risk identification & mitigation',
+            'Next steps roadmap',
           ],
-          ctaText: 'Boek Fit Call',
+          ctaText: 'Book Validation Session',
+          ctaLink: '/contact',
+        },
+        {
+          name: 'The 30-Day MVP Sprint',
+          price: '€4,500',
+          description: 'The complete package to go from idea to market. A fully automated platform, ready for your first users, delivered in 30 days.',
+          features: [
+            'Complete system architecture',
+            'Core feature development',
+            'Automated workflows',
+            'User onboarding system',
+            'Launch support & documentation',
+            '30 days post-launch support',
+          ],
+          ctaText: 'Book a Project Scoping Call',
           ctaLink: '/contact',
         },
       ],
     },
     cta: {
-      headline: 'Klaar om je idee te bouwen?',
-      description: 'Laten we samen je visie omzetten in een werkend systeem.',
-      ctaText: 'Plan een Project Scoping Call',
+      headline: 'Ready to Build?',
+      description: 'Let\'s turn your vision into a market-ready reality. Book a call to discuss your project.',
+      ctaText: 'Book a Project Scoping Call',
       ctaLink: '/contact',
     },
   },
   optimizePage: {
     meta: {
-      title: 'Bestaande Business Optimaliseren | Octomatic',
-      description: 'Elimineer chaos, verlaag kosten en schaal je operatie met bewezen automatisering. ROI Calculator beschikbaar.',
+      title: 'Optimize an Existing Business | Octomatic',
+      description: 'We identify the hidden inefficiencies in your business and implement intelligent automation systems that add thousands back to your bottom line.',
     },
     hero: {
-      headline: 'Transformeer je Operatie',
-      subline: 'We elimineren inefficiënties, automatiseren processen en verlagen kosten terwijl je schaalt.',
-      ctaText: 'Boek een Gratis Proces Audit',
+      // Alternative headlines:
+      // Option 1: 'Eliminate Chaos. Unlock Profit.'
+      // Option 2: 'Stop Leaking Profit.'
+      // Option 3: 'Stop Wasting Money.'
+      headline: 'Stop Leaking Profit.',
+      subline: 'We identify the hidden inefficiencies in your business and implement intelligent automation systems that add thousands back to your bottom line.',
+      ctaText: 'Book a Free Process Audit',
     },
-    problemSolution: {
-      headline: 'Het Profit Leak Probleem',
-      problem: 'De meeste bedrijven verliezen €50.000+ per jaar aan inefficiënte processen, handmatig werk en gemiste automatisering kansen.',
-      solution: 'Onze automatisering oplossingen elimineren deze lekken en creëren directe ROI.',
-      features: [
+    problem: {
+      headline: 'Your Business is Leaking €67,560 Annually. We\'ll Prove It.',
+      description: 'Manual tasks, repetitive work, and disconnected systems act as a hidden tax on your business. Every hour spent on data entry, every email that gets lost, every process that requires human intervention—it all adds up. While you\'re busy running the business, money is quietly slipping away. The good news? These leaks are fixable. Use our free calculator to estimate your company\'s potential savings.',
+      calculatorCta: 'Use our free calculator to estimate your company\'s potential savings.',
+    },
+    solutions: {
+      headline: 'Our Automation Toolkit.',
+      items: [
         {
           title: 'CRM Buildouts',
-          description: 'Volledig geautomatiseerde customer relationship management systemen',
+          description: 'A central system for all customer data.',
         },
         {
-          title: 'HR & Hiring Systems',
-          description: 'Automatiseer recruitment, onboarding en HR processen',
+          title: 'Hiring & HR Systems',
+          description: 'Automating the talent pipeline.',
         },
         {
-          title: 'Lead Generation',
-          description: 'Geautomatiseerde lead capture en nurturing systemen',
+          title: 'Project Management Systems',
+          description: 'A single source of truth for all projects.',
         },
         {
-          title: 'Project Management',
-          description: 'Workflow automatisering en project tracking systemen',
+          title: 'AI Service Fulfillment',
+          description: 'Delivering your services 3x faster.',
         },
       ],
     },
     caseStudies: [
       {
-        title: '€50.000+ Bespaard per Jaar',
-        description: 'Automatisering van HR en recruitment processen',
+        title: 'Case Study: How GreenTech Solutions reduced manual data entry by 80% and saved €45,000 in the first year',
+        description: 'By automating their CRM and project management workflows, they eliminated 25 hours of manual work per week and improved customer response times by 60%.',
         category: 'optimize',
-        metrics: '€50.000+ bespaard/jaar',
-        slug: 'hr-automation-savings',
+        metrics: '80% reduction • €45,000 saved/year',
+        slug: 'greentech-automation',
       },
     ],
     pricing: {
-      headline: 'Optimize Pricing',
+      headline: 'Your Investment in a Scalable Future.',
       tiers: [
         {
-          name: 'Strategy Workshop',
-          price: '€399',
-          description: 'Perfecte start voor proces analyse en automatisering planning',
+          name: 'Value Stream Mapping Workshop',
+          price: '€1,497',
+          description: 'The essential first step to identifying your biggest profit leaks. We map your entire operation, identify inefficiencies, and provide a prioritized automation roadmap.',
           features: [
-            'Proces audit',
-            'Automatisering roadmap',
-            'ROI berekening',
-            'Tech stack advies',
-            'Implementatie strategie',
+            'Complete process audit',
+            'Value stream mapping',
+            'Profit leak identification',
+            'Prioritized automation roadmap',
+            'ROI projections',
+            'Implementation strategy',
           ],
-          ctaText: 'Boek Workshop',
+          ctaText: 'Book Workshop',
           ctaLink: '/contact',
         },
         {
-          name: 'Project Pricing',
-          price: 'Op Maat',
-          description: 'Volledige automatisering implementatie op maat',
+          name: 'Custom Implementation Project',
+          price: '€5,000+',
+          description: 'The hands-on solution to build and deploy the automations. We implement the systems, train your team, and ensure everything works seamlessly.',
           features: [
-            'Alles uit Workshop',
-            'Hands-on implementatie',
-            'Training & documentatie',
-            'Ongoing support',
-            'ROI tracking',
+            'Everything from Workshop',
+            'Custom automation development',
+            'System integration',
+            'Team training & documentation',
+            '30 days post-launch support',
+            'ROI tracking & optimization',
           ],
-          ctaText: 'Plan Gesprek',
+          ctaText: 'Book a Free Process Audit',
           ctaLink: '/contact',
         },
       ],
     },
     cta: {
-      headline: 'Klaar om je bedrijf te optimaliseren?',
-      description: 'Ontdek hoeveel tijd en geld je kunt besparen met automatisering.',
-      ctaText: 'Boek een Gratis Proces Audit',
+      headline: 'Ready to Optimize?',
+      description: 'Stop losing money to inefficiency. Book a free audit and discover how much your business could save.',
+      ctaText: 'Book a Free Process Audit',
       ctaLink: '/contact',
     },
   },
   createPage: {
     meta: {
-      title: 'Virale Content Creëren | Octomatic',
-      description: 'Verbluffende, AI-gedreven visuals die je publiek boeien. Video reels, B-roll en visuele content op demand.',
+      title: 'Create Viral Content | Octomatic',
+      description: 'We produce stunning, AI-powered B-roll and visuals that give your content the cinematic quality it deserves.',
     },
     hero: {
-      headline: 'Viral Visuals. On Demand.',
-      subline: 'We produceren verbluffende, AI-gedreven visuals die je publiek boeien en engagement genereren.',
-      ctaText: 'Bekijk de Pakketten',
+      // Alternative headlines:
+      // Option 1: 'Viral Visuals. On Demand.'
+      // Option 2: 'The End of Stock Footage.'
+      // Option 3: 'Content That Captivates.'
+      headline: 'Content That Captivates.',
+      subline: 'We produce stunning, AI-powered B-roll and visuals that give your content the cinematic quality it deserves.',
+      ctaText: 'See Packages & Pricing',
     },
     portfolio: {
-      headline: 'Ons Werk',
+      headline: 'Trusted by Creators Who Demand Excellence.',
       projects: [
         {
-          title: 'AI B-Roll Reel',
-          description: 'High-impact video content voor social media',
+          title: 'AI B-Roll Reel - Tech Channel',
+          description: 'High-impact video content for social media',
           category: 'create',
-          metrics: '100K+ views',
-          slug: 'ai-broll-reel',
+          metrics: 'Views: 2.3M • 30s Retention: 78% • Likes: 45K',
+          slug: 'ai-broll-reel-tech',
+        },
+        {
+          title: 'AI B-Roll Reel - Finance Channel',
+          description: 'Cinematic visuals for financial content',
+          category: 'create',
+          metrics: 'Views: 1.8M • 30s Retention: 82% • Likes: 38K',
+          slug: 'ai-broll-reel-finance',
         },
       ],
     },
     process: {
-      headline: 'Hoe het Werkt',
+      headline: 'Your Vision, Automated.',
       steps: [
         {
           step: '1',
-          title: 'Brief & Concept',
-          description: 'We bespreken je visie en creëren een creatief concept',
+          title: 'The Brief',
+          description: 'You provide your script or concept.',
         },
         {
           step: '2',
-          title: 'Production',
-          description: 'AI-gedreven content creatie met state-of-the-art tools',
+          title: 'The Creation',
+          description: 'Our AI-powered system generates a library of stunning, relevant visuals.',
         },
         {
           step: '3',
-          title: 'Delivery',
-          description: 'Snelle levering van je visuele content, klaar voor gebruik',
+          title: 'The Delivery',
+          description: 'You receive a folder of high-resolution footage, ready to edit.',
         },
       ],
     },
+    testimonial: {
+      headline: 'Why the Fastest-Growing Channels Choose Octomatic.',
+      quote: 'Octomatic\'s visuals transformed our content. The quality is cinematic, the turnaround is lightning-fast, and our audience engagement has never been higher. This is the secret weapon every creator needs.',
+      author: 'Black Swan Capitalist',
+      authorTitle: 'YouTube Creator, 500K+ Subscribers',
+    },
     pricing: {
-      headline: 'Create Pricing',
+      headline: 'Packages Designed for Impact.',
       tiers: [
         {
-          name: 'Starter Package',
+          name: 'The Starter Pack',
           price: '€299',
-          description: 'Perfect voor kleine projecten en test content',
+          description: 'Perfect for a single, high-impact video. Get stunning visuals that elevate your content without breaking the bank.',
           features: [
-            '5 AI visuals',
-            'Basic editing',
-            'Social media formats',
-            '1 revisie ronde',
-            '7 dagen levering',
+            '10 AI-generated visuals',
+            'HD resolution (1080p)',
+            'All social media formats',
+            '1 revision round',
+            '5-day delivery',
           ],
-          ctaText: 'Bestel Nu',
+          ctaText: 'Order Now',
           ctaLink: '/contact',
         },
         {
-          name: 'Pro Package',
+          name: 'The Growth Bundle',
           price: '€799',
-          description: 'Voor serieuze content creators en merken',
+          description: 'The best value for creators producing regular content. A steady stream of premium visuals to keep your audience engaged.',
           features: [
-            '20 AI visuals',
-            'Premium editing',
-            'Alle formats',
-            '3 revisie rondes',
-            '5 dagen levering',
+            '30 AI-generated visuals',
+            '4K resolution available',
+            'All formats + custom sizes',
+            '3 revision rounds',
+            '3-day delivery',
             'Priority support',
+            'Monthly refresh option',
           ],
-          ctaText: 'Bestel Nu',
+          ctaText: 'Order Now',
+          ctaLink: '/contact',
+        },
+        {
+          name: 'The Viral Enterprise',
+          price: 'Custom',
+          description: 'For agencies and brands needing unlimited creative assets. Unlimited visuals, dedicated support, and custom workflows.',
+          features: [
+            'Unlimited AI visuals',
+            '4K & custom resolutions',
+            'Dedicated account manager',
+            'Unlimited revisions',
+            '24-hour delivery',
+            'Custom workflows',
+            'White-label options',
+          ],
+          ctaText: 'Contact Sales',
           ctaLink: '/contact',
         },
       ],
     },
     cta: {
-      headline: 'Klaar om virale content te creëren?',
-      description: 'Laten we samen visuals maken die je publiek boeien.',
-      ctaText: 'Bekijk de Pakketten',
+      headline: 'Ready to Create?',
+      description: 'Stop settling for stock footage. Get visuals that stop the scroll and captivate your audience.',
+      ctaText: 'See Packages & Pricing',
       ctaLink: '/contact',
     },
   },
   projectenPage: {
     meta: {
       title: 'Ons Werk | Octomatic',
-      description: 'Bekijk onze portfolio van succesvolle projecten: Build, Optimize en Create.',
+      description: 'Bewezen resultaten. Tastbare impact. Ontdek een selectie van onze projecten binnen onze drie kerndisciplines.',
     },
-    headline: 'Ons Werk',
-    description: 'Een overzicht van onze beste projecten across alle drie pijlers.',
+    headline: 'Bewezen Resultaten. Tastbare Impact.',
+    description: 'Wij meten ons succes aan het succes van onze klanten. Ontdek een selectie van onze projecten binnen onze drie kerndisciplines.',
+    projects: [
+      {
+        clientName: 'Bewuste Vakantie',
+        resultTagline: 'Een complete digitale transformatie van idee tot een succesvolle lancering.',
+        category: 'build',
+        slug: 'bewuste-vakantie',
+      },
+      {
+        clientName: '[Automation Client]',
+        resultTagline: 'Meer dan 20 uur aan handmatig werk per week geëlimineerd door intelligente procesautomatisering.',
+        category: 'optimize',
+        slug: 'automation-client',
+      },
+      {
+        clientName: 'Black Swan Capitalist',
+        resultTagline: 'Een kijker retentie van meer dan 70% behaald op YouTube met AI-gedreven visuele content.',
+        category: 'create',
+        slug: 'black-swan-capitalist',
+      },
+    ],
   },
   overOnsPage: {
     meta: {
       title: 'Over Ons | Octomatic',
-      description: 'Leer meer over Octomatic, onze missie en waarom we doen wat we doen.',
+      description: 'Wij zijn architecten van groei, geen technici. Ontdek onze reis en missie.',
+    },
+    hero: {
+      // Alternative headlines:
+      // Option 1: 'Wij zijn architecten van groei, geen technici.'
+      // Option 2: 'De Synergie van Systeem & Verhaal.'
+      // Option 3: 'Waar Intelligente Automatisering en Creatieve Impact Samenkomen.'
+      headline: 'Wij zijn architecten van groei, geen technici.',
+      subline: 'Onze reis heeft ons één ding geleerd: echte groei ontstaat wanneer intelligente systemen en meeslepende creativiteit perfect synchroon werken.',
     },
     founderStory: {
-      headline: 'Het Verhaal van de Founder',
-      content: 'Kennet Timmers heeft 12+ startups gelanceerd en honderden bedrijven geholpen met automatisering en groei. Zijn visie: systemen bouwen die intelligente groei mogelijk maken.',
+      headline: 'Mijn Reis: Van Code naar Creativiteit, en Terug.',
+      content: 'Van jongs af aan werd ik gedreven door een fascinatie voor efficiëntie. Ik zag systemen—zowel digitaal als menselijk—en zag onmiddellijk hoe ze beter konden. Het oplossen van complexe puzzels en het elimineren van chaos door slimme automatisering was niet alleen werk; het was een passie. Het bracht een diepe voldoening om processen te stroomlijnen en te zien hoe een goed geoptimaliseerd systeem een bedrijf vleugels kon geven.\n\nNa jaren van het optimaliseren van bestaande structuren, verschoof mijn focus. Ik wilde niet langer alleen repareren, maar creëren. Dit leidde tot de oprichting van een "startup lab," waar we nieuwe digitale producten vanaf de grond opbouwden. De kick om een abstract idee om te zetten in een tastbaar, functioneel product was verslavend. Hier leerde ik wat er nodig is om een visie om te zetten in een robuust, schaalbaar systeem.\n\nDe meest onverwachte wending in mijn carrière kwam toen een klant, Black Swan Capitalist, me vroeg om AI-gedreven B-roll voor hun YouTube-kanaal te produceren. Ik dook in de wereld van visuele storytelling en realiseerde me iets fundamenteels: het beste systeem ter wereld is nutteloos als het de aandacht niet kan vangen. Een briljant product zonder een meeslepend verhaal is als een motor zonder brandstof.\n\nDeze drie ervaringen—Optimaliseren, Bouwen en Creëren—smolten samen tot de kernfilosofie van Octomatic. Ik realiseerde me dat duurzame groei geen kwestie is van één van deze pilaren, maar van de naadloze integratie van alle drie. Je hebt een efficiënte motor, een solide chassis en een design dat de aandacht trekt nodig om de race te winnen.',
     },
     mission: {
-      headline: 'Waarom we doen wat we doen',
-      content: 'We geloven dat elke ondernemer toegang moet hebben tot de tools en systemen die nodig zijn om te groeien. Door automatisering en intelligente systemen maken we groei toegankelijk voor iedereen.',
+      headline: 'Onze Missie: Groei Moeiteloos Laten Voelen.',
+      content: 'Wij zijn er om ambitieuze bedrijven te bevrijden van de dagelijkse operationele chaos. Door een fundament van intelligente systemen en boeiende content te bouwen, creëren we de ruimte voor jou om te focussen op wat echt telt: innovatie, visie en de groei van je bedrijf.',
     },
     faq: [
       {
-        question: 'Wat maakt Octomatic anders?',
-        answer: 'We combineren technische expertise met strategisch inzicht. We bouwen niet alleen systemen, we bouwen systemen die groei mogelijk maken.',
+        question: 'Zijn jullie een eenmanszaak?',
+        answer: 'Octomatic is een boutique agency, en dat is ons grootste voordeel. Je krijgt directe toegang tot de hoofd-architect, wat topkwaliteit, duidelijke communicatie en één vast aanspreekpunt garandeert. Voor grotere projecten schalen we op met een vertrouwd netwerk van gespecialiseerde professionals.',
       },
       {
-        question: 'Hoe lang duurt een typisch project?',
-        answer: 'Dit hangt af van de scope. MVP sprints duren 30 dagen, automatisering projecten variëren van 2-8 weken, en content projecten kunnen binnen een week worden geleverd.',
+        question: 'Waarom drie verschillende diensten? Zijn die niet compleet verschillend?',
+        answer: 'Ze lijken verschillend, maar in de praktijk versterken ze elkaar constant. Ons diepgaand begrip van hoe een bedrijf schaalt (Optimaliseren) stelt ons in staat om betere producten te Bouwen. En onze expertise in het vangen van aandacht (Creëren) zorgt ervoor dat de systemen en producten die we bouwen ook daadwerkelijk succesvol zijn in de markt.',
       },
       {
-        question: 'Werken jullie alleen met Nederlandse bedrijven?',
-        answer: 'We werken primair met Nederlandse en Belgische bedrijven, maar zijn open voor internationale projecten.',
+        question: 'Wie is jullie ideale klant?',
+        answer: 'Onze ideale klant is een ambitieuze oprichter of ondernemer die begrijpt dat succes op de lange termijn zowel een ijzersterk operationeel fundament als een meeslepend merkverhaal vereist. Ze zoeken geen snelle trucjes, maar een strategische partner voor duurzame groei.',
       },
     ],
   },

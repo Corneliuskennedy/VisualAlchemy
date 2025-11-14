@@ -19,11 +19,16 @@ export const useCal = (namespace: string, config: any = {}) => {
     (async function () {
       try {
         const cal = await getCalApi({ namespace });
-        cal("ui", config);
-        
-        // Only log in development mode
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`📅 Cal.com initialized: ${namespace}`);
+        // Check if cal is a function before calling
+        if (cal && typeof cal === 'function') {
+          cal("ui", config);
+          
+          // Only log in development mode
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`📅 Cal.com initialized: ${namespace}`);
+          }
+        } else {
+          console.warn(`Cal.com API returned non-function for ${namespace}:`, cal);
         }
         
       } catch (error) {

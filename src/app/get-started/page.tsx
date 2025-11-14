@@ -10,6 +10,8 @@ import { Calendar, ArrowRight, ArrowLeft, CheckCircle, Clock, Euro, Shield, Targ
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import { useCalWorkshop, useCalIntroCall } from '@/hooks/use-cal';
+import LiveActivity from '@/components/realtime/LiveActivity';
+import SmartCTA from '@/components/personalization/SmartCTA';
 
 const GetStartedPage: React.FC = () => {
   const { language } = useTranslations();
@@ -164,6 +166,24 @@ const GetStartedPage: React.FC = () => {
                       "From free introduction call to full implementation. Our proven approach ensures guaranteed results."
                     )}
                   </h2>
+                  
+                  {/* AI-Powered Smart CTA */}
+                  <div className="mt-8">
+                    <SmartCTA 
+                      section="hero"
+                      audience="universal"
+                      className="max-w-xl mx-auto"
+                    />
+                  </div>
+                  
+                  {/* Live Activity */}
+                  <div className="mt-6 flex justify-center">
+                    <LiveActivity 
+                      page="get-started"
+                      showViewers={true}
+                      showRecentActivity={true}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

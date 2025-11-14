@@ -28,13 +28,11 @@ export function middleware(request: NextRequest) {
 
   // Handle Dutch language routes (/nl/*)
   if (pathname.startsWith('/nl')) {
-    // Log for debugging
-    console.log(`[MIDDLEWARE] Handling /nl route: ${pathname} -> rewriting to internal route`);
     // Extract the path after /nl
     let pathWithoutLang = pathname.slice(3); // Remove '/nl' prefix
     
     // Handle root /nl route - rewrite to /
-    if (!pathWithoutLang || pathWithoutLang === '') {
+    if (!pathWithoutLang || pathWithoutLang === '' || pathWithoutLang === '/') {
       pathWithoutLang = '/';
     }
     
@@ -53,7 +51,6 @@ export function middleware(request: NextRequest) {
     // Set language header for server components to detect language
     response.headers.set('x-language', 'nl');
     
-    console.log(`[MIDDLEWARE] Rewritten ${pathname} -> ${rewriteUrl.pathname}`);
     return response;
   }
 
@@ -73,6 +70,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - public files (public folder)
+     * 
+     * This regex already matches /nl paths, but we ensure it works
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|webp|ico|woff|woff2|ttf|eot)).*)',
   ],

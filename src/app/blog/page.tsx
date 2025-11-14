@@ -48,7 +48,13 @@ const BlogPage = () => {
         .order('created_at', { ascending: false });
 
       if (error) {
-        console.error("Error fetching blogs:", error);
+        const errorDetails = {
+          message: error.message || 'Unknown error',
+          details: error.details || null,
+          hint: error.hint || null,
+          code: error.code || null,
+        };
+        console.error("Error fetching blogs:", errorDetails);
         return [];
       }
 

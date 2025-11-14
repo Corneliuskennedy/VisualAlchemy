@@ -256,7 +256,7 @@ export const Navbar = () => {
                 aria-label={`Switch to ${language === "nl" ? "English" : "Dutch"}`}
                 type="button"
               >
-                <Flag code={language === "nl" ? "gb" : "nl"} height="16" className="w-5 h-5" />
+                <Flag code={language === "nl" ? "us" : "nl"} height="16" className="w-5 h-5" />
               </button>
               
               {/* Theme Switcher */}
@@ -387,7 +387,7 @@ export const Navbar = () => {
                 className="text-gray-300 hover:text-white transition-colors p-3 hover:bg-white/10 rounded-lg flex items-center justify-center w-full gap-2"
                 aria-label={`Switch to ${language === "nl" ? "English" : "Dutch"}`}
               >
-                <Flag code={language === "nl" ? "gb" : "nl"} height="16" className="w-5 h-5" />
+                <Flag code={language === "nl" ? "us" : "nl"} height="16" className="w-5 h-5" />
                 <span className="text-sm">{language === "nl" ? "English" : "Nederlands"}</span>
               </button>
               

@@ -1,22 +1,37 @@
 import React from "react";
 
 interface FlagProps {
-  code: "gb" | "nl";
+  code: "us" | "nl";
   height?: string;
   className?: string;
 }
 
 const flags = {
-  gb: (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" className="w-full h-full">
-      <clipPath id="s">
-        <path d="M0,0 v30 h60 v-30 z"/>
-      </clipPath>
-      <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
-      <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#s)" stroke="#C8102E" strokeWidth="4"/>
-      <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
-      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+  us: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7410 3900" className="w-full h-full">
+      <rect fill="#B22234" width="7410" height="3900"/>
+      <path d="M0,450h7410m0,300H0m0,300h7410m0,300H0m0,300h7410m0,300H0m0,300h7410m0,300H0m0,300h7410m0,300H0m0,300h7410m0,300H0m0,300h7410" stroke="#FFF" strokeWidth="300"/>
+      <rect fill="#3C3B6E" width="2964" height="2100"/>
+      <g fill="#FFF">
+        <g id="s18">
+          <g id="s9">
+            <g id="s5">
+              <g id="s4">
+                <path id="s" d="M247,90 247,200 292,200 292,90z"/>
+                <use href="#s" y="210"/>
+                <use href="#s" y="420"/>
+                <use href="#s" y="630"/>
+                <use href="#s" y="840"/>
+              </g>
+              <use href="#s4" x="247"/>
+            </g>
+            <use href="#s5" x="494"/>
+          </g>
+          <use href="#s9" x="988"/>
+        </g>
+        <use href="#s18" x="1976"/>
+        <use href="#s9" x="4940"/>
+      </g>
     </svg>
   ),
   nl: (
