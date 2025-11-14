@@ -69,25 +69,25 @@ const ServicesPage: React.FC = () => {
         h1={h1Content}
       />
       
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         {/* Hero Section */}
-        <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+        <section className="py-16 md:py-20 relative bg-background">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <GridBackground className="pointer-events-none" />
           </div>
           
           <div className="container mx-auto px-4 relative z-10">
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="flex items-center space-x-1 text-sm text-gray-400 mb-12">
+            <nav aria-label="Breadcrumb" className="flex items-center space-x-1 text-sm text-muted-foreground dark:text-gray-400 mb-12">
               <ol className="flex items-center space-x-1">
                 <li className="flex items-center">
-                  <Link href={isNL ? '/nl' : '/'} className="hover:text-gray-200 transition-colors">
+                  <Link href={isNL ? '/nl' : '/'} className="hover:text-foreground dark:hover:text-gray-200 transition-colors">
                     Home
                   </Link>
                 </li>
                 <li className="flex items-center">
                   <span className="mx-2" aria-hidden="true">/</span>
-                  <span className="text-gray-200 font-semibold" aria-current="page">
+                  <span className="text-foreground dark:text-gray-200 font-semibold" aria-current="page">
                     {isNL ? 'Strategische Oplossingen' : 'Strategic Solutions'}
                   </span>
                 </li>
@@ -106,7 +106,7 @@ const ServicesPage: React.FC = () => {
                     <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
                   </div>
                   
-                  <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed max-w-lg">
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed max-w-lg">
                     {isNL ? (
                       "Een duurzame oplossing is het resultaat van een heldere strategie."
                     ) : (
@@ -130,7 +130,7 @@ const ServicesPage: React.FC = () => {
 
                 {/* Right Column - Visual Element */}
                 <div className="relative">
-                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 shadow-2xl">
+                  <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                     <div className="space-y-6">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center">
@@ -140,13 +140,13 @@ const ServicesPage: React.FC = () => {
                           <h3 className="text-xl font-semibold text-white">
                             {isNL ? "Strategische focus" : "Strategic focus"}
                           </h3>
-                          <p className="text-gray-400">
+                          <p className="text-muted-foreground dark:text-gray-400">
                             {isNL ? "Methodologie voor duurzame groei" : "Methodology for sustainable growth"}
                           </p>
                         </div>
                       </div>
                       
-                      <p className="text-lg text-gray-300 leading-relaxed">
+                      <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed">
                         {isNL ? (
                           "We bouwen geen tools - we creëren strategische roadmaps die leiden tot meetbare resultaten en schaalbare systemen."
                         ) : (
@@ -157,13 +157,13 @@ const ServicesPage: React.FC = () => {
                       <div className="grid grid-cols-2 gap-4 pt-4">
                         <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                           <div className="text-2xl font-bold text-[#4585f4]">15+</div>
-                          <div className="text-sm text-gray-400">
+                          <div className="text-sm text-muted-foreground dark:text-gray-400">
                             {isNL ? "Bewezen oplossingen" : "Proven solutions"}
                           </div>
                         </div>
                         <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                           <div className="text-2xl font-bold text-[#4585f4]">€15k+</div>
-                          <div className="text-sm text-gray-400">
+                          <div className="text-sm text-muted-foreground dark:text-gray-400">
                             {isNL ? "Gegarandeerde ROI" : "Guaranteed ROI"}
                           </div>
                         </div>
@@ -191,7 +191,7 @@ const ServicesPage: React.FC = () => {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                 {isNL ? "De resultaten van een strategische aanpak" : "The results of a strategic approach"}
               </h2>
-              <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                 {isNL ? (
                   "Hieronder staan enkele kernvoorbeelden van de systemen en resultaten die we voor onze klanten bouwen. Ze zijn niet de start van onze samenwerking, maar het bewijs van onze methodologie."
                 ) : (
@@ -204,7 +204,7 @@ const ServicesPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               
               {/* Lead Generation */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <LineChart className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -223,7 +223,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Een voorspelbaar lead generatie systeem" : "A predictable lead generation system"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: Een voorspelbare pijplijn van gekwalificeerde leads, zodat uw sales team kan focussen op het sluiten van deals, niet op het najagen ervan."
                   ) : (
@@ -241,7 +241,7 @@ const ServicesPage: React.FC = () => {
               </div>
 
               {/* Project Management */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <BarChart3 className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -260,7 +260,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Een gestroomlijnd project management systeem" : "A streamlined project management system"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: Projecten die op tijd, binnen budget en met volledige transparantie worden afgerond, waardoor chaos en onzekerheid worden geëlimineerd."
                   ) : (
@@ -278,7 +278,7 @@ const ServicesPage: React.FC = () => {
               </div>
 
               {/* Hiring Systems */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Users className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -297,7 +297,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Een geautomatiseerde talent pijplijn" : "An automated talent pipeline"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: U spreekt alleen met de top 5% van de kandidaten, waardoor u sneller betere mensen aanneemt en duizenden euro's aan wervingskosten bespaart."
                   ) : (
@@ -315,7 +315,7 @@ const ServicesPage: React.FC = () => {
               </div>
 
               {/* AI Service Fulfillment */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Bot className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -334,7 +334,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Efficiënte AI service fulfillment" : "Efficient AI service fulfillment"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: Servicelevering die 3x sneller is met hogere kwaliteit, waardoor u groeit zonder extra personeel aan te nemen."
                   ) : (
@@ -352,7 +352,7 @@ const ServicesPage: React.FC = () => {
               </div>
 
               {/* CRM Buildouts */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Brain className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -371,7 +371,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Een geïntegreerd CRM systeem" : "An integrated CRM system"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: Een geïntegreerd systeem waar elke klantinteractie wordt vastgelegd, waardoor u nooit meer leads verliest en uw conversie met 40% stijgt."
                   ) : (
@@ -389,7 +389,7 @@ const ServicesPage: React.FC = () => {
               </div>
 
               {/* SOPs Consulting */}
-              <div className="bg-gray-900/20 hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
+              <div className="bg-secondary/20 dark:bg-gray-900/20 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 rounded-xl p-10 group">
                 <div className="flex items-start gap-6 mb-8">
                   <div className="w-16 h-16 bg-[#4585f4]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <FileText className="w-8 h-8 text-[#4585f4] stroke-2" />
@@ -408,7 +408,7 @@ const ServicesPage: React.FC = () => {
                   {isNL ? "Aangepaste SOPs en playbooks" : "Custom SOPs and playbooks"}
                 </h3>
                 
-                <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                <p className="text-foreground dark:text-gray-300 mb-8 leading-relaxed text-lg">
                   {isNL ? (
                     "Het resultaat: Elke medewerker weet precies wat te doen en wanneer, waardoor fouten met 80% afnemen en nieuwe teamleden 3x sneller productief worden."
                   ) : (
@@ -455,7 +455,7 @@ const ServicesPage: React.FC = () => {
                 <div className="mb-6">
                   <Button 
                     size="lg" 
-                    className="px-12 py-6 text-xl font-bold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                     onClick={() => window.location.href = '/contact'}
                   >
                     {isNL ? "Start Gratis Proces Audit" : "Start Free Process Audit"}
