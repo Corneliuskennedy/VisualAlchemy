@@ -106,64 +106,27 @@ function HomeContent() {
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="max-w-6xl mx-auto text-center space-y-8 md:space-y-10 relative z-10"
+          className="max-w-5xl mx-auto text-center space-y-10 md:space-y-12 relative z-10"
         >
-          {/* Premium Typography with Serif Elegance - Editorial Foundation */}
+          {/* Clean Typography - Monopo-Inspired */}
           <motion.h1
             id="hero-heading"
             variants={heroTitleVariants}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-archivo font-bold leading-[1.1] tracking-[-0.02em]
-                     text-heading dark:text-white
-                     dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-gray-300 dark:bg-clip-text dark:text-transparent
-                     drop-shadow-sm dark:drop-shadow-none
-                     relative inline-block"
+            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-archivo font-bold leading-[1.05] tracking-tight
+                     text-heading dark:text-white"
             aria-label={homepage.hero.headline}
           >
-            {/* Ultra-subtle text glow - Barely there elegance */}
-            <motion.span
-              className="absolute inset-0 -z-10 blur-3xl opacity-[0.03] dark:opacity-[0.02] pointer-events-none"
-              style={{
-                background: 'linear-gradient(135deg, #4585f4, #6B8AE6)',
-                transform: 'scale(1.1)',
-              }}
-              animate={{
-                opacity: [0.02, 0.04, 0.02],
-                scale: [1.05, 1.08, 1.05],
-              }}
-              transition={{
-                duration: 12,
-                repeat: Infinity,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-            />
-            <span className="relative z-10">{homepage.hero.headline}</span>
+            {homepage.hero.headline}
           </motion.h1>
 
-          {/* Refined Subline with Premium Spacing - Enhanced Contrast & Emotional Depth */}
+          {/* Clean Subheadline */}
           <motion.p
             variants={itemVariants}
-            className="text-xl md:text-2xl lg:text-3xl max-w-4xl mx-auto leading-[1.6] font-normal
-                     text-body dark:text-gray-300
-                     tracking-tight
-                     relative"
-            aria-describedby="hero-heading"
+            className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed
+                     text-muted-foreground dark:text-gray-400
+                     font-normal"
           >
-            {/* Ultra-subtle underline accent - Refined detail */}
-            <motion.span
-              className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-0.5 bg-gradient-to-r from-transparent via-[#4585f4]/30 to-transparent"
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{
-                opacity: [0, 0.2, 0.15, 0.2, 0],
-                scaleX: [0, 1, 1.05, 1, 0],
-              }}
-              transition={{
-                duration: 8,
-                delay: 2,
-                repeat: Infinity,
-                ease: [0.4, 0, 0.2, 1],
-              }}
-            />
-            <span className="relative z-10">{homepage.hero.subline}</span>
+            {homepage.hero.subline}
           </motion.p>
 
           {/* AI-Powered Smart CTA - Premium Spacing & Polish */}
@@ -262,35 +225,26 @@ function HomeContent() {
                             </div>
                           )}
 
-                          {/* Premium Title - Serif Headlines */}
+                          {/* Clean Title */}
                           <h3 className="text-2xl md:text-3xl lg:text-4xl font-archivo font-bold
-                                       transition-all duration-300
                                        text-heading dark:text-white
-                                       group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6]
                                        tracking-tight">
                             {card.title}
                           </h3>
 
-                          {/* Refined Description */}
+                          {/* Clean Description */}
                           <p className="text-base md:text-lg 
                                       leading-relaxed 
-                                      text-body dark:text-gray-300
-                                      transition-colors duration-300">
+                                      text-muted-foreground dark:text-gray-400">
                             {card.description}
                           </p>
 
-                          {/* Premium CTA with Enhanced Arrow */}
+                          {/* Simple CTA */}
                           <div className="flex items-center gap-2
-                                       font-semibold text-lg md:text-xl
-                                       transition-all duration-300 ease-out
-                                       group-hover:translate-x-2 
-                                       pt-4
-                                       text-[#4585f4] dark:text-[#6B8AE6]">
-                            {card.ctaText}
-                            <ArrowRight className="h-5 w-5 md:h-6 md:w-6 
-                                                 transition-all duration-300
-                                                 group-hover:translate-x-2 
-                                                 group-hover:scale-110" />
+                                       font-medium text-base md:text-lg
+                                       text-[#4585f4] pt-4">
+                            <span>{card.ctaText}</span>
+                            <ArrowRight className="h-4 w-4" />
                           </div>
                         </div>
                       </Card>
