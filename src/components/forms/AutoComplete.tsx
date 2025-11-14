@@ -19,7 +19,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Input } from '@/components/ui/input';
 import { Check, ChevronDown, Loader2 } from 'lucide-react';
-import { debounce } from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 
 interface AutoCompleteProps {
   name: string;

@@ -26,7 +26,7 @@ import { Card } from '@/components/ui/card';
 import { CheckCircle2, AlertCircle, Loader2, Save } from 'lucide-react';
 import useLanguage from '@/contexts/LanguageContext';
 import { getOfflineHandler } from '@/lib/pwa/OfflineHandler';
-import { debounce } from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 
 interface FormStep {
   id: string;
