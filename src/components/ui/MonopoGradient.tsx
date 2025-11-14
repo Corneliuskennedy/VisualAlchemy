@@ -392,12 +392,17 @@ export function MonopoGradient({
         }}
       />
       
-      {/* Grain texture overlay */}
+      {/* Grain texture overlay - Also oversized to match gradient */}
       {grain && (
         <canvas
           ref={grainCanvasRef}
-          className="absolute inset-0 w-full h-full opacity-40"
+          className="absolute opacity-40"
           style={{
+            width: '300%',  // Match gradient size
+            height: '100%',
+            left: '50%',
+            top: 0,
+            transform: 'translate3d(-50%, 0, 0)',  // Center like gradient
             mixBlendMode: 'overlay',
             pointerEvents: 'none',
           }}
