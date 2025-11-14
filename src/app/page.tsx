@@ -14,6 +14,8 @@ import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
 import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
+import { HeroWebGLBackground } from '@/components/ui/HeroWebGLBackground';
+import { HeroTextReveal } from '@/components/ui/HeroTextReveal';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
 
@@ -82,25 +84,14 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Section 1: Clean Hero - Monopo-Inspired Minimalism */}
+      {/* Section 1: Hero with Technical Visual Effects */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10 overflow-hidden"
       >
-        
-        {/* Hero Image - Ready for professional photo */}
-        {/* Uncomment and add image path when photo is ready:
-        <div className="absolute inset-0 opacity-10 dark:opacity-5 pointer-events-none" aria-hidden="true">
-          <Image
-            src="/images/hero-team-workspace.webp"
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        */}
+        {/* Gladeye-Inspired Organic Growth Background - WebGL Canvas */}
+        <HeroWebGLBackground />
         
         <motion.div
           initial="hidden"
@@ -108,16 +99,14 @@ function HomeContent() {
           variants={containerVariants}
           className="max-w-5xl mx-auto text-center space-y-10 md:space-y-12 relative z-10"
         >
-          {/* Clean Typography - Monopo-Inspired */}
-          <motion.h1
+          {/* Character-by-Character Text Reveal - Gladeye-Inspired */}
+          <HeroTextReveal
+            text={homepage.hero.headline}
             id="hero-heading"
-            variants={heroTitleVariants}
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-archivo font-bold leading-[1.05] tracking-tight
                      text-heading dark:text-white"
             aria-label={homepage.hero.headline}
-          >
-            {homepage.hero.headline}
-          </motion.h1>
+          />
 
           {/* Clean Subheadline */}
           <motion.p
