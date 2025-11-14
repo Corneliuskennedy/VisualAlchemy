@@ -47,7 +47,7 @@ const BehaviorTracker = lazy(() => import("@/components/BehaviorTracker").then(m
 const AIChatbot = lazy(() => import("@/components/chatbot/AIChatbot").then(module => ({ 
   default: module.AIChatbot || module.default 
 })));
-const AccessibilityControls = lazy(() => import("@/components/a11y/AccessibilityControls").then(module => ({ 
+const AccessibilityControls = lazy(() => import("@/components/A11y/AccessibilityControls").then(module => ({ 
   default: module.AccessibilityControls || module.default 
 })));
 const TranslationDebug = lazy(() => import("@/components/TranslationDebug").then(module => ({ 
