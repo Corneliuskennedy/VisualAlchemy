@@ -138,15 +138,15 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
           ref={containerRef}
           className="overflow-hidden"
           style={{
-            height: isMobile ? 'auto' : '32rem',
-            maxHeight: isMobile ? 'none' : '32rem',
+            height: isMobile ? 'auto' : '40rem',
+            maxHeight: isMobile ? 'none' : '40rem',
           }}
         >
           <div
             ref={trackRef}
             className={`
               flex ${isMobile ? 'flex-col' : 'flex-row'} 
-              ${isMobile ? 'gap-6' : 'gap-6'} 
+              ${isMobile ? 'gap-8' : 'gap-8'} 
               items-center
               ${isMobile ? '' : 'justify-center'}
               scroll-smooth
@@ -169,23 +169,22 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                     width: isMobile 
                       ? '100%' 
                       : isActive 
-                        ? '36rem' 
-                        : '6rem',
+                        ? '48rem' 
+                        : '8rem',
                     height: isMobile 
                       ? isActive 
                         ? 'auto' 
-                        : '6rem'
-                      : '26rem',
+                        : '8rem'
+                      : '34rem',
                   }}
                   transition={{
-                    duration: 0.6,
-                    ease: [0.25, 0.46, 0.45, 0.94],
+                    duration: 0.8,
+                    ease: [0.4, 0, 0.2, 1],
                   }}
                   className={`
                     relative flex-shrink-0 rounded-2xl overflow-hidden cursor-pointer
                     ${isActive ? 'shadow-2xl' : 'shadow-lg'}
                     ${isMobile ? 'w-full' : ''}
-                    transition-shadow duration-300
                   `}
                   style={{
                     scrollSnapAlign: 'center',
@@ -197,71 +196,113 @@ export function CenterModeSlider({ headline, cards }: CenterModeSliderProps) {
                     }
                   }}
                 >
-                  {/* Background Gradient */}
-                  <div
-                    className="absolute inset-0 transition-all duration-600"
+                  {/* Background Gradient with fade */}
+                  <motion.div
+                    className="absolute inset-0"
                     style={{
                       background: bgGradient,
-                      opacity: isActive ? 1 : 0.7,
+                    }}
+                    animate={{
+                      opacity: isActive ? 1 : 0.6,
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.4, 0, 0.2, 1],
                     }}
                   />
 
                   {/* Gradient Overlay for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30 z-[1]" />
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30 z-[1]"
+                    animate={{
+                      opacity: isActive ? 1 : 0.8,
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      ease: [0.4, 0, 0.2, 1],
+                    }}
+                  />
 
                   {/* Content */}
                   <div
                     className={`
                       relative z-[2] h-full flex
                       ${isActive 
-                        ? (isMobile ? 'flex-col p-8' : 'flex-row items-center p-10 gap-8') 
-                        : 'flex-col items-center justify-center p-4'
+                        ? (isMobile ? 'flex-col p-10' : 'flex-row items-center p-12 gap-10') 
+                        : 'flex-col items-center justify-center p-6'
                       }
-                      transition-all duration-300
                     `}
                   >
-                    {/* Title - Always visible */}
-                    <h3
+                    {/* Title - Always visible with fade */}
+                    <motion.h3
+                      animate={{
+                        opacity: isActive ? 1 : 0.9,
+                      }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.4, 0, 0.2, 1],
+                      }}
                       className={`
                         font-archivo font-bold text-white
                         ${isActive
                           ? isMobile
-                            ? 'text-3xl mb-4'
-                            : 'text-4xl md:text-5xl mb-0 flex-shrink-0'
-                          : 'text-lg md:text-xl'
+                            ? 'text-4xl mb-6'
+                            : 'text-5xl md:text-6xl mb-0 flex-shrink-0'
+                          : 'text-xl md:text-2xl'
                         }
                         ${!isActive && !isMobile ? 'writing-vertical-rl rotate-180' : ''}
-                        transition-all duration-300
-                        ${isActive && !isMobile ? 'w-48' : ''}
+                        ${isActive && !isMobile ? 'w-56' : ''}
                       `}
                     >
                       {card.title}
-                    </h3>
+                    </motion.h3>
 
-                    {/* Active Content */}
+                    {/* Active Content with smooth fade */}
                     <AnimatePresence mode="wait">
                       {isActive && (
                         <motion.div
                           key={`content-${index}`}
-                          initial={{ opacity: 0, x: isMobile ? 0 : 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: isMobile ? 0 : -20 }}
-                          transition={{ duration: 0.4, delay: 0.1 }}
-                          className={`flex-1 ${isMobile ? 'space-y-6' : 'space-y-6 max-w-md'}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ 
+                            duration: 0.6,
+                            ease: [0.4, 0, 0.2, 1],
+                          }}
+                          className={`flex-1 ${isMobile ? 'space-y-8' : 'space-y-8 max-w-lg'}`}
                         >
-                          <p className="text-white/95 text-lg md:text-xl leading-relaxed">
-                            {card.description}
-                          </p>
-
-                          <Link
-                            href={card.href}
-                            className="inline-block"
-                            onClick={(e) => e.stopPropagation()}
+                          <motion.p 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ 
+                              duration: 0.6,
+                              delay: 0.2,
+                              ease: [0.4, 0, 0.2, 1],
+                            }}
+                            className="text-white/95 text-xl md:text-2xl leading-relaxed"
                           >
-                            <button className="px-8 py-4 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold text-base transition-all duration-300 border border-white/20 hover:border-white/40">
-                              {card.ctaText.replace(' →', '')}
-                            </button>
-                          </Link>
+                            {card.description}
+                          </motion.p>
+
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ 
+                              duration: 0.6,
+                              delay: 0.3,
+                              ease: [0.4, 0, 0.2, 1],
+                            }}
+                          >
+                            <Link
+                              href={card.href}
+                              className="inline-block"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button className="px-10 py-5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-semibold text-lg transition-all duration-300 border border-white/20 hover:border-white/40">
+                                {card.ctaText.replace(' →', '')}
+                              </button>
+                            </Link>
+                          </motion.div>
                         </motion.div>
                       )}
                     </AnimatePresence>
