@@ -293,11 +293,11 @@ const LeadGenerationPage: React.FC = () => {
           <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
+                <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar voor voorspelbare groei?" : "Ready for predictable growth?"}
                   </h2>
-                  <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                     {isNL 
                       ? "Laat ons uw huidige lead generatie proces analyseren en tonen hoe u meer gekwalificeerde leads kunt genereren."
                       : "Let us analyze your current lead generation process and show you how to generate more qualified leads."
