@@ -171,7 +171,7 @@ export default function BuildPage() {
         description={content.meta.description}
         canonicalUrl={isNL ? "https://www.octomatic.ai/nl/build" : "https://www.octomatic.ai/build"}
       />
-      <div className="min-h-screen relative font-archivo bg-[#0A0A0A]">
+      <div className="min-h-screen relative font-archivo bg-background">
         {/* Hero */}
         <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-20">
           <motion.div
@@ -182,13 +182,13 @@ export default function BuildPage() {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-heading dark:text-white leading-tight"
             >
               {content.hero.headline}
             </motion.h1>
             <motion.p
               variants={itemVariants}
-              className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-foreground dark:text-gray-300 max-w-2xl mx-auto"
             >
               {content.hero.subline}
             </motion.p>
@@ -215,7 +215,7 @@ export default function BuildPage() {
 
       {/* Problem Section */}
       {buildPage.problem && (
-        <section className="py-24 px-4 bg-gray-900/30">
+        <section className="py-24 px-4 bg-secondary/30 dark:bg-gray-900/30">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial="hidden"
@@ -226,13 +226,13 @@ export default function BuildPage() {
             >
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white text-center"
               >
                 {content.problem?.headline}
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-lg md:text-xl text-gray-300 leading-relaxed text-center"
+                className="text-lg md:text-xl text-foreground dark:text-gray-300 leading-relaxed text-center"
               >
                 {content.problem?.description}
               </motion.p>
@@ -265,13 +265,13 @@ export default function BuildPage() {
                   variants={itemVariants}
                   className="relative"
                 >
-                  <Card className="h-full p-6 bg-gray-900/50 border-gray-800">
+                  <Card className="h-full p-6 bg-secondary/50 dark:bg-gray-900/50 border-border dark:border-gray-800">
                     <div className="space-y-4">
                       <div className="w-12 h-12 bg-[#4585f4] rounded-xl flex items-center justify-center">
-                        <span className="text-2xl font-bold text-white">{step.step}</span>
+                        <span className="text-2xl font-bold text-heading dark:text-white">{step.step}</span>
                       </div>
-                      <h3 className="text-xl font-bold text-white">{step.title}</h3>
-                      <p className="text-gray-400">{step.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white">{step.title}</h3>
+                      <p className="text-muted-foreground dark:text-gray-400">{step.description}</p>
                     </div>
                   </Card>
                 </motion.div>
@@ -304,11 +304,11 @@ export default function BuildPage() {
                   key={index}
                   variants={itemVariants}
                 >
-                  <Card className="h-full p-6 bg-gray-900/50 border-gray-800">
+                  <Card className="h-full p-6 bg-secondary/50 dark:bg-gray-900/50 border-border dark:border-gray-800">
                     <div className="space-y-4">
                       <Rocket className="h-8 w-8 text-[#4585f4]" />
-                      <h3 className="text-xl font-bold text-white">{study.title}</h3>
-                      <p className="text-gray-400">{study.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white">{study.title}</h3>
+                      <p className="text-muted-foreground dark:text-gray-400">{study.description}</p>
                       {study.metrics && (
                         <p className="text-[#4585f4] font-semibold">{study.metrics}</p>
                       )}
@@ -347,22 +347,22 @@ export default function BuildPage() {
                   <Card className="h-full p-8 bg-gray-900/50 border-gray-800 flex flex-col">
                     <div className="space-y-6 flex-1">
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">{tier.name}</h3>
+                        <h3 className="text-2xl font-bold text-heading dark:text-white mb-2">{tier.name}</h3>
                         <div className="text-4xl font-bold text-[#4585f4] mb-2">{tier.price}</div>
-                        <p className="text-gray-400">{tier.description}</p>
+                        <p className="text-muted-foreground dark:text-gray-400">{tier.description}</p>
                       </div>
                       <ul className="space-y-3">
                         {tier.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2">
                             <CheckCircle className="h-5 w-5 text-[#4585f4] flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300">{feature}</span>
+                            <span className="text-foreground dark:text-gray-300">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <Button
                       asChild
-                      className="w-full mt-6 bg-[#4585f4] hover:bg-[#4585f4]/90 text-white"
+                      className="w-full mt-6 bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white"
                     >
                       <Link href={tier.ctaLink}>
                         {tier.ctaText}
@@ -389,13 +389,13 @@ export default function BuildPage() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white"
             >
               {content.cta.headline}
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-300"
+              className="text-xl text-foreground dark:text-gray-300"
             >
               {content.cta.description}
             </motion.p>
