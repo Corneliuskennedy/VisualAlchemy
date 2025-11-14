@@ -279,7 +279,7 @@ export default function OptimizePage() {
         description={content.meta.description}
         canonicalUrl={isNL ? "https://www.octomatic.ai/nl/optimize" : "https://www.octomatic.ai/optimize"}
       />
-      <div className="min-h-screen relative font-archivo bg-[#0A0A0A]">
+      <div className="min-h-screen relative font-archivo bg-background">
         {/* Hero */}
         <section className="relative min-h-[60vh] flex flex-col justify-center items-center px-4 py-20">
           <motion.div
@@ -290,13 +290,13 @@ export default function OptimizePage() {
           >
             <motion.h1
               variants={itemVariants}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-heading dark:text-white leading-tight"
             >
               {content.hero.headline}
             </motion.h1>
             <motion.p
               variants={itemVariants}
-              className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-foreground dark:text-gray-300 max-w-2xl mx-auto"
             >
               {content.hero.subline}
             </motion.p>
@@ -323,7 +323,7 @@ export default function OptimizePage() {
 
       {/* Problem Section */}
       {content.problem && (
-        <section className="py-24 px-4 bg-gray-900/30">
+        <section className="py-24 px-4 bg-secondary/30 dark:bg-gray-900/30">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial="hidden"
@@ -334,13 +334,13 @@ export default function OptimizePage() {
             >
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white text-center"
               >
                 {content.problem.headline}
               </motion.h2>
               <motion.p
                 variants={itemVariants}
-                className="text-lg md:text-xl text-gray-300 leading-relaxed text-center"
+                className="text-lg md:text-xl text-foreground dark:text-gray-300 leading-relaxed text-center"
               >
                 {content.problem.description}
               </motion.p>
@@ -348,12 +348,12 @@ export default function OptimizePage() {
                 <motion.div variants={itemVariants} className="text-center mt-8">
                   <Card className="p-8 bg-gradient-to-r from-[#4585f4]/10 to-[#6B8AE6]/10 border-[#4585f4]/20">
                     <Calculator className="h-12 w-12 text-[#4585f4] mx-auto mb-4" />
-                    <p className="text-gray-300 mb-6">
+                    <p className="text-foreground dark:text-gray-300 mb-6">
                       {content.problem.calculatorCta}
                     </p>
                     <Button
                       asChild
-                      className="bg-[#4585f4] hover:bg-[#4585f4]/90 text-white"
+                      className="bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white"
                     >
                       <Link href="/tools/automation-roi-calculator">
                         {content.problem.calculatorButton}
@@ -381,7 +381,7 @@ export default function OptimizePage() {
             >
               <motion.h2
                 variants={itemVariants}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white text-center"
               >
                 {content.solutions.headline}
               </motion.h2>
@@ -392,10 +392,10 @@ export default function OptimizePage() {
                     key={index}
                     variants={itemVariants}
                   >
-                    <Card className="h-full p-6 bg-gray-900/50 border-gray-800">
+                    <Card className="h-full p-6 bg-secondary/50 dark:bg-gray-900/50 border-border dark:border-gray-800">
                       <TrendingUp className="h-8 w-8 text-[#4585f4] mb-4" />
-                      <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                      <p className="text-gray-400">{item.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{item.title}</h3>
+                      <p className="text-muted-foreground dark:text-gray-400">{item.description}</p>
                     </Card>
                   </motion.div>
                 ))}
@@ -423,7 +423,7 @@ export default function OptimizePage() {
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-300 text-center max-w-3xl mx-auto"
+              className="text-xl text-foreground dark:text-gray-300 text-center max-w-3xl mx-auto"
             >
               {isNL
                 ? 'Van CRM tot recruitment, van project management tot SOPs - we helpen u elk aspect van uw bedrijf te optimaliseren.'
@@ -439,21 +439,21 @@ export default function OptimizePage() {
                     key={index}
                     variants={itemVariants}
                   >
-                    <Card className="h-full p-6 bg-gray-900/50 border-gray-800 hover:border-[#4585f4]/50 transition-all">
+                    <Card className="h-full p-6 bg-secondary/50 dark:bg-gray-900/50 border-border dark:border-gray-800 hover:border-[#4585f4]/50 dark:hover:border-[#4585f4]/50 transition-all">
                       <div className="space-y-4">
                         <div className="flex items-start gap-4">
                           <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center flex-shrink-0">
                             <Icon className="h-6 w-6 text-[#4585f4]" />
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-                            <p className="text-gray-300 text-sm leading-relaxed mb-3">{service.description}</p>
+                            <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{service.title}</h3>
+                            <p className="text-foreground dark:text-gray-300 text-sm leading-relaxed mb-3">{service.description}</p>
                             <p className="text-[#4585f4] font-semibold text-sm mb-4">{service.metrics}</p>
                             <ul className="space-y-2">
                               {service.features.map((feature, idx) => (
                                 <li key={idx} className="flex items-start gap-2">
                                   <CheckCircle className="h-4 w-4 text-[#4585f4] flex-shrink-0 mt-0.5" />
-                                  <span className="text-gray-400 text-sm">{feature}</span>
+                                  <span className="text-muted-foreground dark:text-gray-400 text-sm">{feature}</span>
                                 </li>
                               ))}
                             </ul>
@@ -495,8 +495,8 @@ export default function OptimizePage() {
                   <Card className="h-full p-6 bg-gray-900/50 border-gray-800">
                     <div className="space-y-4">
                       <TrendingUp className="h-8 w-8 text-[#4585f4]" />
-                      <h3 className="text-xl font-bold text-white">{study.title}</h3>
-                      <p className="text-gray-400">{study.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white">{study.title}</h3>
+                      <p className="text-muted-foreground dark:text-gray-400">{study.description}</p>
                       {study.metrics && (
                         <p className="text-green-400 font-bold text-lg">{study.metrics}</p>
                       )}
@@ -535,22 +535,22 @@ export default function OptimizePage() {
                   <Card className="h-full p-8 bg-gray-900/50 border-gray-800 flex flex-col">
                     <div className="space-y-6 flex-1">
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">{tier.name}</h3>
+                        <h3 className="text-2xl font-bold text-heading dark:text-white mb-2">{tier.name}</h3>
                         <div className="text-4xl font-bold text-[#4585f4] mb-2">{tier.price}</div>
-                        <p className="text-gray-400">{tier.description}</p>
+                        <p className="text-muted-foreground dark:text-gray-400">{tier.description}</p>
                       </div>
                       <ul className="space-y-3">
                         {tier.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2">
                             <CheckCircle className="h-5 w-5 text-[#4585f4] flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300">{feature}</span>
+                            <span className="text-foreground dark:text-gray-300">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <Button
                       asChild
-                      className="w-full mt-6 bg-[#4585f4] hover:bg-[#4585f4]/90 text-white"
+                      className="w-full mt-6 bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white"
                     >
                       <Link href={tier.ctaLink}>
                         {tier.ctaText}
@@ -577,13 +577,13 @@ export default function OptimizePage() {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white"
             >
               {content.cta.headline}
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-300"
+              className="text-xl text-foreground dark:text-gray-300"
             >
               {content.cta.description}
             </motion.p>
