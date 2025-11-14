@@ -55,14 +55,16 @@ export const HeroVisualElements: React.FC = () => {
               ease: [0.4, 0, 0.2, 1],
             }}
           >
-            <Icon
+            <div
               className="text-[#4585f4]/8 dark:text-[#6B8AE6]/10"
               style={{
                 width: `${element.size}px`,
                 height: `${element.size}px`,
                 filter: 'blur(1px)',
               }}
-            />
+            >
+              <Icon className="w-full h-full" />
+            </div>
           </motion.div>
         );
       })}
