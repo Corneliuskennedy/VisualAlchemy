@@ -378,11 +378,16 @@ export function MonopoGradient({
         zIndex: 0,
       }}
     >
-      {/* Main gradient canvas with edge blending */}
+      {/* Main gradient canvas - Oversized like Monopo (3x width, centered) */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="absolute"
         style={{
+          width: '300%',  // 3x wider like Monopo
+          height: '100%',
+          left: '50%',
+          top: 0,
+          transform: 'translate3d(-50%, 0, 0)',  // Center the oversized gradient
           mixBlendMode: 'normal',
         }}
       />
