@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { ArrowRight, Rocket, TrendingUp, Sparkles, Users, Clock, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import GridBackground from '@/components/ui/GridBackground';
 import { useThemeSafe } from '@/hooks/useThemeSafe';
 import { useOptimizedAnimations } from '@/hooks/useOptimizedAnimations';
 import { useHomepage, useCommon } from '@/hooks/useContent';
