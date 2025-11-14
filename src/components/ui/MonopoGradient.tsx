@@ -251,7 +251,7 @@ export function MonopoGradient({
         return;
       }
       
-      time += 0.002; // Very slow, smooth animation
+      time += 0.008; // Faster, more organic movement
       
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
@@ -282,16 +282,19 @@ export function MonopoGradient({
           const px = rx + position[0] + colorOffset[0];
           const py = ry + position[1] + colorOffset[1];
           
-          // Create wave patterns (Monopo's approach)
+          // Create wave patterns (Monopo's approach) - More organic movement
           const wave1 = Math.sin(px * spacing + time) * 0.5 + 0.5;
           const wave2 = Math.sin(py * spacing * 0.7 + time * 0.8) * 0.5 + 0.5;
           const wave3 = Math.sin((px + py) * spacing * 0.5 + time * 1.2) * 0.5 + 0.5;
+          const wave4 = Math.sin((px - py) * spacing * 0.9 + time * 0.6) * 0.5 + 0.5;
           
-          // Combine waves
-          const pattern = (wave1 + wave2 + wave3) / 3;
+          // Combine waves with varied weights for more organic feel
+          const pattern = wave1 * 0.3 + wave2 * 0.25 + wave3 * 0.25 + wave4 * 0.2;
           
-          // Add displacement/noise (Monopo's high displacement)
-          const noise = (Math.sin(px * displacement * 8) + Math.cos(py * displacement * 8)) * 0.05;
+          // Add displacement/noise (Monopo's high displacement) - More dynamic
+          const noiseX = Math.sin(px * displacement * 8 + time * 0.5) * 0.05;
+          const noiseY = Math.cos(py * displacement * 8 + time * 0.7) * 0.05;
+          const noise = noiseX + noiseY;
           const finalT = Math.max(0, Math.min(1, pattern + noise));
           
           // Get gradient color

@@ -14,6 +14,7 @@ import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
 import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
+import { MonopoGradient } from '@/components/ui/MonopoGradient';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
 
@@ -86,8 +87,18 @@ function HomeContent() {
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-10"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-10 overflow-hidden"
       >
+        {/* Monopo-style Gradient Background */}
+        <MonopoGradient
+          color1="#0ea5e9"
+          color2="#0284c7"
+          color3="#0369a1"
+          color4="#00d9ff"
+          parallax={true}
+          grain={true}
+          className="absolute inset-0"
+        />
         <motion.div
           initial="hidden"
           animate="visible"
