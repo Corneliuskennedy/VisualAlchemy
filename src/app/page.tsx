@@ -155,107 +155,16 @@ function HomeContent() {
         </motion.div>
       </section>
 
-      {/* Section 2: Premium Segmentation Engine - CRO Optimized */}
-      <section 
-        id="segmentation-engine" 
-        aria-labelledby="segmentation-heading"
-        className="py-32 md:py-40 px-4 relative z-10"
-      >
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            variants={containerVariants}
-            className="space-y-16"
-          >
-            {/* Section Header */}
-            <motion.div variants={itemVariants} className="text-center space-y-4">
-              <motion.h2
-                id="segmentation-heading"
-                variants={fadeInUp}
-                className="text-4xl md:text-5xl lg:text-6xl font-archivo font-bold 
-                           text-heading dark:text-white"
-              >
-                {homepage.segmentation.headline}
-              </motion.h2>
-              {homepage.segmentation.subheadline && (
-                <motion.p
-                  variants={fadeInUp}
-                  className="text-lg md:text-xl max-w-2xl mx-auto 
-                           text-subtle dark:text-gray-400"
-                >
-                  {homepage.segmentation.subheadline}
-                </motion.p>
-              )}
-            </motion.div>
-
-            {/* Clean Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-              {homepage.segmentation.cards.map((card, index) => {
-                const Icon = iconMap[card.href];
-                
-                return (
-                  <motion.div
-                    key={card.href}
-                    variants={cardVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    whileHover="hover"
-                    custom={index}
-                  >
-                    <Link href={card.href} className="block h-full group">
-                      <Card 
-                        className="h-full p-10 lg:p-12 
-                                 transition-all duration-300 ease-out
-                                 cursor-pointer 
-                                 border border-border/20
-                                 bg-card
-                                 hover:border-border/40
-                                 hover:-translate-y-1
-                                 transform-gpu"
-                        aria-label={`${card.title} - ${card.description}`}
-                      >
-                        <div className="space-y-8 relative z-10">
-                          {/* Clean Icon - Minimal Design */}
-                          {Icon && (
-                            <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
-                              <Icon className="h-6 w-6 md:h-7 md:w-7 text-[#4585f4]" />
-                            </div>
-                          )}
-
-                          {/* Clean Title */}
-                          <h3 className="text-2xl md:text-3xl lg:text-4xl font-archivo font-bold
-                                       text-heading dark:text-white
-                                       tracking-tight">
-                            {card.title}
-                          </h3>
-
-                          {/* Clean Description */}
-                          <p className="text-base md:text-lg 
-                                      leading-relaxed 
-                                      text-muted-foreground dark:text-gray-400">
-                            {card.description}
-                          </p>
-
-                          {/* Simple CTA */}
-                          <div className="flex items-center gap-2
-                                       font-medium text-base md:text-lg
-                                       text-[#4585f4] pt-4">
-                            <span>{card.ctaText}</span>
-                            <ArrowRight className="h-4 w-4" />
-                          </div>
-                        </div>
-                      </Card>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Section 2: Center-Mode Slider - Interactive Objective Selection */}
+      <CenterModeSlider
+        headline={homepage.segmentation.headline}
+        cards={homepage.segmentation.cards.map((card) => ({
+          title: card.title,
+          description: card.description,
+          ctaText: card.ctaText,
+          href: card.href,
+        }))}
+      />
 
       {/* Section 3: Clean Social Proof */}
       <section 
