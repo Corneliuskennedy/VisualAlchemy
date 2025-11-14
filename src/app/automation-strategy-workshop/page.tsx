@@ -46,10 +46,10 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
         description={isNL ? "Datagedreven automatiseringsroadmap met gegarandeerd ROI. Workshop voor Nederlandse MKB. Stop met gokken, start met plannen." : "Stop guessing which processes to automate. Get a data-driven automation roadmap with guaranteed ROI through our strategic workshop for Dutch SMEs."}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
           {/* Navigation Header */}
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -195,7 +195,7 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                     <h3 className="text-lg font-semibold text-heading dark:text-white mb-2">
                       {isNL ? "Verspild budget" : "Wasted budget"}
                     </h3>
-                    <p className="text-gray-400">
+                    <p className="text-muted-foreground dark:text-gray-400">
                       {isNL 
                         ? "Duizenden euro's investeren in software die een proces automatiseert dat fundamenteel gebroken is."
                         : "Investing thousands in software that automates a fundamentally broken process."
@@ -209,7 +209,7 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                     <h3 className="text-lg font-semibold text-heading dark:text-white mb-2">
                       {isNL ? "Operationele verstoring" : "Operational disruption"}
                     </h3>
-                    <p className="text-gray-400">
+                    <p className="text-muted-foreground dark:text-gray-400">
                       {isNL 
                         ? "Een nieuwe tool implementeren die meer werk creëert in plaats van minder."
                         : "Implementing a new tool that creates more work instead of less."
@@ -223,7 +223,7 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                     <h3 className="text-lg font-semibold text-heading dark:text-white mb-2">
                       {isNL ? "Compliance nachtmerries" : "Compliance nightmares"}
                     </h3>
-                    <p className="text-gray-400">
+                    <p className="text-muted-foreground dark:text-gray-400">
                       {isNL 
                         ? "AI implementeren zonder duidelijke GDPR-strategie, waardoor uw bedrijf juridische risico's loopt."
                         : "Adopting AI without a clear GDPR strategy, exposing your business to risk."
@@ -378,7 +378,7 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
                 <div className="text-center">
                   <Button 
                     size="lg" 
-                    className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                    className="px-8 py-4 text-lg font-semibold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                     data-cal-namespace="automation-strategy-workshop"
                     data-cal-link="kennet-timmers/workshop"
                     data-cal-config='{"layout":"month_view"}'
