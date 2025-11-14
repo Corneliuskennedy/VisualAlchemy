@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* REMOVED: @import for fonts - using next/font/google instead (non-blocking) */
+/* Fonts are loaded via next/font/google in layout.tsx - no render-blocking CSS import */
 
 @tailwind base;
 @tailwind components;

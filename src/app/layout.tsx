@@ -239,13 +239,8 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
-        {/* Font Preloading - Critical fonts for FCP improvement */}
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@100..900&family=Inter:wght@100..900&display=swap"
-          as="style"
-          crossOrigin="anonymous"
-        />
+        {/* Fonts are loaded via next/font/google - no manual preload needed */}
+        {/* next/font/google handles font loading optimally without render-blocking */}
       </head>
       <body className={`${inter.className} ${archivo.variable} ${inter.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
