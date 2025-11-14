@@ -283,7 +283,7 @@ const CRMBuildoutsPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {features.map((feature, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-8 h-8 bg-[#4585f4]/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
                         <CheckCircle className="w-5 h-5 text-[#4585f4]" />
@@ -303,11 +303,11 @@ const CRMBuildoutsPage: React.FC = () => {
           <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
+                <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar om uw klantdata te centraliseren?" : "Ready to centralize your customer data?"}
                   </h2>
-                  <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                     {isNL 
                       ? "Laat ons uw huidige CRM situatie analyseren en tonen hoe u meer waarde uit uw klantdata kunt halen."
                       : "Let us analyze your current CRM situation and show you how to get more value from your customer data."
