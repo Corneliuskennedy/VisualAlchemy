@@ -140,9 +140,9 @@ const AIAutomationAmsterdamPage: React.FC = () => {
         serviceType="AI Automation Services"
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -177,13 +177,13 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                         </span>
                       </div>
                       
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                         {isNL ? "AI Automatisering specialist in Amsterdam" : "AI Automation specialist in Amsterdam"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
                     </div>
                     
-                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed">
                       {isNL ? (
                         "Lokaal gevestigd in Naarden met diepgaande kennis van de Nederlandse markt en GDPR wetgeving. Bespaar €50.000+ per jaar met bewezen automatiseringsoplossingen."
                       ) : (
@@ -194,7 +194,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                     <div className="flex flex-col sm:flex-row gap-4 pt-6">
                       <Button 
                         size="lg" 
-                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                        className="px-8 py-4 text-lg font-semibold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                         data-cal-namespace="automation-strategy-workshop"
                         data-cal-link="kennet-timmers/workshop"
                         data-cal-config='{"layout":"month_view"}'
@@ -206,17 +206,17 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                   </div>
 
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6">
                         <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center">
                             <Building className="h-6 w-6 text-[#4585f4]" />
                           </div>
                           <div>
-                            <h3 className="text-xl font-semibold text-white">
+                            <h3 className="text-xl font-semibold text-heading dark:text-white">
                               {isNL ? "Lokale expertise" : "Local expertise"}
                             </h3>
-                            <p className="text-gray-400">
+                            <p className="text-muted-foreground dark:text-gray-400">
                               {isNL ? "Nederlandse marktkennis" : "Dutch market knowledge"}
                             </p>
                           </div>
@@ -225,13 +225,13 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                         <div className="grid grid-cols-2 gap-4 pt-4">
                           <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                             <div className="text-2xl font-bold text-[#4585f4]">GDPR</div>
-                            <div className="text-sm text-gray-400">
+                            <div className="text-sm text-muted-foreground dark:text-gray-400">
                               {isNL ? "Compliant" : "Compliant"}
                             </div>
                           </div>
                           <div className="text-center p-4 bg-[#4585f4]/10 rounded-xl">
                             <div className="text-2xl font-bold text-[#4585f4]">15min</div>
-                            <div className="text-sm text-gray-400">
+                            <div className="text-sm text-muted-foreground dark:text-gray-400">
                               {isNL ? "Van Amsterdam" : "From Amsterdam"}
                             </div>
                           </div>
@@ -245,7 +245,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
           </section>
 
           {/* Amsterdam Stats */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -253,10 +253,10 @@ const AIAutomationAmsterdamPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Amsterdam automatisering in cijfers" : "Amsterdam automation in numbers"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Waarom Amsterdamse bedrijven kiezen voor lokale AI automatisering"
                     : "Why Amsterdam businesses choose local AI automation"
@@ -266,10 +266,10 @@ const AIAutomationAmsterdamPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {amsterdamStats.map((item, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 text-center hover:bg-gray-800/40 transition-all duration-300">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 text-center hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                     <div className="text-4xl md:text-5xl font-bold text-[#4585f4] mb-4">{item.stat}</div>
-                    <div className="text-lg font-semibold text-white mb-2">{item.label}</div>
-                    <div className="text-gray-400 text-sm">{item.description}</div>
+                    <div className="text-lg font-semibold text-heading dark:text-white mb-2">{item.label}</div>
+                    <div className="text-muted-foreground dark:text-gray-400 text-sm">{item.description}</div>
                   </div>
                 ))}
               </div>
@@ -277,13 +277,13 @@ const AIAutomationAmsterdamPage: React.FC = () => {
           </section>
 
           {/* Local Benefits */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Waarom lokale automatisering?" : "Why local automation?"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "De voordelen van samenwerken met een lokale AI automatisering specialist"
                     : "The benefits of working with a local AI automation specialist"
@@ -295,14 +295,14 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                 {localBenefits.map((benefit, index) => {
                   const Icon = benefit.icon;
                   return (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8">
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8">
                       <div className="flex items-start gap-4">
                         <div className="w-12 h-12 bg-[#4585f4]/20 rounded-xl flex items-center justify-center flex-shrink-0">
                           <Icon className="w-6 h-6 text-[#4585f4]" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-white mb-3">{benefit.title}</h3>
-                          <p className="text-gray-300 leading-relaxed">{benefit.description}</p>
+                          <h3 className="text-xl font-bold text-heading dark:text-white mb-3">{benefit.title}</h3>
+                          <p className="text-foreground dark:text-gray-300 leading-relaxed">{benefit.description}</p>
                         </div>
                       </div>
                     </div>
@@ -313,7 +313,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
           </section>
 
           {/* Services */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -321,10 +321,10 @@ const AIAutomationAmsterdamPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Onze Amsterdam services" : "Our Amsterdam services"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Gespecialiseerde automatiseringsoplossingen voor Amsterdamse bedrijven"
                     : "Specialized automation solutions for Amsterdam businesses"
@@ -334,9 +334,9 @@ const AIAutomationAmsterdamPage: React.FC = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {services.map((service, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300">
-                    <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
-                    <p className="text-gray-300 leading-relaxed mb-6">{service.description}</p>
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
+                    <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{service.title}</h3>
+                    <p className="text-foreground dark:text-gray-300 leading-relaxed mb-6">{service.description}</p>
                     
                     <div className="space-y-3">
                       {service.features.map((feature, idx) => (
@@ -344,7 +344,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                           <div className="w-5 h-5 bg-[#4585f4]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <CheckCircle className="w-3 h-3 text-[#4585f4]" />
                           </div>
-                          <p className="text-gray-400 text-sm">{feature}</p>
+                          <p className="text-muted-foreground dark:text-gray-400 text-sm">{feature}</p>
                         </div>
                       ))}
                     </div>
@@ -355,11 +355,11 @@ const AIAutomationAmsterdamPage: React.FC = () => {
           </section>
 
           {/* CTA Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
                 <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar voor lokale automatisering?" : "Ready for local automation?"}
                   </h2>
                   <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
@@ -372,7 +372,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                   <div className="mb-6">
                     <Button 
                       size="lg" 
-                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                       data-cal-namespace="automation-strategy-workshop"
                       data-cal-link="kennet-timmers/workshop"
                       data-cal-config='{"layout":"month_view"}'
@@ -382,7 +382,7 @@ const AIAutomationAmsterdamPage: React.FC = () => {
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground dark:text-gray-500">
                     {isNL ? "Persoonlijk gesprek • Lokaal kantoor • GDPR compliant" : "Personal consultation • Local office • GDPR compliant"}
                   </p>
                 </div>
