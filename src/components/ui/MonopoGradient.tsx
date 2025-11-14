@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTheme } from 'next-themes';
 
 export interface MonopoGradientProps {
   color1?: string;
@@ -22,24 +23,30 @@ export interface MonopoGradientProps {
 }
 
 /**
- * Premium Monopo-style Gradient with Grain Texture
+ * Premium Monopo-style Gradient with Edge Blending
  * 
- * Creates a beautiful, expensive-looking gradient with subtle grain texture.
- * Smooth, visible gradients that look premium and professional.
+ * Creates a beautiful, expensive-looking gradient that fades to background color at edges.
+ * This creates a "floating" effect - the gradient appears contained and intentional.
+ * 
+ * Key Features:
+ * - Edge blending: Fades to background color (dark/light mode aware)
+ * - Grain texture: Subtle grain overlay for premium feel
+ * - Smooth gradients: Multiple wave frequencies for organic patterns
+ * - Monopo-inspired: Based on actual Monopo parameters
  */
 export function MonopoGradient({
-  color1 = '#0ea5e9',
-  color2 = '#0284c7',
-  color3 = '#0369a1',
-  color4 = '#075985',
+  color1 = '#80f6ff',
+  color2 = '#3b488c',
+  color3 = '#884ef4',
+  color4 = '#d73c3c',
   colorSize = 0.8,
-  colorSpacing = 1.5,
-  colorRotation = 0.8,
-  displacement = 0.5,
+  colorSpacing = 0.33, // Monopo's tight spacing
+  colorRotation = 1.24840734641021, // Monopo's rotation
+  displacement = 2.378571428571429, // Monopo's high displacement for grain
   seed = 3915.38625,
-  position = [0, 0],
-  zoom = 1.0,
-  spacing = 1.8,
+  position = [-1.8283292510943407, 1.3235562192065857],
+  zoom = 0.75, // Monopo's zoom
+  spacing = 4.24, // Monopo's spacing
   parallax = true,
   grain = true,
   className = '',
@@ -48,6 +55,7 @@ export function MonopoGradient({
   const grainCanvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const [mounted, setMounted] = useState(false);
+  const { theme, resolvedTheme } = useTheme();
   const { scrollYProgress } = useScroll();
   
   const parallaxY = useTransform(
@@ -57,6 +65,12 @@ export function MonopoGradient({
   );
   
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+
+  // Detect background color (dark/light mode)
+  const isDark = resolvedTheme === 'dark' || theme === 'dark';
+  const bgColor = isDark 
+    ? { r: 4, g: 4, b: 4 } // #040404 - dark mode background
+    : { r: 255, g: 255, b: 255 }; // #FFFFFF - light mode background
 
   useEffect(() => {
     setMounted(true);
@@ -82,7 +96,6 @@ export function MonopoGradient({
 
     updateGrainSize();
 
-    // Create grain texture
     const generateGrain = () => {
       const rect = canvas.getBoundingClientRect();
       const width = rect.width;
@@ -91,19 +104,20 @@ export function MonopoGradient({
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
       
-      // Simple random function
+      // Seeded random for consistency
       let seedValue = seed;
       const random = () => {
         seedValue = (seedValue * 9301 + 49297) % 233280;
-        return (seedValue / 233280) * 2 - 1; // -1 to 1
+        return (seedValue / 233280) * 2 - 1;
       };
       
+      // Generate grain - more intense for premium look
       for (let i = 0; i < data.length; i += 4) {
-        const value = random() * 30; // Grain intensity
-        data[i] = value;     // R
-        data[i + 1] = value; // G
-        data[i + 2] = value; // B
-        data[i + 3] = 15;    // Low opacity for subtle grain
+        const value = random() * 40; // Higher intensity
+        data[i] = value;
+        data[i + 1] = value;
+        data[i + 2] = value;
+        data[i + 3] = 20; // Slightly more visible
       }
       
       ctx.putImageData(imageData, 0, 0);
@@ -120,7 +134,7 @@ export function MonopoGradient({
     return () => window.removeEventListener('resize', handleResize);
   }, [mounted, grain, seed]);
 
-  // Main gradient rendering
+  // Main gradient rendering with edge blending
   useEffect(() => {
     if (!mounted || !canvasRef.current) return;
 
@@ -150,9 +164,8 @@ export function MonopoGradient({
 
     const colors = [color1, color2, color3, color4].map(hexToRgb);
 
-    // Smooth interpolation
+    // Smooth interpolation with ease-in-out
     const lerp = (a: number, b: number, t: number) => {
-      // Ease in-out for smoother transitions
       const smoothT = t < 0.5 
         ? 2 * t * t 
         : 1 - Math.pow(-2 * t + 2, 2) / 2;
@@ -163,7 +176,7 @@ export function MonopoGradient({
     const getColor = (t: number) => {
       t = ((t % 1) + 1) % 1; // Normalize to 0-1
       
-      // Map through 4 colors
+      // Map through 4 colors with Monopo's tight spacing
       const segment = t * 4;
       const i = Math.floor(segment) % 4;
       const localT = segment - Math.floor(segment);
@@ -193,52 +206,80 @@ export function MonopoGradient({
         return;
       }
       
-      time += 0.003; // Very slow, smooth animation
+      time += 0.002; // Very slow, smooth animation
       
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
       
-      // Render gradient
+      // Center point for radial edge blending
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+      
+      // Render gradient with edge blending
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
           // Normalized coordinates
           const nx = (x / width - 0.5) * 2;
           const ny = (y / height - 0.5) * 2;
           
-          // Apply zoom
+          // Apply zoom (Monopo's 0.75)
           const zx = nx / zoom;
           const zy = ny / zoom;
           
-          // Apply rotation
+          // Apply rotation (Monopo's rotation)
           const cos = Math.cos(colorRotation);
           const sin = Math.sin(colorRotation);
           const rx = zx * cos - zy * sin;
           const ry = zx * sin + zy * cos;
           
-          // Create beautiful, visible wave patterns
-          // Multiple frequencies for rich, organic gradients
-          const wave1 = Math.sin(rx * spacing * 1.5 + time) * 0.5 + 0.5;
-          const wave2 = Math.sin(ry * spacing * 1.2 + time * 0.6) * 0.5 + 0.5;
-          const wave3 = Math.sin((rx + ry) * spacing * 0.8 + time * 1.1) * 0.5 + 0.5;
-          const wave4 = Math.sin((rx - ry) * spacing * 1.1 + time * 0.9) * 0.5 + 0.5;
+          // Apply position offset
+          const px = rx + position[0];
+          const py = ry + position[1];
           
-          // Combine with weighted average for rich, visible gradients
-          const pattern = wave1 * 0.3 + wave2 * 0.25 + wave3 * 0.25 + wave4 * 0.2;
+          // Create wave patterns (Monopo's approach)
+          const wave1 = Math.sin(px * spacing + time) * 0.5 + 0.5;
+          const wave2 = Math.sin(py * spacing * 0.7 + time * 0.8) * 0.5 + 0.5;
+          const wave3 = Math.sin((px + py) * spacing * 0.5 + time * 1.2) * 0.5 + 0.5;
           
-          // Subtle displacement for texture
-          const noise = (Math.sin(rx * displacement * 6) + Math.cos(ry * displacement * 6)) * 0.03;
+          // Combine waves
+          const pattern = (wave1 + wave2 + wave3) / 3;
           
-          // Final value
+          // Add displacement/noise (Monopo's high displacement)
+          const noise = (Math.sin(px * displacement * 8) + Math.cos(py * displacement * 8)) * 0.05;
           const finalT = Math.max(0, Math.min(1, pattern + noise));
           
-          // Get color
-          const color = getColor(finalT * colorSpacing);
+          // Get gradient color
+          const gradientColor = getColor(finalT * colorSpacing);
+          
+          // Calculate distance from center for edge blending
+          const distX = x - centerX;
+          const distY = y - centerY;
+          const dist = Math.sqrt(distX * distX + distY * distY);
+          
+          // Edge fade factor (0 = center, 1 = edge)
+          // Start fading at 60% from center, full fade at edge
+          const fadeStart = maxDist * 0.6;
+          const fadeEnd = maxDist;
+          const edgeFactor = dist < fadeStart 
+            ? 0 
+            : Math.min(1, (dist - fadeStart) / (fadeEnd - fadeStart));
+          
+          // Smooth edge fade curve
+          const smoothEdgeFactor = edgeFactor * edgeFactor * (3 - 2 * edgeFactor);
+          
+          // Blend gradient color with background color at edges
+          const finalColor = {
+            r: Math.round(gradientColor.r * (1 - smoothEdgeFactor) + bgColor.r * smoothEdgeFactor),
+            g: Math.round(gradientColor.g * (1 - smoothEdgeFactor) + bgColor.g * smoothEdgeFactor),
+            b: Math.round(gradientColor.b * (1 - smoothEdgeFactor) + bgColor.b * smoothEdgeFactor),
+          };
           
           // Write pixel
           const index = (y * width + x) * 4;
-          data[index] = color.r;
-          data[index + 1] = color.g;
-          data[index + 2] = color.b;
+          data[index] = finalColor.r;
+          data[index + 1] = finalColor.g;
+          data[index + 2] = finalColor.b;
           data[index + 3] = 255;
         }
       }
@@ -275,6 +316,8 @@ export function MonopoGradient({
     position,
     zoom,
     spacing,
+    bgColor,
+    isDark,
   ]);
 
   if (!mounted) return null;
@@ -288,7 +331,7 @@ export function MonopoGradient({
         zIndex: 0,
       }}
     >
-      {/* Main gradient canvas */}
+      {/* Main gradient canvas with edge blending */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
@@ -301,7 +344,7 @@ export function MonopoGradient({
       {grain && (
         <canvas
           ref={grainCanvasRef}
-          className="absolute inset-0 w-full h-full opacity-30"
+          className="absolute inset-0 w-full h-full opacity-40"
           style={{
             mixBlendMode: 'overlay',
             pointerEvents: 'none',
