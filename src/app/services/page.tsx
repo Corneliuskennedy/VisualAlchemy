@@ -463,7 +463,7 @@ const ServicesPage: React.FC = () => {
                   </Button>
                 </div>
                 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-muted-foreground dark:text-gray-500">
                   {isNL ? "4-uur sessie • Vaste prijs • ROI Gegarandeerd" : "4-hour session • Fixed price • ROI Guaranteed"}
                 </p>
               </div>
