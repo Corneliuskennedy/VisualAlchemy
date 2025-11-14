@@ -127,9 +127,9 @@ const GetStartedPage: React.FC = () => {
         keywords={isNL ? "automatisering starten, gratis gesprek, workshop, Amsterdam, ROI" : "start automation, free call, workshop, Amsterdam, ROI"}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
@@ -159,7 +159,7 @@ const GetStartedPage: React.FC = () => {
                     {isNL ? "Start uw automatiseringsreis" : "Start your automation journey"}
                   </h1>
                   <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full mx-auto"></div>
-                  <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed max-w-4xl mx-auto">
+                  <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed max-w-4xl mx-auto">
                     {isNL ? (
                       "Van gratis kennismakingsgesprek tot volledige implementatie. Onze bewezen aanpak zorgt voor gegarandeerde resultaten."
                     ) : (
@@ -190,7 +190,7 @@ const GetStartedPage: React.FC = () => {
           </section>
 
           {/* Process Steps */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -201,7 +201,7 @@ const GetStartedPage: React.FC = () => {
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                   {isNL ? "Ons 3-stappen proces" : "Our 3-step process"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Van eerste gesprek tot volledige automatisering"
                     : "From first conversation to full automation"
@@ -211,7 +211,7 @@ const GetStartedPage: React.FC = () => {
 
               <div className="max-w-5xl mx-auto space-y-8">
                 {steps.map((step, index) => (
-                  <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-3xl p-8 hover:bg-gray-800/40 transition-all duration-300">
+                  <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-3xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300">
                     <div className="flex flex-col lg:flex-row gap-8 items-center">
                       <div className="flex items-center gap-6 lg:w-2/3">
                         <div className="w-16 h-16 bg-[#4585f4] rounded-2xl flex items-center justify-center flex-shrink-0">
@@ -224,7 +224,7 @@ const GetStartedPage: React.FC = () => {
                               {step.duration}
                             </span>
                           </div>
-                          <p className="text-lg text-gray-300 leading-relaxed">{step.description}</p>
+                          <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed">{step.description}</p>
                         </div>
                       </div>
                       
@@ -242,8 +242,8 @@ const GetStartedPage: React.FC = () => {
                             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                           </Button>
                         ) : (
-                          <div className="bg-gray-800/50 border border-gray-700/50 rounded-xl px-6 py-3">
-                            <span className="text-gray-400 font-medium">{step.cta}</span>
+                          <div className="bg-secondary/50 dark:bg-gray-800/50 border border-border/50 dark:border-gray-700/50 rounded-xl px-6 py-3">
+                            <span className="text-muted-foreground dark:text-gray-400 font-medium">{step.cta}</span>
                           </div>
                         )}
                       </div>
@@ -255,13 +255,13 @@ const GetStartedPage: React.FC = () => {
           </section>
 
           {/* Guarantees */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                   {isNL ? "Onze garanties" : "Our guarantees"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "We staan achter onze resultaten met concrete garanties"
                     : "We stand behind our results with concrete guarantees"
@@ -278,7 +278,7 @@ const GetStartedPage: React.FC = () => {
                         <Icon className="w-8 h-8 text-green-400" />
                       </div>
                       <h3 className="text-xl font-bold text-white mb-4">{guarantee.title}</h3>
-                      <p className="text-gray-300 leading-relaxed">{guarantee.description}</p>
+                      <p className="text-foreground dark:text-gray-300 leading-relaxed">{guarantee.description}</p>
                     </div>
                   );
                 })}
@@ -287,7 +287,7 @@ const GetStartedPage: React.FC = () => {
           </section>
 
           {/* Pricing */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -298,7 +298,7 @@ const GetStartedPage: React.FC = () => {
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                   {isNL ? "Transparante prijzen" : "Transparent pricing"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Geen verborgen kosten, geen verrassingen"
                     : "No hidden costs, no surprises"
@@ -308,7 +308,7 @@ const GetStartedPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {pricing.map((plan, index) => (
-                  <div key={index} className={`relative bg-gray-900/20 border rounded-3xl p-8 ${plan.popular ? 'border-[#4585f4] bg-[#4585f4]/5' : 'border-gray-800/50'}`}>
+                  <div key={index} className={`relative bg-secondary/20 dark:bg-gray-900/20 border rounded-3xl p-8 ${plan.popular ? 'border-[#4585f4] dark:border-[#4585f4] bg-[#4585f4]/5 dark:bg-[#4585f4]/5' : 'border-border/50 dark:border-gray-800/50'}`}>
                     {plan.popular && (
                       <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                         <div className="bg-[#4585f4] text-white px-6 py-2 rounded-full text-sm font-semibold">
@@ -320,7 +320,7 @@ const GetStartedPage: React.FC = () => {
                     <div className="text-center mb-8">
                       <h3 className="text-2xl font-bold text-white mb-4">{plan.title}</h3>
                       <div className="text-4xl font-bold text-[#4585f4] mb-2">{plan.price}</div>
-                      <div className="text-gray-400">{plan.duration}</div>
+                      <div className="text-muted-foreground dark:text-gray-400">{plan.duration}</div>
                     </div>
                     
                     <div className="space-y-4 mb-8">
@@ -329,7 +329,7 @@ const GetStartedPage: React.FC = () => {
                           <div className="w-5 h-5 bg-[#4585f4]/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                             <CheckCircle className="w-3 h-3 text-[#4585f4]" />
                           </div>
-                          <p className="text-gray-300">{feature}</p>
+                          <p className="text-foreground dark:text-gray-300">{feature}</p>
                         </div>
                       ))}
                     </div>
@@ -356,14 +356,14 @@ const GetStartedPage: React.FC = () => {
           </section>
 
           {/* Final CTA */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
+                <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
                     {isNL ? "Klaar om te beginnen?" : "Ready to get started?"}
                   </h2>
-                  <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                     {isNL 
                       ? "Begin met een gratis kennismakingsgesprek van 15 minuten. Geen verplichtingen, alleen een eerlijk gesprek over uw automatiseringsmogelijkheden."
                       : "Start with a free 15-minute introduction call. No obligations, just an honest conversation about your automation opportunities."
@@ -384,7 +384,7 @@ const GetStartedPage: React.FC = () => {
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground dark:text-gray-500">
                     {isNL ? "15 minuten • Gratis • Geen verplichtingen" : "15 minutes • Free • No obligations"}
                   </p>
                 </div>
