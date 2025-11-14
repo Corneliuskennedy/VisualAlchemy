@@ -3,6 +3,13 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+interface CursorState {
+  x: number;
+  y: number;
+  isHovering: boolean;
+  label?: string;
+}
+
 /**
  * CustomCursor - Context-Aware Custom Cursor Component
  * 
@@ -21,13 +28,6 @@ export function CustomCursor() {
     y: 0,
     isHovering: false,
   });
-
-interface CursorState {
-  x: number;
-  y: number;
-  isHovering: boolean;
-  label?: string;
-}
 
 /**
  * CustomCursor - Context-Aware Custom Cursor Component
