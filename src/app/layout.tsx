@@ -19,7 +19,6 @@ import InstallPrompt from "@/lib/pwa/InstallPrompt";
 import { usePrefetcher } from "@/lib/performance/Prefetcher";
 import PerformanceMonitor from "@/components/performance/Monitor";
 import HydrationHandler from "@/components/loading/HydrationHandler";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 
 // Typography System: Archivo + Inter
 // Archivo for headlines (premium sans-serif)
@@ -249,8 +248,6 @@ export default function RootLayout({
                   <ThemeTransition>
                     <div className="min-h-screen relative overflow-x-hidden">
                     <GlobalInteractiveGrid />
-                      {/* Premium Experience: Custom Cursor */}
-                      <CustomCursor />
                       {/* Critical SEO components - render immediately */}
                       <HTMLLangUpdater />
                       <CriticalContentPreloader />

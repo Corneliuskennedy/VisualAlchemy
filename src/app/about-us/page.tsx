@@ -11,7 +11,6 @@ import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import { useCalIntroCall } from '@/hooks/use-cal';
 import Image from 'next/image';
-import { ParallaxImage } from '@/components/motion/ParallaxImage';
 
 const AboutUsPage: React.FC = () => {
   const { language } = useTranslations();
@@ -207,15 +206,13 @@ const AboutUsPage: React.FC = () => {
                   <div className="relative lg:-ml-16 z-10">
                     <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6 text-center">
-                        <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-[#4585f4]/20">
-                          <ParallaxImage
+                        <div className="w-32 h-32 mx-auto rounded-full overflow-hidden">
+                          <Image
                             src="/team/kennet_timmers.webp"
                             alt="Kennet Timmers - Founder of Octomatic"
                             width={128}
                             height={128}
-                            className="w-full h-full object-cover rounded-full"
-                            containerClassName="h-full w-full"
-                            fill
+                            className="w-full h-full object-cover"
                             priority
                           />
                         </div>

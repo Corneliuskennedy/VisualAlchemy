@@ -82,19 +82,12 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Background Grid */}
-      <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
-        <GridBackground className="pointer-events-none" highContrast={false} />
-      </div>
-
-      {/* Section 1: Premium Hero with Sophisticated Visual Interest - Image Ready */}
+      {/* Section 1: Clean Hero - Monopo-Inspired Minimalism */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-16 z-10 overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10"
       >
-        {/* Floating visual storytelling elements */}
-        <HeroVisualElements />
         
         {/* Hero Image - Ready for professional photo */}
         {/* Uncomment and add image path when photo is ready:
@@ -234,8 +227,8 @@ function HomeContent() {
               )}
             </motion.div>
 
-            {/* Premium Cards Grid with Images */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+            {/* Clean Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
               {homepage.segmentation.cards.map((card, index) => {
                 const Icon = iconMap[card.href];
                 
@@ -251,61 +244,23 @@ function HomeContent() {
                   >
                     <Link href={card.href} className="block h-full group">
                       <Card 
-                        className="h-full p-8 lg:p-10 
-                                 transition-all duration-500 ease-out
+                        className="h-full p-10 lg:p-12 
+                                 transition-all duration-300 ease-out
                                  cursor-pointer 
-                                 border-2 relative overflow-hidden 
-                                 bg-gradient-to-br from-card via-card to-card/95
-                                 dark:from-card dark:via-card dark:to-card/95
-                                 border-border/50 dark:border-border/50
-                                 hover:border-[#4585f4]/60 dark:hover:border-[#4585f4]/60
-                                 backdrop-blur-sm 
-                                 shadow-xl hover:shadow-2xl 
-                                 hover:shadow-[#4585f4]/20 dark:hover:shadow-[#4585f4]/20
-                                 hover:-translate-y-2 hover:scale-[1.02]
-                                 transform-gpu group"
+                                 border border-border/20
+                                 bg-card
+                                 hover:border-border/40
+                                 hover:-translate-y-1
+                                 transform-gpu"
                         aria-label={`${card.title} - ${card.description}`}
-                        data-cursor="hover"
-                        data-cursor-label="Explore"
                       >
-                        {/* Subtle gradient overlay - Enhanced without placeholder images */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-[#4585f4]/0 via-transparent to-[#6B8AE6]/0
-                                      group-hover:from-[#4585f4]/8 group-hover:via-transparent group-hover:to-[#6B8AE6]/8
-                                      transition-all duration-700 pointer-events-none" />
-                        
-                        {/* Image zoom effect on hover - Tactile Layer */}
-                        {card.href in iconMap && (
-                          <motion.div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-10 pointer-events-none"
-                            initial={{ scale: 1 }}
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                          />
-                        )}
-                        
-                        <div className="space-y-6 relative z-10">
-                          {/* Premium Icon with Enhanced Effects */}
-                          <motion.div
-                            className="w-16 h-16 md:w-20 md:h-20
-                                     rounded-2xl 
-                                     flex items-center justify-center 
-                                     transition-all duration-500 ease-out
-                                     bg-gradient-to-br from-[#4585f4]/10 via-[#4585f4]/15 to-[#6B8AE6]/10
-                                     dark:from-[#4585f4]/20 dark:via-[#4585f4]/25 dark:to-[#6B8AE6]/20
-                                     group-hover:from-[#4585f4]/20 group-hover:via-[#4585f4]/25 group-hover:to-[#6B8AE6]/20
-                                     dark:group-hover:from-[#4585f4]/30 dark:group-hover:via-[#4585f4]/35 dark:group-hover:to-[#6B8AE6]/30
-                                     shadow-lg shadow-[#4585f4]/10
-                                     group-hover:shadow-xl group-hover:shadow-[#4585f4]/20"
-                            whileHover={{ rotate: 360, scale: 1.1 }}
-                            transition={{ duration: 0.6, ease: "easeOut" }}
-                          >
-                            {Icon && (
-                              <Icon className="h-8 w-8 md:h-10 md:w-10 
-                                             text-[#4585f4] dark:text-[#6B8AE6]
-                                             transition-transform duration-300
-                                             group-hover:scale-110" />
-                            )}
-                          </motion.div>
+                        <div className="space-y-8 relative z-10">
+                          {/* Clean Icon - Minimal Design */}
+                          {Icon && (
+                            <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
+                              <Icon className="h-6 w-6 md:h-7 md:w-7 text-[#4585f4]" />
+                            </div>
+                          )}
 
                           {/* Premium Title - Serif Headlines */}
                           <h3 className="text-2xl md:text-3xl lg:text-4xl font-archivo font-bold
@@ -348,10 +303,10 @@ function HomeContent() {
         </div>
       </section>
 
-      {/* Section 3: Premium Social Proof - Trust Building */}
+      {/* Section 3: Clean Social Proof */}
       <section 
         aria-labelledby="social-proof-heading"
-        className="py-20 px-4 relative z-10"
+        className="py-32 md:py-40 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -371,8 +326,8 @@ function HomeContent() {
               {homepage.socialProof.headline}
             </motion.h2>
 
-            {/* Logo Grid with Enhanced Light Theme */}
-            <div className="max-w-7xl mx-auto bg-card border-border shadow-2xl rounded-3xl py-16 px-8 backdrop-blur-sm border-2">
+            {/* Clean Logo Grid */}
+            <div className="max-w-7xl mx-auto border border-border/20 py-16 px-8">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-12 items-center justify-items-center">
                 {clientLogos.map((logo, index) => (
                   <motion.div
@@ -398,10 +353,10 @@ function HomeContent() {
         </div>
       </section>
 
-      {/* Section 4: Premium Why Us - Asymmetrical Editorial Layout */}
+      {/* Section 4: Clean Why Us - Asymmetrical Layout */}
       <section 
         aria-labelledby="why-us-heading"
-        className="py-32 md:py-40 px-4 relative z-10"
+        className="py-40 md:py-48 px-4 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -443,9 +398,9 @@ function HomeContent() {
               </motion.div>
             </div>
 
-            {/* Premium Feature Cards - Staggered Grid Animation */}
+            {/* Clean Feature Cards */}
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
+              className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16"
               variants={{
                 hidden: { opacity: 0 },
                 visible: {
@@ -463,77 +418,31 @@ function HomeContent() {
                   <motion.div
                     key={index}
                     variants={cardVariants}
-                    whileHover={{ 
-                      y: -12,
-                      scale: 1.02,
-                      transition: {
-                        type: 'spring',
-                        stiffness: 400,
-                        damping: 25,
-                      }
-                    }}
-                    className="group relative p-8 lg:p-10 
-                             rounded-2xl 
-                             border-2 
-                             transition-all duration-500 ease-out
-                             bg-gradient-to-br from-card via-card to-card/95
-                             dark:from-card dark:via-card dark:to-card/95
-                             border-border/50 dark:border-border/50
-                             hover:border-[#4585f4]/50 dark:hover:border-[#4585f4]/50
-                             backdrop-blur-sm 
-                             shadow-xl hover:shadow-2xl hover:shadow-[#4585f4]/30
-                             dark:hover:shadow-[#4585f4]/30
-                             transform-gpu
-                             cursor-pointer"
-                    data-cursor="hover"
-                    data-cursor-label="Learn more"
+                    className="group relative p-10 lg:p-12 
+                             border border-border/20
+                             transition-all duration-300 ease-out
+                             bg-card
+                             hover:border-border/40
+                             hover:-translate-y-1
+                             transform-gpu"
                   >
-                    {/* Premium Icon */}
-                    <motion.div
-                      className="w-16 h-16 md:w-20 md:h-20
-                               rounded-2xl 
-                               flex items-center justify-center mb-6 
-                               bg-gradient-to-br from-[#4585f4]/10 via-[#4585f4]/15 to-[#6B8AE6]/10
-                               dark:from-[#4585f4]/20 dark:via-[#4585f4]/25 dark:to-[#6B8AE6]/20
-                               group-hover:from-[#4585f4]/20 group-hover:via-[#4585f4]/25 group-hover:to-[#6B8AE6]/20
-                               dark:group-hover:from-[#4585f4]/30 dark:group-hover:via-[#4585f4]/35 dark:group-hover:to-[#6B8AE6]/30
-                               transition-all duration-500
-                               shadow-lg shadow-[#4585f4]/10
-                               group-hover:shadow-xl group-hover:shadow-[#4585f4]/20"
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6, ease: "easeOut" }}
-                    >
-                      {Icon && (
-                        <Icon className="h-8 w-8 md:h-10 md:w-10 
-                                       text-[#4585f4] dark:text-[#6B8AE6]
-                                       transition-transform duration-300
-                                       group-hover:scale-110" />
-                      )}
-                    </motion.div>
+                    {/* Clean Icon */}
+                    {Icon && (
+                      <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center mb-6">
+                        <Icon className="h-6 w-6 md:h-7 md:w-7 text-[#4585f4]" />
+                      </div>
+                    )}
 
-                    {/* Premium Content - Serif Headlines */}
+                    {/* Clean Content */}
                     <h3 className="text-2xl md:text-3xl font-archivo font-bold mb-6 
                                  text-heading dark:text-white
-                                 group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6] 
-                                 transition-colors duration-300
                                  tracking-tight">
                       {point.title}
                     </h3>
                     <p className="text-base md:text-lg leading-relaxed 
-                                text-body dark:text-gray-300
-                                transition-colors duration-300
-                                space-y-4">
+                                text-muted-foreground dark:text-gray-400">
                       {point.description}
                     </p>
-
-                    {/* Premium Accent Line */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-1 
-                               bg-gradient-to-r from-[#4585f4] via-[#5A8FF5] to-[#6B8AE6]
-                               opacity-0 group-hover:opacity-100 
-                               transition-opacity duration-500
-                               rounded-b-2xl"
-                    />
                   </motion.div>
                 );
               })}
