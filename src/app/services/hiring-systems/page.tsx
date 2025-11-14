@@ -331,7 +331,7 @@ const HiringSystemsPage: React.FC = () => {
                 {features.map((feature, index) => {
                   const Icon = feature.icon;
                   return (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300 text-center">
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 text-center">
                       <div className="w-16 h-16 bg-[#4585f4]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <Icon className="w-8 h-8 text-[#4585f4]" />
                       </div>
@@ -348,11 +348,11 @@ const HiringSystemsPage: React.FC = () => {
           <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="max-w-4xl mx-auto text-center">
-                <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
+                <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 rounded-3xl border border-border/50 dark:border-gray-700/50 p-8 md:p-12">
                   <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                     {isNL ? "Klaar om sneller te huren?" : "Ready to hire faster?"}
                   </h2>
-                  <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                  <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                     {isNL 
                       ? "Laat ons uw huidige recruitment proces analyseren en tonen hoe u de beste kandidaten sneller kunt vinden."
                       : "Let us analyze your current recruitment process and show you how to find the best candidates faster."
