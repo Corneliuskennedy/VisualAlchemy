@@ -57,12 +57,11 @@ export function OceanGradient({
     <MonopoGradient
       {...colors}
       colorSize={0.85}
-      colorSpacing={0.35}
+      colorSpacing={0.6}
       colorRotation={1.2}
-      colorSpread={12}
-      displacement={2.0}
-      zoom={0.8}
-      spacing={4.5}
+      displacement={1.5}
+      zoom={1.0}
+      spacing={3.5}
       {...props}
     />
   );
