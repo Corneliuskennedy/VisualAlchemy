@@ -356,6 +356,8 @@ export function MonopoGradient({
     colorSize,
     colorSpacing,
     colorRotation,
+    colorSpread,
+    colorOffset,
     displacement,
     seed,
     position,
