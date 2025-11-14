@@ -1,6 +1,6 @@
 'use client';
 
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Archivo } from "next/font/google";
 import "./globals.css";
 import "@/styles/loading.css";
 import { ThemeProvider } from "next-themes";
@@ -21,13 +21,12 @@ import PerformanceMonitor from "@/components/performance/Monitor";
 import HydrationHandler from "@/components/loading/HydrationHandler";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 
-// Editorial Foundation: Premium Typography System
-// Playfair Display for headlines (serif elegance)
-const playfairDisplay = Playfair_Display({ 
+// Typography System: Archivo + Inter
+// Archivo for headlines (premium sans-serif)
+const archivo = Archivo({ 
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-archivo",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 // Inter for body & UI (hyper-readable sans-serif)
@@ -108,7 +107,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${playfairDisplay.variable} ${inter.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${archivo.variable} ${inter.variable}`}>
       <head>
         {/* Font is loaded via next/font/google - no manual preload needed */}
         {/* Favicon and app icons - Multiple formats for maximum compatibility */}
@@ -234,7 +233,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.className} ${playfairDisplay.variable} ${inter.variable} bg-background text-foreground font-sans`}>
+      <body className={`${inter.className} ${archivo.variable} ${inter.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
             <ThemeProvider
@@ -251,7 +250,7 @@ export default function RootLayout({
                     <div className="min-h-screen relative overflow-x-hidden">
                     <GlobalInteractiveGrid />
                       {/* Premium Experience: Custom Cursor */}
-                      {typeof window !== 'undefined' && <CustomCursor />}
+                      <CustomCursor />
                       {/* Critical SEO components - render immediately */}
                       <HTMLLangUpdater />
                       <CriticalContentPreloader />

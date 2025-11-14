@@ -3,6 +3,25 @@
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+/**
+ * CustomCursor - Context-Aware Custom Cursor Component
+ * 
+ * Creates a premium, tactile cursor that:
+ * - Smoothly follows mouse with spring physics
+ * - Detects interactive elements (a, button, data-cursor)
+ * - Scales and inverts on hover using mix-blend-mode
+ * - Displays contextual labels when hovering
+ * 
+ * NOTE: This component must only render on client-side to avoid hydration errors
+ */
+export function CustomCursor() {
+  const [mounted, setMounted] = useState(false);
+  const [cursorState, setCursorState] = useState<CursorState>({
+    x: 0,
+    y: 0,
+    isHovering: false,
+  });
+
 interface CursorState {
   x: number;
   y: number;
@@ -100,15 +119,27 @@ export function CustomCursor() {
     };
   }, [cursorX, cursorY]);
 
+  // Only mount on client-side to avoid hydration errors
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Hide default cursor on desktop (not touch devices)
   useEffect(() => {
+    if (!mounted) return;
+    
     if (!window.matchMedia('(pointer: coarse)').matches) {
       document.body.style.cursor = 'none';
       return () => {
         document.body.style.cursor = '';
       };
     }
-  }, []);
+  }, [mounted]);
+
+  // Don't render on server or until mounted to avoid hydration errors
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <motion.div

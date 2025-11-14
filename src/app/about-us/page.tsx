@@ -171,7 +171,7 @@ const AboutUsPage: React.FC = () => {
                   {/* Left Column - Content with Serif Headline */}
                   <div className="space-y-10 lg:pt-8">
                     <div className="space-y-8">
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-heading dark:text-white leading-[0.95] tracking-tight">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-archivo font-bold text-heading dark:text-white leading-[0.95] tracking-tight">
                         {isNL ? "Wij helpen Nederlandse bedrijven schalen" : "We help Dutch businesses scale"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
@@ -221,7 +221,7 @@ const AboutUsPage: React.FC = () => {
                         </div>
                         
                         <div>
-                          <h3 className="text-2xl font-serif font-bold text-heading dark:text-white mb-2">Kennet Timmers</h3>
+                          <h3 className="text-2xl font-archivo font-bold text-heading dark:text-white mb-2">Kennet Timmers</h3>
                           <p className="text-[#4585f4] font-semibold mb-4">
                             {isNL ? "Oprichter & AI Automatisering Expert" : "Founder & AI Automation Expert"}
                           </p>

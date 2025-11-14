@@ -76,8 +76,7 @@ const config = {
             },
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans], // Inter for body & UI
-                serif: ["var(--font-serif)", ...fontFamily.serif], // Playfair Display for headlines
-                archivo: ["Archivo", ...fontFamily.sans], // Keep for backward compatibility
+                archivo: ["var(--font-archivo)", ...fontFamily.sans], // Archivo for headlines
             },
             keyframes: {
                 "accordion-down": {

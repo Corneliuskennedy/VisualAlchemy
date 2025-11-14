@@ -119,7 +119,7 @@ function HomeContent() {
           <motion.h1
             id="hero-heading"
             variants={heroTitleVariants}
-            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-serif font-bold leading-[1.1] tracking-[-0.02em]
+            className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-archivo font-bold leading-[1.1] tracking-[-0.02em]
                      text-heading dark:text-white
                      dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-gray-300 dark:bg-clip-text dark:text-transparent
                      drop-shadow-sm dark:drop-shadow-none
@@ -218,7 +218,7 @@ function HomeContent() {
               <motion.h2
                 id="segmentation-heading"
                 variants={fadeInUp}
-                className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold 
+                className="text-4xl md:text-5xl lg:text-6xl font-archivo font-bold 
                            text-heading dark:text-white"
               >
                 {homepage.segmentation.headline}
@@ -308,7 +308,7 @@ function HomeContent() {
                           </motion.div>
 
                           {/* Premium Title - Serif Headlines */}
-                          <h3 className="text-2xl md:text-3xl lg:text-4xl font-serif font-bold
+                          <h3 className="text-2xl md:text-3xl lg:text-4xl font-archivo font-bold
                                        transition-all duration-300
                                        text-heading dark:text-white
                                        group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6]
@@ -421,7 +421,7 @@ function HomeContent() {
                 <motion.h2
                   id="why-us-heading"
                   variants={fadeInUp}
-                  className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold 
+                  className="text-4xl md:text-5xl lg:text-6xl font-archivo font-bold 
                            text-heading dark:text-white leading-[1.1] tracking-tight"
                 >
                   {homepage.whyUs.headline}
@@ -512,7 +512,7 @@ function HomeContent() {
                     </motion.div>
 
                     {/* Premium Content - Serif Headlines */}
-                    <h3 className="text-2xl md:text-3xl font-serif font-bold mb-6 
+                    <h3 className="text-2xl md:text-3xl font-archivo font-bold mb-6 
                                  text-heading dark:text-white
                                  group-hover:text-[#4585f4] dark:group-hover:text-[#6B8AE6] 
                                  transition-colors duration-300
