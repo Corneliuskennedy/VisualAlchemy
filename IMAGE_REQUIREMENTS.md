@@ -51,7 +51,7 @@
 ---
 
 ### 3. Social Proof / Client Logos
-**Status:** ✅ Complete (SVG logos exist)  
+**Status:** ✅ Complete (SVG logos exist)   
 **Location:** `/public/logo/`  
 **Current Logos:**
 - Monuta.svg ✅

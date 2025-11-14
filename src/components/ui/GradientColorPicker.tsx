@@ -75,8 +75,8 @@ export function GradientColorPicker() {
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-6xl mx-auto space-y-8">
-        {/* Preview */}
-        <div className="relative h-96 rounded-lg overflow-hidden border border-border/20">
+        {/* Preview - Full Viewport Height */}
+        <div className="relative min-h-screen rounded-lg overflow-hidden border border-border/20">
           <MonopoGradient
             color1={color1}
             color2={color2}
@@ -89,8 +89,9 @@ export function GradientColorPicker() {
             zoom={zoom}
             spacing={spacing}
             parallax={false}
+            className="!fixed"
           />
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="bg-background/80 backdrop-blur-sm px-6 py-4 rounded-lg border border-border/20">
               <h2 className="text-2xl font-bold text-heading">Gradient Preview</h2>
             </div>
