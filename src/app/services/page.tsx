@@ -100,7 +100,7 @@ const ServicesPage: React.FC = () => {
                 {/* Left Column - Content */}
                 <div className="space-y-8">
                   <div className="space-y-6">
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                       {isNL ? "Strategie eerst. Duurzame oplossingen daarna." : "Strategy first. Sustainable solutions after."}
                     </h1>
                     <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
@@ -180,7 +180,7 @@ const ServicesPage: React.FC = () => {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[#4585f4]/30 to-transparent" />
 
         {/* Solutions Section */}
-        <section className="py-24 bg-[#0A0A0A] relative">
+        <section className="py-24 bg-background relative">
           {isLargeScreen && (
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
@@ -188,7 +188,7 @@ const ServicesPage: React.FC = () => {
           )}
           <div className="container mx-auto px-4 lg:px-8 relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                 {isNL ? "De resultaten van een strategische aanpak" : "The results of a strategic approach"}
               </h2>
               <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
@@ -210,7 +210,7 @@ const ServicesPage: React.FC = () => {
                     <LineChart className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -219,7 +219,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Een voorspelbaar lead generatie systeem" : "A predictable lead generation system"}
                 </h3>
                 
@@ -247,7 +247,7 @@ const ServicesPage: React.FC = () => {
                     <BarChart3 className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -256,7 +256,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Een gestroomlijnd project management systeem" : "A streamlined project management system"}
                 </h3>
                 
@@ -284,7 +284,7 @@ const ServicesPage: React.FC = () => {
                     <Users className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -293,7 +293,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Een geautomatiseerde talent pijplijn" : "An automated talent pipeline"}
                 </h3>
                 
@@ -321,7 +321,7 @@ const ServicesPage: React.FC = () => {
                     <Bot className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -330,7 +330,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Efficiënte AI service fulfillment" : "Efficient AI service fulfillment"}
                 </h3>
                 
@@ -358,7 +358,7 @@ const ServicesPage: React.FC = () => {
                     <Brain className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -367,7 +367,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Een geïntegreerd CRM systeem" : "An integrated CRM system"}
                 </h3>
                 
@@ -395,7 +395,7 @@ const ServicesPage: React.FC = () => {
                     <FileText className="w-8 h-8 text-[#4585f4] stroke-2" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-widest text-gray-400 mb-2 font-medium">
+                    <div className="text-xs uppercase tracking-widest text-muted-foreground dark:text-gray-400 mb-2 font-medium">
                       {isNL ? "HET PROBLEEM:" : "THE PROBLEM:"}
                     </div>
                     <div className="text-red-400 font-semibold mb-6 text-lg">
@@ -404,7 +404,7 @@ const ServicesPage: React.FC = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-bold text-heading dark:text-white mb-6 leading-tight">
                   {isNL ? "Aangepaste SOPs en playbooks" : "Custom SOPs and playbooks"}
                 </h3>
                 
@@ -432,7 +432,7 @@ const ServicesPage: React.FC = () => {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[#4585f4]/30 to-transparent" />
 
         {/* CTA Section */}
-        <section className="py-24 bg-[#0A0A0A] relative">
+        <section className="py-24 bg-background relative">
           {isLargeScreen && (
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
@@ -441,10 +441,10 @@ const ServicesPage: React.FC = () => {
           <div className="container mx-auto px-4 lg:px-8 relative z-10">
             <div className="max-w-4xl mx-auto text-center">
               <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-3xl border border-gray-700/50 p-8 md:p-12">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Alle duurzame oplossingen beginnen met één stap" : "All sustainable solutions start with one step"}
                 </h2>
-                <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
+                <p className="text-xl text-foreground dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto">
                   {isNL ? (
                     "Voordat we een enkele tool implementeren, creëren we uw strategische blauwdruk. De Value Stream Mapping Workshop is de enige manier om te garanderen dat uw investering in technologie leidt tot een meetbaar rendement."
                   ) : (
