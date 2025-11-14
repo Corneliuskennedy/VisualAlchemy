@@ -4,72 +4,27 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export interface MonopoGradientProps {
-  /**
-   * Gradient colors (4 colors for smooth transitions)
-   */
   color1?: string;
   color2?: string;
   color3?: string;
   color4?: string;
-  
-  /**
-   * Size of each color segment (0-1)
-   */
   colorSize?: number;
-  
-  /**
-   * Spacing between color segments (0-1)
-   */
   colorSpacing?: number;
-  
-  /**
-   * Rotation of the gradient (radians)
-   */
   colorRotation?: number;
-  
-  /**
-   * Displacement amount for noise/distortion
-   */
   displacement?: number;
-  
-  /**
-   * Seed for random generation (for consistency)
-   */
   seed?: number;
-  
-  /**
-   * Position offset (x, y)
-   */
   position?: [number, number];
-  
-  /**
-   * Zoom level
-   */
   zoom?: number;
-  
-  /**
-   * Spacing between gradient elements
-   */
   spacing?: number;
-  
-  /**
-   * Enable parallax scroll effect
-   */
   parallax?: boolean;
-  
-  /**
-   * Additional className
-   */
   className?: string;
 }
 
 /**
- * MonopoGradient Component
+ * Premium Monopo-style Gradient
  * 
- * Creates a beautiful, premium gradient background similar to Monopo's website.
- * Uses canvas rendering for smooth, animated gradients with multiple color stops.
- * 
- * Premium, expensive-looking gradient that fills the viewport beautifully.
+ * Creates a beautiful, expensive-looking gradient background.
+ * Uses optimized canvas rendering for smooth, visible gradients.
  */
 export function MonopoGradient({
   color1 = '#80f6ff',
@@ -77,13 +32,13 @@ export function MonopoGradient({
   color3 = '#884ef4',
   color4 = '#d73c3c',
   colorSize = 0.8,
-  colorSpacing = 0.5,
-  colorRotation = 1.2,
-  displacement = 1.5,
+  colorSpacing = 1.0,
+  colorRotation = 0.5,
+  displacement = 1.0,
   seed = 3915.38625,
   position = [0, 0],
   zoom = 1.0,
-  spacing = 3.0,
+  spacing = 2.0,
   parallax = true,
   className = '',
 }: MonopoGradientProps) {
@@ -92,7 +47,6 @@ export function MonopoGradient({
   const [mounted, setMounted] = useState(false);
   const { scrollYProgress } = useScroll();
   
-  // Parallax transform based on scroll
   const parallaxY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -112,10 +66,9 @@ export function MonopoGradient({
     const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
-    // Set canvas size (high DPI for retina displays)
     const updateCanvasSize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2); // Cap at 2x for performance
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
@@ -125,7 +78,7 @@ export function MonopoGradient({
 
     updateCanvasSize();
 
-    // Parse colors to RGB
+    // Parse colors
     const hexToRgb = (hex: string) => {
       const r = parseInt(hex.slice(1, 3), 16);
       const g = parseInt(hex.slice(3, 5), 16);
@@ -135,24 +88,23 @@ export function MonopoGradient({
 
     const colors = [color1, color2, color3, color4].map(hexToRgb);
 
-    // Interpolate between two colors
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    // Smooth color interpolation
+    const lerp = (a: number, b: number, t: number) => {
+      const smoothT = t * t * (3 - 2 * t); // Smoothstep
+      return a + (b - a) * smoothT;
+    };
     
-    // Smooth interpolation function
-    const smoothstep = (t: number) => t * t * (3 - 2 * t);
-    
-    // Get color at position (0-1)
+    // Get color from gradient (0-1 maps through all 4 colors)
     const getColor = (t: number) => {
-      // Normalize t to 0-1 range
-      t = ((t % 1) + 1) % 1;
+      t = ((t % 1) + 1) % 1; // Normalize to 0-1
       
-      // Map to 4-color cycle
+      // Map to 4-color gradient
       const segment = t * 4;
-      const segmentIndex = Math.floor(segment);
-      const localT = smoothstep(segment - segmentIndex);
+      const i = Math.floor(segment) % 4;
+      const localT = segment - Math.floor(segment);
       
-      const c1 = colors[segmentIndex % 4];
-      const c2 = colors[(segmentIndex + 1) % 4];
+      const c1 = colors[i];
+      const c2 = colors[(i + 1) % 4];
       
       return {
         r: Math.round(lerp(c1.r, c2.r, localT)),
@@ -171,26 +123,23 @@ export function MonopoGradient({
       const width = rect.width;
       const height = rect.height;
       
-      time += 0.01; // Slow, smooth animation
+      if (width === 0 || height === 0) {
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
       
-      // Clear with a subtle base color
-      ctx.fillStyle = `rgb(${colors[0].r}, ${colors[0].g}, ${colors[0].b})`;
-      ctx.fillRect(0, 0, width, height);
+      time += 0.005; // Slow animation
       
-      // Create image data for pixel manipulation
+      // Create image data
       const imageData = ctx.createImageData(width, height);
       const data = imageData.data;
       
-      // Center point for radial-like effect
-      const centerX = width / 2 + position[0] * width;
-      const centerY = height / 2 + position[1] * height;
-      
-      // Render gradient pixel by pixel
+      // Render with optimized algorithm
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-          // Normalized coordinates (-1 to 1)
-          const nx = (x / width) * 2 - 1;
-          const ny = (y / height) * 2 - 1;
+          // Normalized coordinates centered at origin
+          const nx = (x / width - 0.5) * 2;
+          const ny = (y / height - 0.5) * 2;
           
           // Apply zoom
           const zx = nx / zoom;
@@ -202,41 +151,39 @@ export function MonopoGradient({
           const rx = zx * cos - zy * sin;
           const ry = zx * sin + zy * cos;
           
-          // Distance from center (for radial effect)
-          const dist = Math.sqrt(rx * rx + ry * ry);
+          // Create beautiful wave pattern
+          // Multiple frequencies for complex, organic look
+          const wave1 = Math.sin(rx * spacing * 2 + time) * 0.5 + 0.5;
+          const wave2 = Math.sin(ry * spacing * 1.5 + time * 0.7) * 0.5 + 0.5;
+          const wave3 = Math.sin((rx + ry) * spacing + time * 1.2) * 0.5 + 0.5;
           
-          // Create wave pattern with multiple frequencies
-          const wave1 = Math.sin(rx * spacing + time) * 0.5 + 0.5;
-          const wave2 = Math.sin(ry * spacing * 0.7 + time * 0.8) * 0.5 + 0.5;
-          const wave3 = Math.sin(dist * spacing * 2 + time * 1.2) * 0.5 + 0.5;
+          // Combine waves with different weights for organic feel
+          const pattern = wave1 * 0.4 + wave2 * 0.35 + wave3 * 0.25;
           
-          // Combine waves for complex pattern
-          const pattern = (wave1 + wave2 + wave3) / 3;
+          // Add subtle noise for texture
+          const noise = (Math.sin(rx * displacement * 8) + Math.cos(ry * displacement * 8)) * 0.05;
           
-          // Add displacement/noise for texture
-          const noise = (Math.sin(rx * displacement * 10) + Math.cos(ry * displacement * 10)) * 0.1;
+          // Final value for color lookup
           const finalT = Math.max(0, Math.min(1, pattern + noise));
           
-          // Get color
+          // Map to color gradient
           const color = getColor(finalT * colorSpacing);
           
-          // Write to image data
+          // Write pixel
           const index = (y * width + x) * 4;
-          data[index] = color.r;     // R
-          data[index + 1] = color.g; // G
-          data[index + 2] = color.b; // B
-          data[index + 3] = 255;     // A
+          data[index] = color.r;
+          data[index + 1] = color.g;
+          data[index + 2] = color.b;
+          data[index + 3] = 255;
         }
       }
       
       ctx.putImageData(imageData, 0, 0);
-      
       rafId = requestAnimationFrame(animate);
     };
 
     animate();
 
-    // Handle resize
     const handleResize = () => {
       updateCanvasSize();
     };

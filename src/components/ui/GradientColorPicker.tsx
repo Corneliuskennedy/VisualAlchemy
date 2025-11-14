@@ -19,11 +19,11 @@ export function GradientColorPicker() {
   const [color4, setColor4] = useState('#075985');
   
   const [colorSize, setColorSize] = useState(0.85);
-  const [colorSpacing, setColorSpacing] = useState(0.35);
-  const [colorRotation, setColorRotation] = useState(1.2);
-  const [displacement, setDisplacement] = useState(2.0);
-  const [zoom, setZoom] = useState(0.8);
-  const [spacing, setSpacing] = useState(4.5);
+  const [colorSpacing, setColorSpacing] = useState(1.0);
+  const [colorRotation, setColorRotation] = useState(0.5);
+  const [displacement, setDisplacement] = useState(1.0);
+  const [zoom, setZoom] = useState(1.0);
+  const [spacing, setSpacing] = useState(2.0);
 
   // Ocean color presets
   const oceanPresets = {
