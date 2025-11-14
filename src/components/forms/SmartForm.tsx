@@ -188,7 +188,7 @@ export const SmartForm: React.FC<SmartFormProps> = ({
             if (React.isValidElement(child)) {
               const fieldName = (child.props as { name?: string }).name;
               // Show only current step fields in multi-step mode
-              if (steps && steps.length > 1) {
+              if (steps && steps.length > 1 && fieldName) {
                 if (!currentStepFields.includes(fieldName)) {
                   return null;
                 }
