@@ -135,10 +135,10 @@ const AboutUsPage: React.FC = () => {
         keywords={isNL ? "Octomatic, Kennet Timmers, AI automatisering, Amsterdam, bedrijfsautomatisering" : "Octomatic, Kennet Timmers, AI automation, Amsterdam, business automation"}
       />
 
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
-        <div className="min-h-screen bg-[#0A0A0A]">
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
+        <div className="min-h-screen bg-background">
           {/* Hero Section */}
-          <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
+          <section className="py-16 md:py-20 relative bg-background">
             <div className="absolute inset-0 z-0 pointer-events-none">
               <GridBackground className="pointer-events-none" />
             </div>
