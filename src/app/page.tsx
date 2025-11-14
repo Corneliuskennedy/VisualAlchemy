@@ -13,7 +13,7 @@ import { useHomepage, useCommon } from '@/hooks/useContent';
 import SmartCTA from '@/components/personalization/SmartCTA';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import TeamSection from '@/components/sections/TeamSection';
-import HeroVisualElements from '@/components/ui/HeroVisualElements';
+import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
 import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
 import { getContentFreshness } from '@/lib/seo/ContentFreshness';
 
