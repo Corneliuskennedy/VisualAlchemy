@@ -186,7 +186,7 @@ export const SmartForm: React.FC<SmartFormProps> = ({
         <div className="space-y-4">
           {React.Children.map(children, (child) => {
             if (React.isValidElement(child)) {
-              const fieldName = child.props.name;
+              const fieldName = (child.props as { name?: string }).name;
               // Show only current step fields in multi-step mode
               if (steps && steps.length > 1) {
                 if (!currentStepFields.includes(fieldName)) {
