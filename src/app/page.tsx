@@ -120,7 +120,7 @@ function HomeContent() {
             id="hero-heading"
             variants={heroTitleVariants}
             className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-[1.1] tracking-[-0.02em]
-                     text-[#0F172A] dark:text-white
+                     text-heading dark:text-white
                      dark:bg-gradient-to-br dark:from-white dark:via-white dark:to-gray-300 dark:bg-clip-text dark:text-transparent
                      drop-shadow-sm dark:drop-shadow-none
                      relative inline-block"
@@ -150,7 +150,7 @@ function HomeContent() {
           <motion.p
             variants={itemVariants}
             className="text-xl md:text-2xl lg:text-3xl max-w-4xl mx-auto leading-[1.6] font-normal
-                     text-[#1E293B] dark:text-gray-300
+                     text-body dark:text-gray-300
                      tracking-tight
                      relative"
             aria-describedby="hero-heading"
@@ -219,7 +219,7 @@ function HomeContent() {
                 id="segmentation-heading"
                 variants={fadeInUp}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold 
-                           text-[#0F172A] dark:text-white"
+                           text-heading dark:text-white"
               >
                 {homepage.segmentation.headline}
               </motion.h2>
@@ -227,7 +227,7 @@ function HomeContent() {
                 <motion.p
                   variants={fadeInUp}
                   className="text-lg md:text-xl max-w-2xl mx-auto 
-                           text-[#475569] dark:text-gray-400"
+                           text-subtle dark:text-gray-400"
                 >
                   {homepage.segmentation.subheadline}
                 </motion.p>
@@ -406,14 +406,14 @@ function HomeContent() {
                 id="why-us-heading"
                 variants={fadeInUp}
                 className="text-4xl md:text-5xl lg:text-6xl font-bold 
-                         text-[#0F172A] dark:text-white"
+                         text-heading dark:text-white"
               >
                 {homepage.whyUs.headline}
               </motion.h2>
               <motion.p
                 variants={fadeInUp}
                 className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed 
-                         text-[#1E293B] dark:text-gray-300"
+                         text-body dark:text-gray-300"
               >
                 {homepage.whyUs.description}
               </motion.p>
