@@ -338,9 +338,9 @@ const StartupKickoffLabPage: React.FC = () => {
                     <div className="w-16 h-16 bg-[#4585f4] rounded-2xl flex items-center justify-center mx-auto mb-6">
                       <span className="text-2xl font-bold text-heading dark:text-white">{step.step}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                    <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{step.title}</h3>
                     <div className="text-[#4585f4] font-medium text-sm mb-4">{step.duration}</div>
-                    <p className="text-gray-300 text-sm leading-relaxed">{step.description}</p>
+                    <p className="text-foreground dark:text-gray-300 text-sm leading-relaxed">{step.description}</p>
                   </div>
                 ))}
               </div>
@@ -375,10 +375,10 @@ const StartupKickoffLabPage: React.FC = () => {
                     )}
                     
                     <div className="text-center mb-8">
-                      <h3 className="text-2xl font-bold text-white mb-4">{pkg.name}</h3>
+                      <h3 className="text-2xl font-bold text-heading dark:text-white mb-4">{pkg.name}</h3>
                       <div className="text-4xl font-bold text-[#4585f4] mb-2">{pkg.price}</div>
-                      <div className="text-gray-400 mb-4">{pkg.duration}</div>
-                      <p className="text-gray-300 leading-relaxed">{pkg.description}</p>
+                      <div className="text-muted-foreground dark:text-gray-400 mb-4">{pkg.duration}</div>
+                      <p className="text-foreground dark:text-gray-300 leading-relaxed">{pkg.description}</p>
                     </div>
                     
                     <div className="space-y-4 mb-8">
@@ -463,7 +463,7 @@ const StartupKickoffLabPage: React.FC = () => {
                     </div>
                     <h3 className="text-xl font-bold text-heading dark:text-white mb-2">{member.name}</h3>
                     <div className="text-[#4585f4] font-medium mb-4">{member.role}</div>
-                    <p className="text-gray-300 leading-relaxed mb-6">{member.bio}</p>
+                    <p className="text-foreground dark:text-gray-300 leading-relaxed mb-6">{member.bio}</p>
                     <Button variant="outline" asChild>
                       <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
                         LinkedIn
@@ -494,7 +494,7 @@ const StartupKickoffLabPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                     <Button 
                       size="lg" 
-                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 group"
+                      className="px-12 py-6 text-xl font-bold bg-[#4585f4] dark:bg-[#4585f4] hover:bg-[#4585f4]/90 dark:hover:bg-[#4585f4]/90 text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#4585f4]/25 dark:hover:shadow-[#4585f4]/25 group"
                       data-cal-namespace="intro-call"
                       data-cal-link="kennet-timmers/intro-call"
                       data-cal-config='{"layout":"month_view"}'
@@ -506,7 +506,7 @@ const StartupKickoffLabPage: React.FC = () => {
                     <Button 
                       size="lg" 
                       variant="outline"
-                      className="px-8 py-6 text-xl font-semibold border-[#4585f4] text-[#4585f4] hover:bg-[#4585f4] hover:text-white transition-all duration-300 group"
+                      className="px-8 py-6 text-xl font-semibold border-[#4585f4] text-[#4585f4] dark:text-[#4585f4] hover:bg-[#4585f4] dark:hover:bg-[#4585f4] hover:text-white transition-all duration-300 group"
                       asChild
                     >
                       <Link href="#">
@@ -516,7 +516,7 @@ const StartupKickoffLabPage: React.FC = () => {
                     </Button>
                   </div>
                   
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground dark:text-gray-500">
                     {isNL ? "15-min fit call • Gratis template • Geen verplichtingen" : "15-min fit call • Free template • No obligations"}
                   </p>
                 </div>
