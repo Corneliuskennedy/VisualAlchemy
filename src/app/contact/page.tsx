@@ -65,7 +65,7 @@ const ContactPage = () => {
         <input type="text" name="preferredLanguage" autoComplete="language" />
       </form>
       
-      <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
+      <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         <div className="container mx-auto px-4 py-24 max-w-5xl">
           {/* Add Breadcrumb */}
           <div className="mb-8">
