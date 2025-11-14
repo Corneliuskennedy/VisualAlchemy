@@ -282,7 +282,7 @@ export default function BuildPage() {
       </section>
 
       {/* Case Studies */}
-      <section className="py-24 px-4 bg-gray-900/30">
+      <section className="py-24 px-4 bg-secondary/30 dark:bg-gray-900/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -344,7 +344,7 @@ export default function BuildPage() {
                   key={index}
                   variants={itemVariants}
                 >
-                  <Card className="h-full p-8 bg-gray-900/50 border-gray-800 flex flex-col">
+                  <Card className="h-full p-8 bg-secondary/50 dark:bg-gray-900/50 border-border dark:border-gray-800 flex flex-col">
                     <div className="space-y-6 flex-1">
                       <div>
                         <h3 className="text-2xl font-bold text-heading dark:text-white mb-2">{tier.name}</h3>
