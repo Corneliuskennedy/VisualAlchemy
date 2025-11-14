@@ -14,14 +14,15 @@ interface WebVitalMetric {
 // Only send analytics in production
 const SEND_TO_ANALYTICS = process.env.NODE_ENV === 'production';
 
-// Define thresholds for each metric according to Core Web Vitals standards
+// ELITE THRESHOLDS - Top 0.1% Performance (2025)
+// These are significantly more stringent than Google's "Good" thresholds
 const thresholds = {
-  CLS: { good: 0.1, poor: 0.25 }, // Cumulative Layout Shift
-  FID: { good: 100, poor: 300 },  // First Input Delay (ms)
-  LCP: { good: 2500, poor: 4000 }, // Largest Contentful Paint (ms)
-  FCP: { good: 1800, poor: 3000 }, // First Contentful Paint (ms)
-  TTFB: { good: 800, poor: 1800 }, // Time To First Byte (ms)
-  INP: { good: 200, poor: 500 }    // Interaction to Next Paint (ms)
+  CLS: { good: 0.01, poor: 0.1 },      // Elite: ≤ 0.01 (Google "Good": ≤ 0.1)
+  FID: { good: 100, poor: 300 },       // First Input Delay (ms) - deprecated, use INP
+  LCP: { good: 1200, poor: 2500 },     // Elite: ≤ 1.2s (Google "Good": ≤ 2.5s)
+  FCP: { good: 800, poor: 1800 },      // First Contentful Paint (ms)
+  TTFB: { good: 200, poor: 800 },      // Elite: ≤ 200ms (Google "Good": ≤ 800ms)
+  INP: { good: 100, poor: 200 }        // Elite: ≤ 100ms (Google "Good": ≤ 200ms)
 };
 
 // Get rating based on thresholds
@@ -86,9 +87,19 @@ const createMetricHandler = () => {
   return (metric: Metric) => {
     const rating = getRating(metric.name as keyof typeof thresholds, metric.value);
     
-    // Log to console in development - only for poor metrics to reduce noise
-    if (process.env.NODE_ENV === 'development' && rating === 'poor') {
-      console.warn(`⚠️ Poor Web Vital: ${metric.name}: ${metric.value} (${rating})`);
+    // Log to console in development
+    if (process.env.NODE_ENV === 'development') {
+      const isElite = (name: string, value: number) => {
+        if (name === 'LCP') return value <= 1200;
+        if (name === 'INP') return value <= 100;
+        if (name === 'CLS') return value <= 0.01;
+        return false;
+      };
+      
+      const eliteStatus = isElite(metric.name, metric.value) ? '⚡ ELITE' : '';
+      const status = rating === 'poor' ? '⚠️ POOR' : rating === 'needs-improvement' ? '⚠️ NEEDS IMPROVEMENT' : '✅ GOOD';
+      
+      console.log(`📊 Web Vital: ${metric.name}: ${metric.value}${metric.name === 'CLS' ? '' : 'ms'} - ${status} ${eliteStatus}`);
     }
 
     // Send to analytics in production
@@ -124,13 +135,23 @@ interface WebVitalsMonitorProps {
 export const WebVitalsMonitor: React.FC<WebVitalsMonitorProps> = () => {
   useEffect(() => {
     // Load web vitals and use our custom handler
-    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB }) => {
+    // INP is the new metric (replaces FID in 2024+)
+    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
       const handler = createMetricHandler();
-      onCLS(handler);
-      onFID(handler);
-      onFCP(handler);
-      onLCP(handler);
-      onTTFB(handler);
+      
+      // Core Web Vitals (2025)
+      onCLS(handler);  // Cumulative Layout Shift - Elite: ≤ 0.01
+      onLCP(handler);  // Largest Contentful Paint - Elite: ≤ 1.2s
+      onINP(handler);  // Interaction to Next Paint - Elite: ≤ 100ms (replaces FID)
+      
+      // Additional metrics
+      onFCP(handler);  // First Contentful Paint
+      onTTFB(handler); // Time To First Byte
+      
+      // FID is deprecated but keep for backwards compatibility
+      if (onFID) {
+        onFID(handler);
+      }
     }).catch(() => {
       // Silently fail if web-vitals is not available
     });

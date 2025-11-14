@@ -16,17 +16,23 @@
 
 ## 📊 Top 0.1% Benchmarks
 
-### **Performance (Core Web Vitals)**
-**Target Scores:**
+### **Performance (Core Web Vitals) - ELITE THRESHOLDS**
+**Target Scores (Top 0.1% 2025):**
 - **Lighthouse Performance:** 98-100 (top 0.1% = 95+)
 - **First Contentful Paint (FCP):** < 800ms (top 0.1% = < 1.0s)
-- **Largest Contentful Paint (LCP):** < 1.2s (top 0.1% = < 1.5s)
+- **Largest Contentful Paint (LCP):** ≤ 1.2s ⚡ **ELITE** (Google "Good" = ≤ 2.5s)
+- **Interaction to Next Paint (INP):** ≤ 100ms ⚡ **ELITE** (Google "Good" = ≤ 200ms)
+- **Cumulative Layout Shift (CLS):** ≤ 0.01 ⚡ **ELITE** (Google "Good" = ≤ 0.1)
 - **Time to Interactive (TTI):** < 2.0s (top 0.1% = < 2.5s)
 - **Total Blocking Time (TBT):** < 100ms (top 0.1% = < 200ms)
-- **Cumulative Layout Shift (CLS):** < 0.05 (top 0.1% = < 0.1)
 - **Speed Index:** < 1.5s (top 0.1% = < 2.0s)
 
 **Current State:** Need to audit and measure
+
+**Elite Performance Philosophy:**
+- **LCP ≤ 1.2s:** Perceived invisibility - content appears almost instantly
+- **INP ≤ 100ms:** Instantaneous responsiveness - immediate visual feedback
+- **CLS ≤ 0.01:** Near-zero visual instability - any shift is treated as a bug
 
 ### **Design Excellence**
 **Target Standards:**
