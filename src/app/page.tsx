@@ -82,17 +82,17 @@ function HomeContent() {
         {common.skipToContent}
       </a>
 
-      {/* Section 1: Clean Hero - Simple & Well-Spaced */}
+      {/* Section 1: Clean Hero - Generously Spaced */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 pt-24 pb-32 md:pb-48 z-10"
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-32 md:py-48 lg:py-64 z-10"
       >
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="max-w-5xl mx-auto text-center space-y-10 md:space-y-12 relative z-10"
+          className="max-w-5xl mx-auto text-center space-y-16 md:space-y-20 lg:space-y-24 relative z-10"
         >
           {/* Clean Typography */}
           <motion.h1
@@ -115,10 +115,10 @@ function HomeContent() {
             {homepage.hero.subline}
           </motion.p>
 
-          {/* AI-Powered Smart CTA - Premium Spacing & Polish */}
+          {/* AI-Powered Smart CTA - Generous Spacing */}
           <motion.div 
             variants={itemVariants} 
-            className="pt-6 md:pt-8"
+            className="pt-8 md:pt-12"
           >
             <SmartCTA 
               section="hero"
@@ -127,10 +127,10 @@ function HomeContent() {
             />
           </motion.div>
 
-          {/* Live Activity Indicator - Refined */}
+          {/* Live Activity Indicator - Well-Spaced */}
           <motion.div 
             variants={itemVariants} 
-            className="pt-6 md:pt-8 flex justify-center"
+            className="pt-12 md:pt-16 flex justify-center"
           >
             <LiveActivity 
               page="homepage"
