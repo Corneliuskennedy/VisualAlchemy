@@ -170,13 +170,13 @@ const AboutUsPage: React.FC = () => {
                   {/* Left Column - Content */}
                   <div className="space-y-8">
                     <div className="space-y-6">
-                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[0.9] tracking-tight">
+                      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-heading dark:text-white leading-[0.9] tracking-tight">
                         {isNL ? "Wij helpen Nederlandse bedrijven schalen" : "We help Dutch businesses scale"}
                       </h1>
                       <div className="w-24 h-2 bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] rounded-full"></div>
                     </div>
                     
-                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-gray-300 leading-relaxed">
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-foreground dark:text-gray-300 leading-relaxed">
                       {isNL ? (
                         "Door slimme automatisering die mensen versterkt in plaats van vervangt. Gevestigd in Naarden, serveren we bedrijven door heel Nederland."
                       ) : (
@@ -200,7 +200,7 @@ const AboutUsPage: React.FC = () => {
 
                   {/* Right Column - Team Photo */}
                   <div className="relative">
-                    <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 shadow-2xl">
+                    <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8 shadow-2xl">
                       <div className="space-y-6 text-center">
                         <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-[#4585f4]/20">
                           <Image
@@ -214,11 +214,11 @@ const AboutUsPage: React.FC = () => {
                         </div>
                         
                         <div>
-                          <h3 className="text-2xl font-bold text-white mb-2">Kennet Timmers</h3>
+                          <h3 className="text-2xl font-bold text-heading dark:text-white mb-2">Kennet Timmers</h3>
                           <p className="text-[#4585f4] font-semibold mb-4">
                             {isNL ? "Oprichter & AI Automatisering Expert" : "Founder & AI Automation Expert"}
                           </p>
-                          <p className="text-gray-300 leading-relaxed">
+                          <p className="text-foreground dark:text-gray-300 leading-relaxed">
                             {isNL 
                               ? "5+ jaar ervaring met het automatiseren van B2B processen en het helpen van Nederlandse bedrijven om te schalen."
                               : "5+ years of experience automating B2B processes and helping Dutch businesses scale."
@@ -234,7 +234,7 @@ const AboutUsPage: React.FC = () => {
           </section>
 
           {/* Values Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -242,10 +242,10 @@ const AboutUsPage: React.FC = () => {
             )}
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Onze kernwaarden" : "Our core values"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Wat ons drijft in alles wat we doen"
                     : "What drives us in everything we do"
@@ -257,12 +257,12 @@ const AboutUsPage: React.FC = () => {
                 {companyValues.map((value, index) => {
                   const Icon = value.icon;
                   return (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8 hover:bg-gray-800/40 transition-all duration-300 text-center">
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8 hover:bg-secondary/40 dark:hover:bg-gray-800/40 transition-all duration-300 text-center">
                       <div className="w-16 h-16 bg-[#4585f4]/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                         <Icon className="w-8 h-8 text-[#4585f4]" />
                       </div>
-                      <h3 className="text-xl font-bold text-white mb-4">{value.title}</h3>
-                      <p className="text-gray-300 leading-relaxed">{value.description}</p>
+                      <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{value.title}</h3>
+                      <p className="text-foreground dark:text-gray-300 leading-relaxed">{value.description}</p>
                     </div>
                   );
                 })}
@@ -271,13 +271,13 @@ const AboutUsPage: React.FC = () => {
           </section>
 
           {/* Timeline Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Ons verhaal" : "Our story"}
                 </h2>
-                <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+                <p className="text-lg md:text-xl text-foreground dark:text-gray-300 max-w-3xl mx-auto">
                   {isNL 
                     ? "Van startup tot vertrouwde automatisering partner"
                     : "From startup to trusted automation partner"
@@ -291,12 +291,12 @@ const AboutUsPage: React.FC = () => {
                     <div key={index} className="flex gap-8 items-start">
                       <div className="flex-shrink-0">
                         <div className="w-20 h-20 bg-[#4585f4] rounded-2xl flex items-center justify-center">
-                          <span className="text-xl font-bold text-white">{item.year}</span>
+                          <span className="text-xl font-bold text-heading dark:text-white">{item.year}</span>
                         </div>
                       </div>
                       <div className="flex-1 pt-2">
-                        <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
-                        <p className="text-lg text-gray-300 leading-relaxed">{item.description}</p>
+                        <h3 className="text-2xl font-bold text-heading dark:text-white mb-4">{item.title}</h3>
+                        <p className="text-lg text-foreground dark:text-gray-300 leading-relaxed">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -306,10 +306,10 @@ const AboutUsPage: React.FC = () => {
           </section>
 
           {/* FAQ Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             <div className="container mx-auto px-4 lg:px-8 relative z-10">
               <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-heading dark:text-white mb-6">
                   {isNL ? "Veelgestelde vragen" : "Frequently Asked Questions"}
                 </h2>
               </div>
@@ -317,9 +317,9 @@ const AboutUsPage: React.FC = () => {
               <div className="max-w-4xl mx-auto">
                 <div className="space-y-6">
                   {faqItems.map((item, index) => (
-                    <div key={index} className="bg-gray-900/20 border border-gray-800/50 rounded-2xl p-8">
-                      <h3 className="text-xl font-bold text-white mb-4">{item.question}</h3>
-                      <p className="text-gray-300 leading-relaxed">{item.answer}</p>
+                    <div key={index} className="bg-secondary/20 dark:bg-gray-900/20 border border-border/50 dark:border-gray-800/50 rounded-2xl p-8">
+                      <h3 className="text-xl font-bold text-heading dark:text-white mb-4">{item.question}</h3>
+                      <p className="text-foreground dark:text-gray-300 leading-relaxed">{item.answer}</p>
                     </div>
                   ))}
                 </div>
@@ -328,7 +328,7 @@ const AboutUsPage: React.FC = () => {
           </section>
 
           {/* Location & Contact Section */}
-          <section className="py-24 bg-[#0A0A0A] relative">
+          <section className="py-24 bg-background relative">
             {isLargeScreen && (
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <GridBackground className="pointer-events-none opacity-30" />
@@ -338,10 +338,10 @@ const AboutUsPage: React.FC = () => {
               <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                   <div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                    <h2 className="text-3xl md:text-4xl font-bold text-heading dark:text-white mb-6">
                       {isNL ? "Lokaal gevestigd, landelijk actief" : "Locally based, nationally active"}
                     </h2>
-                    <p className="text-lg text-gray-300 mb-8 leading-relaxed">
+                    <p className="text-lg text-foreground dark:text-gray-300 mb-8 leading-relaxed">
                       {isNL 
                         ? "Ons kantoor in Naarden biedt de perfecte basis om Nederlandse bedrijven persoonlijk te ondersteunen. We begrijpen de lokale markt en kunnen snel ter plaatse zijn voor training en implementatie."
                         : "Our office in Naarden provides the perfect base to personally support Dutch businesses. We understand the local market and can quickly be on-site for training and implementation."
@@ -354,10 +354,10 @@ const AboutUsPage: React.FC = () => {
                           <MapPin className="w-6 h-6 text-[#4585f4]" />
                         </div>
                         <div>
-                          <h4 className="text-white font-semibold">
+                          <h4 className="text-heading dark:text-white font-semibold">
                             {isNL ? "Kantoor Locatie" : "Office Location"}
                           </h4>
-                          <p className="text-gray-400">Naarden, Nederland</p>
+                          <p className="text-muted-foreground dark:text-gray-400">Naarden, Nederland</p>
                         </div>
                       </div>
                       
@@ -366,10 +366,10 @@ const AboutUsPage: React.FC = () => {
                           <Users className="w-6 h-6 text-[#4585f4]" />
                         </div>
                         <div>
-                          <h4 className="text-white font-semibold">
+                          <h4 className="text-heading dark:text-white font-semibold">
                             {isNL ? "Service Gebied" : "Service Area"}
                           </h4>
-                          <p className="text-gray-400">
+                          <p className="text-muted-foreground dark:text-gray-400">
                             {isNL ? "Nederland, focus op Amsterdam en omgeving" : "Netherlands, focus on Amsterdam and surrounding areas"}
                           </p>
                         </div>
@@ -377,11 +377,11 @@ const AboutUsPage: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8">
-                    <h3 className="text-2xl font-bold text-white mb-6 text-center">
+                  <div className="bg-gradient-to-br from-secondary/50 dark:from-gray-800/50 to-background/50 dark:to-gray-900/50 backdrop-blur-sm border border-border/50 dark:border-gray-700/50 rounded-3xl p-8">
+                    <h3 className="text-2xl font-bold text-heading dark:text-white mb-6 text-center">
                       {isNL ? "Laten we kennismaken" : "Let's get acquainted"}
                     </h3>
-                    <p className="text-gray-300 mb-8 text-center leading-relaxed">
+                    <p className="text-foreground dark:text-gray-300 mb-8 text-center leading-relaxed">
                       {isNL 
                         ? "Boek een gratis kennismakingsgesprek om te ontdekken hoe we uw bedrijf kunnen helpen automatiseren en schalen."
                         : "Book a free introductory call to discover how we can help your business automate and scale."
@@ -401,7 +401,7 @@ const AboutUsPage: React.FC = () => {
                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                       </Button>
                       
-                      <p className="text-sm text-gray-500 mt-4">
+                      <p className="text-sm text-muted-foreground dark:text-gray-500 mt-4">
                         {isNL ? "15 minuten • Gratis • Geen verplichtingen" : "15 minutes • Free • No obligations"}
                       </p>
                     </div>
