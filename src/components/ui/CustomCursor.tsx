@@ -29,22 +29,6 @@ export function CustomCursor() {
     isHovering: false,
   });
 
-/**
- * CustomCursor - Context-Aware Custom Cursor Component
- * 
- * Creates a premium, tactile cursor that:
- * - Smoothly follows mouse with spring physics
- * - Detects interactive elements (a, button, data-cursor)
- * - Scales and inverts on hover using mix-blend-mode
- * - Displays contextual labels when hovering
- */
-export function CustomCursor() {
-  const [cursorState, setCursorState] = useState<CursorState>({
-    x: 0,
-    y: 0,
-    isHovering: false,
-  });
-
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
