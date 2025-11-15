@@ -60,10 +60,13 @@ const nextConfig = {
     // Cal.com is client-only and should never be executed on the server
     if (isServer) {
       const webpack = require('webpack');
+      // Replace Cal.com with an empty stub during server builds
+      // This prevents any code from being executed during SSR
       config.plugins.push(
-        new webpack.IgnorePlugin({
-          resourceRegExp: /^@calcom\/embed-react$/,
-        })
+        new webpack.NormalModuleReplacementPlugin(
+          /^@calcom\/embed-react$/,
+          require.resolve('./src/lib/stubs/calcom-stub.js')
+        )
       );
     }
     
