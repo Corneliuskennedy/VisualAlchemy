@@ -1,10 +1,6 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import dynamicImport from 'next/dynamic';
-
-// Force dynamic rendering to prevent SSR issues with Cal.com
-export const dynamic = 'force-dynamic';
 
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from '@/components/ui/button';
@@ -15,12 +11,6 @@ import { MapPin, Users, Target, Award, ArrowRight, ArrowLeft, Calendar } from 'l
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import Image from 'next/image';
-
-// Dynamically import Cal.com component with SSR disabled
-const CalIntroCallClient = dynamicImport(
-  () => import('@/components/cal/CalIntroCallClient').then(mod => mod.CalIntroCallClient),
-  { ssr: false }
-);
 
 const AboutUsPage: React.FC = () => {
   const { language } = useTranslations();
