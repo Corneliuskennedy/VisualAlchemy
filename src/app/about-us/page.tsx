@@ -135,8 +135,8 @@ const AboutUsPage: React.FC = () => {
 
   return (
     <>
-      {/* Cal.com wrapper - SSR disabled, client-only */}
-      <CalIntroCallClient />
+      {/* Cal.com temporarily disabled to fix SSR build issues */}
+      {/* <CalIntroCallClient /> */}
       <UnifiedSEO 
         title={isNL ? "Over Octomatic - AI Automatisering Experts Amsterdam | Kennet Timmers" : "About Octomatic - AI Automation Experts Amsterdam | Kennet Timmers"}
         description={isNL ? "Leer over Octomatic's missie om Nederlandse bedrijven te helpen schalen door AI automatisering. Lokale ondersteuning vanuit Naarden kantoor." : "Learn about Octomatic's mission to help Dutch businesses scale through AI automation. Local support from Naarden office."}
