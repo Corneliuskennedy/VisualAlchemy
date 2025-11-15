@@ -4,7 +4,6 @@ import React, { Suspense } from 'react';
 
 // Force dynamic rendering to prevent SSR issues with Cal.com
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from '@/components/ui/button';
