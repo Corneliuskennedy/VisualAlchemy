@@ -11,15 +11,129 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   experimental: {
-    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'framer-motion'],
+    // Optimize package imports for tree-shaking - reduces bundle size significantly
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'framer-motion',
+      // Optimize all Radix UI packages for tree-shaking
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-alert-dialog',
+      '@radix-ui/react-aspect-ratio',
+      '@radix-ui/react-avatar',
+      '@radix-ui/react-checkbox',
+      '@radix-ui/react-collapsible',
+      '@radix-ui/react-context-menu',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-hover-card',
+      '@radix-ui/react-label',
+      '@radix-ui/react-menubar',
+      '@radix-ui/react-navigation-menu',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-progress',
+      '@radix-ui/react-radio-group',
+      '@radix-ui/react-scroll-area',
+      '@radix-ui/react-select',
+      '@radix-ui/react-separator',
+      '@radix-ui/react-slider',
+      '@radix-ui/react-slot',
+      '@radix-ui/react-switch',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-toast',
+      '@radix-ui/react-toggle',
+      '@radix-ui/react-toggle-group',
+      '@radix-ui/react-tooltip',
+    ],
+    // Optimize CSS output
+    optimizeCss: true,
+  },
+  // Optimize CSS output - remove unused styles
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
   },
   // Performance budgets to catch regressions early
   webpack: (config, { isServer }) => {
+    // Exclude Cal.com from server bundle to prevent SSR errors
+    // Cal.com is client-only and should never be executed on the server
+    if (isServer) {
+      const webpack = require('webpack');
+      config.plugins.push(
+        new webpack.IgnorePlugin({
+          resourceRegExp: /^@calcom\/embed-react$/,
+        })
+      );
+    }
+    
     if (!isServer) {
       config.performance = {
         maxAssetSize: 250000, // 250 kB
         maxEntrypointSize: 250000, // 250 kB
         hints: 'warning', // Warn instead of error to not break builds
+      };
+      
+      // Optimize chunk splitting for better code splitting
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            // Separate vendor chunks for better caching
+            default: false,
+            vendors: false,
+            // Framer Motion in separate chunk (heavy library)
+            framerMotion: {
+              name: 'framer-motion',
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              priority: 30,
+              reuseExistingChunk: true,
+            },
+            // Radix UI in separate chunk
+            radixUI: {
+              name: 'radix-ui',
+              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+              priority: 25,
+              reuseExistingChunk: true,
+            },
+            // React Query in separate chunk (only used in blog)
+            reactQuery: {
+              name: 'react-query',
+              test: /[\\/]node_modules[\\/]@tanstack[\\/]react-query[\\/]/,
+              priority: 20,
+              reuseExistingChunk: true,
+            },
+            // Split React/Next.js into separate chunk (heavily cached)
+            react: {
+              name: 'react',
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+              priority: 40,
+              reuseExistingChunk: true,
+            },
+            // Next.js core in separate chunk
+            nextjs: {
+              name: 'nextjs',
+              test: /[\\/]node_modules[\\/]next[\\/]/,
+              priority: 35,
+              reuseExistingChunk: true,
+            },
+            // Supabase client (only used in blog)
+            supabase: {
+              name: 'supabase',
+              test: /[\\/]node_modules[\\/]@supabase[\\/]/,
+              priority: 15,
+              reuseExistingChunk: true,
+            },
+            // Other vendor libraries
+            vendor: {
+              name: 'vendor',
+              test: /[\\/]node_modules[\\/]/,
+              priority: 10,
+              reuseExistingChunk: true,
+            },
+          },
+        },
       };
     }
     return config;
@@ -50,6 +164,12 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    // Prevent crashes on missing images
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Add error handling for missing images
+    minimumCacheTTL: 60,
   },
   async redirects() {
     return [
