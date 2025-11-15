@@ -7,6 +7,12 @@ import { useEffect } from 'react';
  * Prevents SSR issues by only running on client side
  */
 export function CalIntroCallClient() {
+  // TEMPORARILY DISABLED: Cal.com causing SSR build errors
+  // Will be re-enabled once we fix the webpack bundling issue
+  // The buttons still have data-cal-* attributes and will work if Cal.com is initialized via script tag
+  return null;
+  
+  /* DISABLED CODE - Re-enable once SSR issue is fixed
   useEffect(() => {
     // Only run on client
     if (typeof window === 'undefined') {
@@ -35,7 +41,6 @@ export function CalIntroCallClient() {
       initCal();
     });
   }, []);
-
-  return null;
+  */
 }
 
