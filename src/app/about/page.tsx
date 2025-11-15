@@ -1,8 +1,8 @@
 'use client';
 
 // Force dynamic rendering to prevent SSR issues with Cal.com
+// This prevents static generation and ensures pages are rendered on-demand
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 import React, { Suspense } from 'react';
 
