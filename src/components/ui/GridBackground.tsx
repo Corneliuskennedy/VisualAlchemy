@@ -27,7 +27,8 @@
 
 import { lazy, Suspense, useEffect, useRef, useState, useMemo } from 'react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
-import { useTheme } from 'next-themes';
+// DISABLED: ThemeProvider - using hardcoded dark theme
+// import { useTheme } from 'next-themes';
 
 // Lazy load tech elements
 const TechElements = lazy(() => import('./TechElements'));
@@ -126,19 +127,20 @@ const GridBackground = ({
   disableInteractive = false
 }: GridBackgroundProps) => {
   const isLargeScreen = useIsLargeScreen();
-  const { theme, resolvedTheme } = useTheme();
+  // DISABLED: ThemeProvider - hardcoded to dark theme
+  // const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Determine current theme (handle hydration) - memoized to prevent unnecessary recalculations
+  // DISABLED: ThemeProvider - always use dark theme
   const currentTheme = useMemo(() => {
-    return mounted ? (resolvedTheme || theme || 'light') : 'light';
-  }, [mounted, resolvedTheme, theme]);
+    return 'dark'; // Always dark theme
+  }, []);
   
-  const isDark = useMemo(() => currentTheme === 'dark', [currentTheme]);
+  const isDark = useMemo(() => true, []); // Always dark
 
   // Use static grid if interactive is disabled or on small screens
   if (disableInteractive || !isLargeScreen) {
