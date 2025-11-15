@@ -19,10 +19,11 @@
     "test:performance": "RUN_PERFORMANCE_TESTS=true playwright test tests/performance/lighthouse.spec.ts",
     "test:structured-data": "node scripts/validate-structured-data.js",
     "test:structured-data-dom": "node scripts/test-structured-data-dom.js",
-    "audit:theme": "node scripts/theme-audit-helper.js"
+    "audit:theme": "node scripts/theme-audit-helper.js",
+    "analyze:unused": "node scripts/analyze-unused-code.js",
+    "baseline:performance": "node scripts/performance-baseline.js"
   },
   "dependencies": {
-    "@calcom/embed-react": "^1.5.3",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
