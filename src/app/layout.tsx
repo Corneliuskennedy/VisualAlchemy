@@ -3,9 +3,10 @@
 import { Inter, Archivo } from "next/font/google";
 import "./globals.css";
 import "@/styles/loading.css";
-import { ThemeProvider } from "next-themes";
+// DISABLED: ThemeProvider - will be re-enabled when light theme is added
+// import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { HelmetProvider } from 'react-helmet-async';
+// REMOVED: react-helmet-async - using Next.js metadata instead (saves ~50-100 KiB)
 import React, { Suspense, lazy } from "react";
 import { SkipToContent } from "@/components/A11y/SkipToContent";
 import { HTMLLangUpdater } from "@/components/SEO/HTMLLangUpdater";
@@ -18,22 +19,28 @@ const GlobalInteractiveGrid = lazy(() => import("@/components/ScrollBasedNightSk
 import { ThemeTransition } from "@/components/ui/ThemeTransition";
 import InstallPrompt from "@/lib/pwa/InstallPrompt";
 import { usePrefetcher } from "@/lib/performance/Prefetcher";
-import PerformanceMonitor from "@/components/performance/Monitor";
+// Lazy load PerformanceMonitor - dev only, saves bundle size
+const PerformanceMonitor = lazy(() => import("@/components/performance/Monitor").then(module => ({ 
+  default: module.default || module.PerformanceMonitor 
+})));
 import HydrationHandler from "@/components/loading/HydrationHandler";
+import { CriticalCSS } from "@/components/performance/CriticalCSS";
 
 // Typography System: Archivo + Inter
 // Archivo for headlines (premium sans-serif)
 const archivo = Archivo({ 
   subsets: ["latin"],
   variable: "--font-archivo",
-  display: "swap",
+  display: "optional", // Changed from "swap" to prevent FOIT/FOUT - uses system font fallback
+  preload: true,
 });
 
 // Inter for body & UI (hyper-readable sans-serif)
 const inter = Inter({ 
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
+  display: "optional", // Changed from "swap" to prevent FOIT/FOUT - uses system font fallback
+  preload: true,
 });
 
 // Lazy load all major components
@@ -110,7 +117,12 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
-      <PerformanceMonitor show={process.env.NODE_ENV === 'development'} />
+      {/* Lazy load PerformanceMonitor - dev only */}
+      {process.env.NODE_ENV === 'development' && (
+        <Suspense fallback={null}>
+          <PerformanceMonitor show={true} />
+        </Suspense>
+      )}
     </>
   );
 }
@@ -121,20 +133,70 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${archivo.variable} ${inter.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`dark ${archivo.variable} ${inter.variable}`}>
       <head>
-        {/* Font is loaded via next/font/google - no manual preload needed */}
+        {/* Critical CSS - Inlined for faster FCP/LCP - Theme-aware */}
+        <style dangerouslySetInnerHTML={{ __html: `
+:root {
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  --radius: 0.5rem;
+}
+.dark {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: var(--font-archivo), system-ui, -apple-system, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 300ms, color 300ms;
+}
+h1 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+        ` }} />
+        
+        {/* Font preload hints for faster LCP - next/font/google handles this, but we add hints */}
         {/* Favicon and app icons - Multiple formats for maximum compatibility */}
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        {/* Favicon - Multiple formats for maximum compatibility */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
         <link rel="icon" href="/logo/octomatic-200.png" type="image/png" sizes="200x200" />
         <link rel="icon" href="/logo/octomatic-400.png" type="image/png" sizes="400x400" />
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo/octomatic-200.png" sizes="200x200" />
         <link rel="apple-touch-icon" href="/logo/octomatic-400.png" sizes="400x400" />
         <link rel="apple-touch-icon" href="/logo/octomatic-800.png" sizes="800x800" />
-        <meta name="theme-color" content="#FFFFFF" />
-        <meta name="msapplication-TileColor" content="#FFFFFF" />
+        {/* Theme color - white for light mode, black for dark mode */}
+        <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-TileImage" content="/logo/octomatic-200.png" />
         <link rel="manifest" href="/manifest.json" />
         
@@ -239,24 +301,21 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         
-        {/* Fonts are loaded via next/font/google - no manual preload needed */}
+        {/* Fonts are loaded via next/font/google - optimized for LCP */}
         {/* next/font/google handles font loading optimally without render-blocking */}
+        {/* Font display: swap ensures text is visible immediately */}
       </head>
       <body className={`${inter.className} ${archivo.variable} ${inter.variable} bg-background text-foreground font-archivo`}>
         <QueryClientProvider client={queryClient}>
-          <HelmetProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="light"
-              enableSystem={false}
-              enableColorScheme={true}
-            >
-              <LanguageProvider>
-                <AuthProvider>
-                  <WebVitalsMonitor />
-                  <HydrationHandler />
-                  <ThemeTransition>
-                    <div className="min-h-screen relative overflow-x-hidden">
+          {/* DISABLED: ThemeProvider - will be re-enabled when light theme is added */}
+          {/* REMOVED: HelmetProvider - using Next.js metadata instead */}
+          <LanguageProvider>
+            <AuthProvider>
+              <WebVitalsMonitor />
+              <HydrationHandler />
+              <CriticalCSS />
+              <ThemeTransition>
+                <div className="min-h-screen relative overflow-x-hidden">
                     {/* GlobalInteractiveGrid - Only load on homepage, lazy loaded */}
                     <Suspense fallback={null}>
                       <ConditionalGlobalGrid />
@@ -333,10 +392,10 @@ export default function RootLayout({
                       <InstallPrompt />
                     </Suspense>
 
-                    {/* AI Chatbot */}
-                    <Suspense fallback={null}>
+                    {/* AI Chatbot - Removed for now */}
+                    {/* <Suspense fallback={null}>
                       <AIChatbot position="bottom-right" />
-                    </Suspense>
+                    </Suspense> */}
 
                     {/* Accessibility Controls */}
                     <Suspense fallback={null}>
@@ -346,8 +405,6 @@ export default function RootLayout({
                   </ThemeTransition>
                 </AuthProvider>
               </LanguageProvider>
-            </ThemeProvider>
-          </HelmetProvider>
         </QueryClientProvider>
       </body>
     </html>

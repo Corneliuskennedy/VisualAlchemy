@@ -1,41 +1,61 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useTheme } from 'next-themes';
+import { useState, useEffect, useRef } from 'react';
+// DISABLED: ThemeProvider - using hardcoded dark theme for now
+// import { useTheme } from 'next-themes';
 
 /**
  * SSR-safe theme hook that prevents hydration mismatches
+ * Optimized to prevent unnecessary re-renders
+ * 
+ * DISABLED: ThemeProvider - currently hardcoded to dark theme
+ * Will be re-enabled when light theme is added
  * 
  * This hook ensures that:
- * 1. Server-side render always uses light theme (default)
+ * 1. Server-side render always uses dark theme (hardcoded)
  * 2. Client-side hydration matches server render initially
- * 3. Theme updates happen smoothly after hydration
+ * 3. Theme updates happen smoothly after hydration (disabled for now)
+ * 4. Only re-renders when theme actually changes (disabled for now)
  * 
  * @returns {Object} Theme state with SSR-safe values
  */
 export function useThemeSafe() {
-  const { theme, systemTheme } = useTheme();
+  // DISABLED: ThemeProvider - hardcoded to dark theme
+  const theme = 'dark';
+  const systemTheme = 'dark';
+  
+  const mountedRef = useRef(false);
   const [mounted, setMounted] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const isDarkRef = useRef(true); // Always dark
+  const previousThemeRef = useRef<string | undefined>(theme);
+  const previousSystemThemeRef = useRef<string | undefined>(systemTheme);
 
-  // Set mounted state after client-side hydration
+  // Single effect: Set mounted once
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Update theme state after mount
-  useEffect(() => {
-    if (mounted) {
-      const shouldBeDark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
-      setIsDark(shouldBeDark);
+    if (!mountedRef.current) {
+      mountedRef.current = true;
+      setMounted(true);
     }
-  }, [theme, systemTheme, mounted]);
+    
+    // DISABLED: Theme change detection - ThemeProvider is disabled
+    // Theme is hardcoded to 'dark'
+    // Calculate dark mode state
+    // const shouldBeDark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
+    
+    // Only update if theme actually changed
+    // if (previousThemeRef.current !== theme || previousSystemThemeRef.current !== systemTheme) {
+    //   isDarkRef.current = shouldBeDark;
+    //   previousThemeRef.current = theme;
+    //   previousSystemThemeRef.current = systemTheme;
+    // }
+  }, []); // Empty deps since theme is constant
 
+  // Return stable values - always dark theme
   return {
-    theme: mounted ? (theme || 'light') : 'light', // Default to light for SSR
-    isDark: mounted ? isDark : false, // Default to false for SSR
+    theme: 'dark', // Hardcoded to dark
+    isDark: true, // Always dark
     mounted,
-    systemTheme: mounted ? systemTheme : undefined,
+    systemTheme: 'dark', // Hardcoded to dark
   };
 }
 
