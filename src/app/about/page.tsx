@@ -1,6 +1,10 @@
 'use client';
 
 import React, { Suspense } from 'react';
+
+// Force dynamic rendering to prevent SSR issues with Cal.com
+export const dynamic = 'force-dynamic';
+
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -9,16 +13,13 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { MapPin, Users, Target, Award, ArrowRight, ArrowLeft, Calendar, Briefcase, GraduationCap } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalIntroCall } from '@/hooks/use-cal';
+import { CalIntroCallClient } from '@/components/cal/CalIntroCallClient';
 import Image from 'next/image';
 
 const AboutPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
   const isLargeScreen = useIsLargeScreen();
-  
-  // Initialize Cal.com booking system
-  useCalIntroCall();
 
   // Define breadcrumb items
   const breadcrumbItems = [
@@ -100,6 +101,8 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
+      {/* Cal.com wrapper - SSR disabled, client-only */}
+      <CalIntroCallClient />
       <UnifiedSEO 
         title={isNL ? "Over Octomatic - AI Automatisering Experts Amsterdam | Kennet Timmers" : "About Octomatic - AI Automation Experts Amsterdam | Kennet Timmers"}
         description={isNL ? "Leer over Octomatic's missie om Nederlandse bedrijven te helpen schalen door AI automatisering. Lokale ondersteuning vanuit Naarden kantoor." : "Learn about Octomatic's mission to help Dutch businesses scale through AI automation. Local support from Naarden office."}
