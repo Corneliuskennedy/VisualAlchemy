@@ -8,8 +8,16 @@ import Cookies from "js-cookie";
 import { Flag } from "./ui/flag";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
-import { useCalIntroCall } from '@/hooks/use-cal';
+// DISABLED: Cal.com hook - using client-only component instead
+// import { useCalIntroCall } from '@/hooks/use-cal';
 import { ThemeSwitcher } from "./ui/ThemeSwitcher";
+import dynamicImport from 'next/dynamic';
+
+// Dynamically import Cal.com component with SSR disabled
+const CalIntroCallClient = dynamicImport(
+  () => import('@/components/cal/CalIntroCallClient').then(mod => mod.CalIntroCallClient),
+  { ssr: false }
+);
 
 interface NavItemProps {
   item: {
@@ -83,8 +91,7 @@ export const Navbar = () => {
   const router = useRouter();
   const { language, t, setLanguage: setLanguageContext } = useLanguage();
   
-  // Initialize Cal.com embed for intro call
-  useCalIntroCall();
+  // Cal.com initialized via client-only component (SSR disabled)
 
   // Memoized translations
   const translations = useMemo(
@@ -226,6 +233,8 @@ export const Navbar = () => {
 
   return (
     <>
+      {/* Cal.com wrapper - SSR disabled, client-only */}
+      <CalIntroCallClient />
       {/* Desktop Navbar - Full experience */}
       <nav
         role="navigation"
@@ -259,8 +268,8 @@ export const Navbar = () => {
                 <Flag code={language === "nl" ? "us" : "nl"} height="16" className="w-5 h-5" />
               </button>
               
-              {/* Theme Switcher */}
-              <ThemeSwitcher />
+              {/* Theme Switcher - Hidden for now */}
+              {/* <ThemeSwitcher /> */}
               
               {/* Secondary CTA - Workshop */}
               <button
@@ -391,10 +400,10 @@ export const Navbar = () => {
                 <span className="text-sm">{language === "nl" ? "English" : "Nederlands"}</span>
               </button>
               
-              {/* Mobile Theme Switcher */}
-              <div className="flex justify-center">
+              {/* Mobile Theme Switcher - Hidden for now */}
+              {/* <div className="flex justify-center">
                 <ThemeSwitcher />
-              </div>
+              </div> */}
             </div>
           </SheetContent>
         </Sheet>
