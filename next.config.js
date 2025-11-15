@@ -45,8 +45,8 @@ const nextConfig = {
       '@radix-ui/react-toggle-group',
       '@radix-ui/react-tooltip',
     ],
-    // Optimize CSS output
-    optimizeCss: true,
+    // DISABLED: Optimize CSS output - requires critters package
+    // optimizeCss: true,
   },
   // Optimize CSS output - remove unused styles
   compiler: {
