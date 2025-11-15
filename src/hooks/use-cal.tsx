@@ -1,4 +1,3 @@
-import { getCalApi } from "@calcom/embed-react";
 import { useEffect, useRef } from "react";
 
 // Global set to track initialized namespaces across all components
@@ -8,6 +7,11 @@ export const useCal = (namespace: string, config: any = {}) => {
   const hasInitialized = useRef(false);
   
   useEffect(() => {
+    // SSR safety check - only run on client
+    if (typeof window === 'undefined') {
+      return;
+    }
+    
     // Prevent multiple initializations globally and per component
     if (hasInitialized.current || globalInitialized.has(namespace)) {
       return;
@@ -18,6 +22,8 @@ export const useCal = (namespace: string, config: any = {}) => {
     
     (async function () {
       try {
+        // Dynamically import Cal.com only on client side to avoid SSR issues
+        const { getCalApi } = await import("@calcom/embed-react");
         const cal = await getCalApi({ namespace });
         // Check if cal is a function before calling
         if (cal && typeof cal === 'function') {
