@@ -63,14 +63,22 @@ const nextConfig = {
       const path = require('path');
       
       // Aggressively exclude Cal.com from server bundle using multiple strategies
-      // Strategy 1: IgnorePlugin to completely ignore the module
+      // Strategy 1: Externals - completely exclude from bundle
+      config.externals = config.externals || [];
+      if (Array.isArray(config.externals)) {
+        config.externals.push('@calcom/embed-react');
+      } else {
+        config.externals['@calcom/embed-react'] = 'commonjs @calcom/embed-react';
+      }
+      
+      // Strategy 2: IgnorePlugin to completely ignore the module
       config.plugins.push(
         new webpack.IgnorePlugin({
           resourceRegExp: /^@calcom\/embed-react$/,
         })
       );
       
-      // Strategy 2: NormalModuleReplacementPlugin to replace with stub
+      // Strategy 3: NormalModuleReplacementPlugin to replace with stub
       config.plugins.push(
         new webpack.NormalModuleReplacementPlugin(
           /^@calcom\/embed-react$/,
