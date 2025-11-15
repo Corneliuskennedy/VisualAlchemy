@@ -18,8 +18,8 @@ export function CriticalCSS() {
       // Only defer if not already loaded
       if (!linkElement.dataset.deferred && linkElement.href) {
         linkElement.media = 'print';
-        linkElement.onload = function() {
-          this.media = 'all';
+        linkElement.onload = () => {
+          linkElement.media = 'all';
         };
         linkElement.dataset.deferred = 'true';
       }
