@@ -1,5 +1,9 @@
 'use client';
 
+// Force dynamic rendering to prevent SSR issues with Cal.com
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 import React, { Suspense } from 'react';
 
 import { useTranslations } from '@/hooks/useTranslations';
