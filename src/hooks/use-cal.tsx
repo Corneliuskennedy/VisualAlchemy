@@ -1,7 +1,16 @@
 import { useEffect, useRef } from "react";
 
 // Global set to track initialized namespaces across all components
-const globalInitialized = new Set<string>();
+// Only create on client side to prevent SSR issues
+const getGlobalInitialized = (): Set<string> => {
+  if (typeof window === 'undefined') {
+    return new Set<string>();
+  }
+  if (!(globalThis as any).__calInitialized) {
+    (globalThis as any).__calInitialized = new Set<string>();
+  }
+  return (globalThis as any).__calInitialized;
+};
 
 export const useCal = (namespace: string, config: any = {}) => {
   const hasInitialized = useRef(false);
@@ -11,6 +20,8 @@ export const useCal = (namespace: string, config: any = {}) => {
     if (typeof window === 'undefined') {
       return;
     }
+    
+    const globalInitialized = getGlobalInitialized();
     
     // Prevent multiple initializations globally and per component
     if (hasInitialized.current || globalInitialized.has(namespace)) {
@@ -40,7 +51,10 @@ export const useCal = (namespace: string, config: any = {}) => {
       } catch (error) {
         console.error(`Failed to initialize Cal.com for ${namespace}:`, error);
         // Remove from global set on error so it can be retried
-        globalInitialized.delete(namespace);
+        if (typeof window !== 'undefined') {
+          const globalInitialized = getGlobalInitialized();
+          globalInitialized.delete(namespace);
+        }
         hasInitialized.current = false;
       }
     })();
