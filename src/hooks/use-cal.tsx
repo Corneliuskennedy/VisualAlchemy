@@ -13,6 +13,12 @@ const getGlobalInitialized = (): Set<string> => {
 };
 
 export const useCal = (namespace: string, config: any = {}) => {
+  // TEMPORARILY DISABLED: Cal.com causing SSR build errors
+  // Will be re-enabled once we fix the webpack bundling issue
+  // The buttons still have data-cal-* attributes and will work if Cal.com is initialized via script tag
+  return;
+  
+  /* DISABLED CODE - Re-enable once SSR issue is fixed
   const hasInitialized = useRef(false);
   
   useEffect(() => {
@@ -74,6 +80,7 @@ export const useCal = (namespace: string, config: any = {}) => {
       }
     })();
   }, [namespace]); // Remove config from dependencies to prevent re-initialization
+  */
 };
 
 export const useCalWorkshop = () => {
