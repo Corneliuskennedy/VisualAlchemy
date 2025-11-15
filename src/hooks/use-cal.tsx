@@ -34,7 +34,18 @@ export const useCal = (namespace: string, config: any = {}) => {
     (async function () {
       try {
         // Dynamically import Cal.com only on client side to avoid SSR issues
-        const { getCalApi } = await import("@calcom/embed-react");
+        // This will fail silently during SSR if webpack IgnorePlugin is used
+        const calModule = await import("@calcom/embed-react").catch(() => null);
+        if (!calModule) {
+          // Cal.com not available (likely SSR or build-time)
+          return;
+        }
+        
+        const { getCalApi } = calModule;
+        if (!getCalApi) {
+          return;
+        }
+        
         const cal = await getCalApi({ namespace });
         // Check if cal is a function before calling
         if (cal && typeof cal === 'function') {
@@ -49,6 +60,10 @@ export const useCal = (namespace: string, config: any = {}) => {
         }
         
       } catch (error) {
+        // Silently fail during SSR/build - Cal.com is client-only
+        if (typeof window === 'undefined') {
+          return;
+        }
         console.error(`Failed to initialize Cal.com for ${namespace}:`, error);
         // Remove from global set on error so it can be retried
         if (typeof window !== 'undefined') {
