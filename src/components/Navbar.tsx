@@ -8,16 +8,10 @@ import Cookies from "js-cookie";
 import { Flag } from "./ui/flag";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
-// DISABLED: Cal.com hook - using client-only component instead
+// DISABLED: Cal.com hook - temporarily removed to fix SSR build issues
+// Cal.com buttons have data-cal-* attributes and will work if initialized globally
 // import { useCalIntroCall } from '@/hooks/use-cal';
 import { ThemeSwitcher } from "./ui/ThemeSwitcher";
-import dynamicImport from 'next/dynamic';
-
-// Dynamically import Cal.com component with SSR disabled
-const CalIntroCallClient = dynamicImport(
-  () => import('@/components/cal/CalIntroCallClient').then(mod => mod.CalIntroCallClient),
-  { ssr: false }
-);
 
 interface NavItemProps {
   item: {
@@ -233,8 +227,7 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Cal.com wrapper - SSR disabled, client-only */}
-      <CalIntroCallClient />
+      {/* Cal.com temporarily disabled - buttons have data-cal-* attributes */}
       {/* Desktop Navbar - Full experience */}
       <nav
         role="navigation"
