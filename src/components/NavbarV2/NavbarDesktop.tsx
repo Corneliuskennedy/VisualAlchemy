@@ -177,6 +177,6 @@ export function NavbarDesktop({
           isScrolled ? 'opacity-20' : 'opacity-40'
         )}
       />
-    </header>
+    </motion.header>
   );
 }
