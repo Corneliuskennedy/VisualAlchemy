@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from "next/link";
+import { motion } from 'framer-motion';
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
 import { useFooter } from "@/hooks/useContent";
@@ -11,6 +12,7 @@ const Footer = () => {
   const footer = useFooter();
   const currentYear = new Date().getFullYear();
   const isNL = language === 'nl';
+  const footerRef = useRef<HTMLElement>(null);
 
   const handleLinkClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -50,19 +52,25 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative border-t border-border/10 bg-background">
+    <footer 
+      ref={footerRef}
+      className="relative border-t border-border/10 dark:border-white/10 bg-background z-10"
+      style={{
+        backgroundColor: 'hsl(var(--background))',
+      }}
+    >
       <div className="container relative mx-auto px-4 py-20 md:py-24 z-[1]">
         {/* Monopo-Inspired Two-Column Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 mb-16">
           {/* Left Column: Logo + Description + Contact */}
           <div className="space-y-8">
             <Logo variant="footer" />
-            <p className="text-muted-foreground text-sm leading-relaxed max-w-md">
+            <p className="text-muted-foreground dark:text-gray-600 text-sm leading-relaxed max-w-md">
               {footer.description}
             </p>
             
             {/* Contact Info - Clean, Text-Only (Monopo Style) */}
-            <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="space-y-3 text-sm text-muted-foreground dark:text-gray-600">
               <div>
                 <a
                   href={`mailto:${footer.contact.email}?subject=Business Optimization Inquiry`}
@@ -94,7 +102,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-12">
             {/* Company Links */}
             <div className="space-y-4">
-              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground">
+              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground dark:text-black">
                 {footer.company.title}
               </h4>
               <ul className="space-y-3">
@@ -103,7 +111,7 @@ const Footer = () => {
                     <Link
                       href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
                       onClick={handleLinkClick}
-                      className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                      className="text-xs md:text-sm text-muted-foreground dark:text-gray-600 hover:text-foreground dark:hover:text-black transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -114,7 +122,7 @@ const Footer = () => {
 
             {/* Services Links */}
             <div className="space-y-4">
-              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground">
+              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground dark:text-black">
                 {isNL ? 'Diensten' : 'Services'}
               </h4>
               <ul className="space-y-3">
@@ -123,7 +131,7 @@ const Footer = () => {
                     <Link
                       href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
                       onClick={handleLinkClick}
-                      className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                      className="text-xs md:text-sm text-muted-foreground dark:text-gray-600 hover:text-foreground dark:hover:text-black transition-colors duration-200"
                     >
                       {link.label}
                     </Link>
@@ -134,21 +142,21 @@ const Footer = () => {
 
             {/* Legal Links */}
             <div className="space-y-4">
-              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground">
+              <h4 className="text-xs uppercase tracking-wider font-medium text-foreground dark:text-black">
                 {footer.legal.title}
               </h4>
               <ul className="space-y-3">
                 {links.legal.map((link, index) => (
                   <li key={index}>
                     {link.href === '/cookies' ? (
-                      <span className="text-xs md:text-sm text-muted-foreground/60 cursor-not-allowed">
+                      <span className="text-xs md:text-sm text-muted-foreground/60 dark:text-gray-400 cursor-not-allowed">
                         {link.label}
                       </span>
                     ) : (
                       <Link
                         href={(isNL ? `/nl${link.href}` : link.href).replace(/\/$/, "")}
                         onClick={handleLinkClick}
-                        className="text-xs md:text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                        className="text-xs md:text-sm text-muted-foreground dark:text-gray-600 hover:text-foreground dark:hover:text-black transition-colors duration-200"
                       >
                         {link.label}
                       </Link>
@@ -164,7 +172,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-border/10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             {/* Copyright */}
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs text-muted-foreground dark:text-gray-600">
               © {currentYear} Octomatic. {footer.copyright}
             </div>
             
@@ -176,7 +184,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="text-xs uppercase tracking-wider text-muted-foreground dark:text-gray-600 hover:text-foreground dark:hover:text-black transition-colors duration-200"
                 >
                   {social.label}
                 </a>

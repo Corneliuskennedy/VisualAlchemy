@@ -241,3 +241,4 @@ export const AccessibilityControls: React.FC<AccessibilityControlsProps> = ({
 
 export default AccessibilityControls;
 
+

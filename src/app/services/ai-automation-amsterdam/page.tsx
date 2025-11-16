@@ -9,16 +9,10 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { MapPin, Building, Users, Euro, CheckCircle, ArrowRight, ArrowLeft, Star, Clock, Shield } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalWorkshop } from '@/hooks/use-cal';
-
 const AIAutomationAmsterdamPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  useCalWorkshop();
-
-  const breadcrumbItems = [
+  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',

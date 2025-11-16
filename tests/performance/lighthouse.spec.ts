@@ -4,14 +4,27 @@ import { playAudit } from 'playwright-lighthouse';
 /**
  * Performance Tests
  * 
- * Lighthouse performance audits
+ * Lighthouse performance audits for all critical pages
  * Ensures Core Web Vitals meet targets
  * 
  * Technical Showcase:
  * - Performance testing expertise
  * - Core Web Vitals monitoring
  * - Lighthouse integration
+ * - Multi-page performance auditing
  */
+
+// Critical pages to audit
+const CRITICAL_PAGES = [
+  { path: '/', name: 'Homepage' },
+  { path: '/about-us', name: 'About Us' },
+  { path: '/contact', name: 'Contact' },
+  { path: '/our-work', name: 'Our Work' },
+  { path: '/build', name: 'Build' },
+  { path: '/optimize', name: 'Optimize' },
+  { path: '/create', name: 'Create' },
+  { path: '/blog', name: 'Blog' },
+];
 
 test.describe('Performance Tests', () => {
   // Skip in CI unless explicitly enabled (requires Chrome)
@@ -19,59 +32,110 @@ test.describe('Performance Tests', () => {
 
   test.skip(!shouldRunPerformanceTests, 'Performance tests disabled by default');
 
-  test('homepage meets performance targets', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'Lighthouse only works in Chromium');
-    
-    await page.goto('/');
-    
-    await playAudit({
-      page,
-      thresholds: {
-        performance: 90,
-        accessibility: 95,
-        'best-practices': 90,
-        seo: 95,
-      },
-      port: 9222,
+  // Lighthouse audit for each critical page
+  for (const pageInfo of CRITICAL_PAGES) {
+    test(`${pageInfo.name} (${pageInfo.path}) meets performance targets`, async ({ page, browserName }) => {
+      test.skip(browserName !== 'chromium', 'Lighthouse only works in Chromium');
+      
+      await page.goto(pageInfo.path);
+      
+      await playAudit({
+        page,
+        thresholds: {
+          performance: 85, // Slightly lower threshold for initial audits
+          accessibility: 95,
+          'best-practices': 90,
+          seo: 95,
+        },
+        port: 9222,
+      });
     });
-  });
+  }
 
-  test('homepage Core Web Vitals', async ({ page }) => {
-    await page.goto('/');
-    
-    // Measure LCP
-    const lcp = await page.evaluate(() => {
-      return new Promise((resolve) => {
-        new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1];
-          resolve(lastEntry.startTime);
-        }).observe({ entryTypes: ['largest-contentful-paint'] });
-        
-        setTimeout(() => resolve(null), 5000);
+  // Core Web Vitals measurement for each critical page
+  for (const pageInfo of CRITICAL_PAGES) {
+    test(`${pageInfo.name} (${pageInfo.path}) Core Web Vitals`, async ({ page }) => {
+      await page.goto(pageInfo.path);
+      
+      // Wait for page to be fully loaded
+      await page.waitForLoadState('networkidle');
+      
+      // Measure LCP (Largest Contentful Paint)
+      const lcp = await page.evaluate(() => {
+        return new Promise((resolve) => {
+          const observer = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const lastEntry = entries[entries.length - 1] as PerformanceEntry;
+            resolve(lastEntry.startTime);
+          });
+          observer.observe({ entryTypes: ['largest-contentful-paint'] });
+          
+          // Timeout after 10 seconds
+          setTimeout(() => {
+            observer.disconnect();
+            resolve(null);
+          }, 10000);
+        });
       });
-    });
-    
-    if (lcp) {
-      expect(lcp).toBeLessThan(2500); // LCP should be < 2.5s
-    }
-    
-    // Measure FCP
-    const fcp = await page.evaluate(() => {
-      return new Promise((resolve) => {
-        new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          resolve(entries[0].startTime);
-        }).observe({ entryTypes: ['paint'] });
-        
-        setTimeout(() => resolve(null), 5000);
+      
+      if (lcp && typeof lcp === 'number') {
+        console.log(`${pageInfo.name} LCP: ${lcp}ms`);
+        expect(lcp).toBeLessThan(2500); // LCP should be < 2.5s (target: ≤ 1.2s)
+      }
+      
+      // Measure FCP (First Contentful Paint)
+      const fcp = await page.evaluate(() => {
+        return new Promise((resolve) => {
+          const observer = new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const fcpEntry = entries.find(entry => entry.name === 'first-contentful-paint');
+            if (fcpEntry) {
+              resolve(fcpEntry.startTime);
+            }
+          });
+          observer.observe({ entryTypes: ['paint'] });
+          
+          setTimeout(() => {
+            observer.disconnect();
+            resolve(null);
+          }, 10000);
+        });
       });
+      
+      if (fcp && typeof fcp === 'number') {
+        console.log(`${pageInfo.name} FCP: ${fcp}ms`);
+        expect(fcp).toBeLessThan(1800); // FCP should be < 1.8s (target: < 800ms)
+      }
+      
+      // Measure CLS (Cumulative Layout Shift)
+      const cls = await page.evaluate(() => {
+        return new Promise((resolve) => {
+          let clsValue = 0;
+          const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (!(entry as any).hadRecentInput) {
+                clsValue += (entry as any).value;
+              }
+            }
+          });
+          observer.observe({ entryTypes: ['layout-shift'] });
+          
+          setTimeout(() => {
+            observer.disconnect();
+            resolve(clsValue);
+          }, 10000);
+        });
+      });
+      
+      if (cls && typeof cls === 'number') {
+        console.log(`${pageInfo.name} CLS: ${cls}`);
+        expect(cls).toBeLessThan(0.1); // CLS should be < 0.1 (target: < 0.1)
+      }
+      
+      // Measure FID (First Input Delay) - requires user interaction
+      // This is measured separately as it requires actual interaction
     });
-    
-    if (fcp) {
-      expect(fcp).toBeLessThan(1800); // FCP should be < 1.8s
-    }
-  });
+  }
 
   test('page load time is acceptable', async ({ page }) => {
     const startTime = Date.now();

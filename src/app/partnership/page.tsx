@@ -9,16 +9,10 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { Handshake, TrendingUp, Users, Euro, CheckCircle, ArrowRight, ArrowLeft, Target, Zap } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalIntroCall } from '@/hooks/use-cal';
-
 const PartnershipPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  useCalIntroCall();
-
-  const breadcrumbItems = [
+  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',

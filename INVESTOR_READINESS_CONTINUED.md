@@ -247,3 +247,4 @@
 
 **Status:** Making good progress on theme consistency and light mode improvements. Critical issue remains: structured data not rendering.
 
+

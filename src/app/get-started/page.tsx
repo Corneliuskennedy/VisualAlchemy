@@ -9,19 +9,13 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { Calendar, ArrowRight, ArrowLeft, CheckCircle, Clock, Euro, Shield, Target, Zap } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalWorkshop, useCalIntroCall } from '@/hooks/use-cal';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import SmartCTA from '@/components/personalization/SmartCTA';
 
 const GetStartedPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  useCalWorkshop();
-  useCalIntroCall();
-
-  const breadcrumbItems = [
+  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',

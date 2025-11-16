@@ -6,7 +6,7 @@
 
 'use client';
 
-import { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react';
+import { createContext, useContext, useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import Cookies from 'js-cookie';
 import { usePathname, useRouter } from 'next/navigation';
 import { translations } from '@/translations/index';
@@ -79,60 +79,63 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const isInitialized = useRef(false);
   const isNavigating = useRef(false);
 
-  // Initialize language from URL on mount
+  // Combined initialization and sync effect - reduces cascading updates
   useEffect(() => {
-    if (isInitialized.current) return;
-    
     const urlLang = getLanguageFromPath(pathname);
     
-    // If URL has language, use it
-    if (pathname.startsWith('/nl') || pathname === '/') {
-      setLanguageState(urlLang);
+    // Initialization phase
+    if (!isInitialized.current) {
+      // If URL has language, use it
+      if (pathname.startsWith('/nl') || pathname === '/') {
+        setLanguageState(urlLang);
+        isInitialized.current = true;
+        return;
+      }
+      
+      // Otherwise check stored preference
+      const savedLang = safeGetLanguagePreference();
+      if (savedLang) {
+        setLanguageState(savedLang);
+        // Navigate to correct URL if needed
+        if (savedLang === 'nl' && !pathname.startsWith('/nl')) {
+          const newPath = `/nl${pathname === '/' ? '' : pathname}`;
+          router.replace(newPath);
+        }
+      } else {
+        // Check browser language as last resort
+        try {
+          const browserLang = navigator.language.toLowerCase();
+          if (browserLang.startsWith('nl')) {
+            setLanguageState('nl');
+            if (!pathname.startsWith('/nl')) {
+              router.replace(`/nl${pathname === '/' ? '' : pathname}`);
+            }
+          }
+        } catch {
+          // Keep default 'en'
+        }
+      }
+      
       isInitialized.current = true;
       return;
     }
     
-    // Otherwise check stored preference
-    const savedLang = safeGetLanguagePreference();
-    if (savedLang) {
-      setLanguageState(savedLang);
-      // Navigate to correct URL if needed
-      if (savedLang === 'nl' && !pathname.startsWith('/nl')) {
-        const newPath = `/nl${pathname === '/' ? '' : pathname}`;
-        router.replace(newPath);
-      }
-    } else {
-      // Check browser language as last resort
-      try {
-        const browserLang = navigator.language.toLowerCase();
-        if (browserLang.startsWith('nl')) {
-          setLanguageState('nl');
-          if (!pathname.startsWith('/nl')) {
-            router.replace(`/nl${pathname === '/' ? '' : pathname}`);
-          }
-        }
-      } catch {
-        // Keep default 'en'
-      }
-    }
-    
-    isInitialized.current = true;
-  }, [pathname, router]);
-
-  // Sync language state with URL changes (e.g., back button, direct navigation)
-  useEffect(() => {
-    if (!isInitialized.current || isNavigating.current) return;
-    
-    const urlLang = getLanguageFromPath(pathname);
-    if (language !== urlLang) {
+    // Sync phase - only update if URL language differs from state
+    if (!isNavigating.current && language !== urlLang) {
       setLanguageState(urlLang);
     }
-  }, [pathname, language]);
+  }, [pathname, language, router]);
 
-  // Persist language preference when it changes
+  // Persist language preference when it changes - debounced with ref check
+  const previousLanguageRef = useRef<Language>('en');
   useEffect(() => {
     if (!isInitialized.current) return;
-    safeSetLanguagePreference(language);
+    
+    // Only persist if language actually changed
+    if (previousLanguageRef.current !== language) {
+      safeSetLanguagePreference(language);
+      previousLanguageRef.current = language;
+    }
   }, [language]);
 
   // Set language function - updates state and navigates to correct URL
@@ -190,6 +193,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [language, pathname, router]);
 
   // Translation function (kept for backward compatibility)
+  // Memoized to prevent recreation on every render
   const t = useCallback((section: string, key: string): string => {
     try {
       const langData = translations[language];
@@ -213,8 +217,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, [language]);
 
+  // Memoize context value to prevent unnecessary re-renders of all consumers
+  const contextValue = useMemo(() => ({
+    language,
+    setLanguage,
+    t,
+  }), [language, setLanguage, t]);
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={contextValue}>
       {children}
     </LanguageContext.Provider>
   );

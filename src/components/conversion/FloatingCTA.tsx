@@ -54,17 +54,17 @@ export const FloatingCTA: React.FC<FloatingCTAProps> = ({
       className={`
         fixed bottom-6 right-6 z-[9999]
         hidden lg:block
-        transition-all duration-500 ease-out
-        ${isMinimized ? 'translate-y-0' : 'translate-y-0'}
+        transition-all duration-300 ease-out
       `}
       role="region"
       aria-label="Floating call to action"
     >
       {isMinimized ? (
-        // Minimized state - small pill
+        // Minimized state - elegant black/white pill
         <button
           onClick={() => setIsMinimized(false)}
-          className="bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-[#4585f4]/30 transition-all duration-300 hover:scale-105 flex items-center gap-2"
+          type="button"
+          className="bg-white text-black px-5 py-3 rounded-sm border-2 border-white hover:bg-transparent hover:text-white transition-all duration-300 ease-in-out flex items-center gap-2 shadow-lg active:scale-[0.98] cursor-pointer"
           aria-label="Expand call to action"
         >
           <Calendar className="h-4 w-4" />
@@ -72,14 +72,14 @@ export const FloatingCTA: React.FC<FloatingCTAProps> = ({
           <ChevronUp className="h-4 w-4" />
         </button>
       ) : (
-        // Full state - card with CTA
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl p-6 max-w-sm">
+        // Full state - elegant black/white card
+        <div className="bg-white border border-black rounded-sm shadow-lg p-6 max-w-sm">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 className="text-white font-semibold text-lg mb-1">
+              <h3 className="text-black font-semibold text-lg mb-1">
                 {isNL ? 'Gratis Automatisering Audit' : 'Free Automation Audit'}
               </h3>
-              <p className="text-gray-300 text-sm">
+              <p className="text-black/70 text-sm">
                 {isNL 
                   ? 'Ontdek hoe je €15k+ kunt besparen'
                   : 'Discover how you can save €15k+'}
@@ -87,7 +87,7 @@ export const FloatingCTA: React.FC<FloatingCTAProps> = ({
             </div>
             <button
               onClick={() => setIsMinimized(true)}
-              className="text-gray-400 hover:text-white transition-colors p-1"
+              className="text-black/50 hover:text-black transition-colors p-1"
               aria-label="Minimize"
             >
               <X className="h-4 w-4" />
@@ -96,7 +96,8 @@ export const FloatingCTA: React.FC<FloatingCTAProps> = ({
           
           <button
             onClick={handleClick}
-            className="w-full bg-gradient-to-r from-[#4585f4] to-[#6B8AE6] text-white font-semibold py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-[#4585f4]/30 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
+            type="button"
+            className="w-full bg-white text-black font-medium py-3 px-6 rounded-sm hover:bg-transparent hover:text-white border-2 border-white transition-all duration-300 ease-in-out flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
             data-cta="floating"
             data-audience={audience}
           >

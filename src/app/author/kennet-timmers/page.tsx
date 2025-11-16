@@ -9,17 +9,12 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { User, MapPin, Calendar, ExternalLink, ArrowRight, ArrowLeft, Linkedin, Github, Mail } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalIntroCall } from '@/hooks/use-cal';
 import Image from 'next/image';
 
 const KennetTimmersPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  useCalIntroCall();
-
-  const breadcrumbItems = [
+  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',

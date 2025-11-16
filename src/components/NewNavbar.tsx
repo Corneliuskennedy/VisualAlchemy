@@ -58,7 +58,7 @@ export const NewNavbar = () => {
       <header
         role="banner"
         aria-label="Main Navigation"
-        className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-sm backdrop-blur-md hidden md:block bg-navbar"
+        className="fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ease-in-out shadow-sm backdrop-blur-md hidden md:block bg-navbar"
         style={{
           backgroundColor: `var(--navbar-bg-opacity)`,
           backdropFilter: `blur(${computedBlur}px)`,
@@ -99,17 +99,17 @@ export const NewNavbar = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent 
                   align="start" 
-                  className="w-64 border bg-popover border-border transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                  className="w-64 border bg-popover border-border transition-colors duration-300 ease-in-out"
                 >
                   <DropdownMenuItem asChild>
                     <Link
                       href="/build"
-                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-in-out"
                     >
-                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-in-out">
                         Build a New System
                       </span>
-                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-in-out">
                         Voor het omzetten van een idee in een volledig geautomatiseerd platform
                       </span>
                     </Link>
@@ -117,12 +117,12 @@ export const NewNavbar = () => {
                   <DropdownMenuItem asChild>
                     <Link
                       href="/optimize"
-                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-in-out"
                     >
-                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-in-out">
                         Optimize Your Business
                       </span>
-                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-in-out">
                         Voor het elimineren van chaos en het schalen van je operatie
                       </span>
                     </Link>
@@ -130,12 +130,12 @@ export const NewNavbar = () => {
                   <DropdownMenuItem asChild>
                     <Link
                       href="/create"
-                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                      className="flex flex-col items-start p-3 hover:bg-accent/50 rounded-md cursor-pointer transition-colors duration-300 ease-in-out"
                     >
-                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="font-semibold text-popover-foreground transition-colors duration-300 ease-in-out">
                         Create Viral Content
                       </span>
-                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+                      <span className="text-sm mt-1 text-muted-foreground transition-colors duration-300 ease-in-out">
                         Voor het produceren van verbluffende, AI-gedreven visuals
                       </span>
                     </Link>
@@ -182,13 +182,13 @@ export const NewNavbar = () => {
               {/* Language Switcher */}
               <LanguageSwitcher variant="compact" />
 
-              {/* Theme Switcher */}
-              <ThemeSwitcher variant="compact" />
+              {/* Theme Switcher - Hidden for now */}
+              {/* <ThemeSwitcher variant="compact" /> */}
 
               {/* Contact CTA */}
               <Button
                 asChild
-                className="px-4 lg:px-6 py-2 rounded-lg transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] font-semibold shadow-lg hover:shadow-xl text-sm bg-button-primary hover:bg-button-primary-hover text-white shadow-button-primary"
+                className="px-4 lg:px-6 py-2 font-medium text-sm"
               >
                 <Link href="/contact">Contact Us</Link>
               </Button>
@@ -311,16 +311,15 @@ export const NewNavbar = () => {
                 About Us
               </Link>
 
-              {/* Language & Theme Switchers */}
-              <div className="pt-4 border-t border-border space-y-4">
-                <LanguageSwitcher />
-                <ThemeSwitcher />
+              {/* Language Switcher - Minimal style */}
+              <div className="pt-4 border-t border-border flex items-center justify-center py-4">
+                <LanguageSwitcher variant="default" />
               </div>
 
               {/* Mobile CTA */}
               <Button
                 asChild
-                className="bg-button-primary hover:bg-button-primary-hover text-white flex items-center gap-2 w-full justify-center py-3 font-semibold mt-4 shadow-button-primary"
+                className="flex items-center gap-2 w-full justify-center py-3 font-medium mt-4"
                 onClick={handleCloseMenu}
               >
                 <Link href="/contact">Contact Us</Link>

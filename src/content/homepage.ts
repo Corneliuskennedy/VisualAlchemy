@@ -21,19 +21,22 @@ export const homepageContent: ContentStructure<HomepageContent> = {
       subheadline: '',
       cards: [
         {
-          title: 'Build a New System',
+          title: 'BUILD.',
+          expandedTitle: 'Build a New System',
           description: 'Turn your vision into a market-ready reality. We architect robust, automated systems from the ground up to validate your idea, minimize risk, and ensure a powerful launch.',
           ctaText: 'Explore the Lab →',
           href: '/build',
         },
         {
-          title: 'Optimize an Existing Business',
+          title: 'OPTIMIZE.',
+          expandedTitle: 'Optimize an Existing Business',
           description: 'Eliminate operational chaos and unlock your team\'s true potential. We replace costly manual work with intelligent automation to streamline processes and scale your business with precision.',
           ctaText: 'See Automation Services →',
           href: '/optimize',
         },
         {
-          title: 'Create Viral Content',
+          title: 'CREATE.',
+          expandedTitle: 'Create Viral Content',
           description: 'Stop shouting into the void. We produce stunning, AI-powered visuals and data-driven content that captivates your audience and commands attention in a crowded digital world.',
           ctaText: 'View the Portfolio →',
           href: '/create',
@@ -85,19 +88,22 @@ export const homepageContent: ContentStructure<HomepageContent> = {
       subheadline: '',
       cards: [
         {
-          title: 'Bouw een Nieuw Systeem',
+          title: 'BUILD.',
+          expandedTitle: 'Bouw een Nieuw Systeem',
           description: 'Verander je visie in een marktklaar product. We ontwerpen robuuste, geautomatiseerde systemen vanaf de grond om je idee te valideren, risico te minimaliseren en een krachtige lancering te garanderen.',
           ctaText: 'Verken de Lab →',
           href: '/build',
         },
         {
-          title: 'Optimaliseer een Bestaand Bedrijf',
+          title: 'OPTIMIZE.',
+          expandedTitle: 'Optimaliseer een Bestaand Bedrijf',
           description: 'Elimineer operationele chaos en ontgrendel het ware potentieel van je team. We vervangen kostbare handmatige werkzaamheden door intelligente automatisering om processen te stroomlijnen en je bedrijf met precisie te schalen.',
           ctaText: 'Bekijk Automatisering Diensten →',
           href: '/optimize',
         },
         {
-          title: 'Creëer Virale Content',
+          title: 'CREATE.',
+          expandedTitle: 'Creëer Virale Content',
           description: 'Stop met roepen in de leegte. We produceren verbluffende, AI-aangedreven visuals en data-gedreven content die je publiek boeit en aandacht trekt in een drukke digitale wereld.',
           ctaText: 'Bekijk het Portfolio →',
           href: '/create',

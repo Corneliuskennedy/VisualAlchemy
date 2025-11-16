@@ -234,20 +234,23 @@ function SolutionsDropdownComponent({ isActiveRoute }: SolutionsDropdownProps) {
             'text-sm lg:text-base font-medium',
             'flex items-center gap-1.5',
             'transition-colors duration-200 ease-out',
-            'text-foreground/95 dark:text-foreground/95',
+            'text-foreground/80 hover:text-[#4585f4] dark:hover:text-[#6B8AE6]',
             'focus:outline-none focus:ring-2 focus:ring-button-primary/50 focus:ring-offset-2',
             'group',
-            'data-[state=open]:text-blue-500 data-[state=open]:dark:text-blue-400 data-[state=open]:font-semibold'
+            'data-[state=open]:text-[#4585f4] data-[state=open]:dark:text-[#6B8AE6] data-[state=open]:font-semibold'
           )}
           aria-label={isDutch ? 'Oplossingen menu' : 'Solutions menu'}
           aria-haspopup="true"
           type="button"
         >
-          {/* Background glow - matches regular nav items */}
+          {/* Clean hover background - Blue only */}
           <motion.div
-            className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 blur-xl"
+            className="absolute inset-0 rounded-lg opacity-0"
             animate={{ opacity: isOpen ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{
+              background: 'linear-gradient(135deg, rgba(69, 133, 244, 0.15) 0%, rgba(107, 138, 230, 0.12) 50%, rgba(69, 133, 244, 0.15) 100%)',
+            }}
           />
           <span className="relative z-10">{isDutch ? 'Oplossingen' : 'Solutions'}</span>
           <ChevronDown 

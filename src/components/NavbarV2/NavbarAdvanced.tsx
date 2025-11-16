@@ -90,7 +90,12 @@ export function NavbarAdvanced({ isScrolled, isVisible }: NavbarAdvancedProps) {
       ref={navRef}
       initial={{ y: -100 }}
       animate={{ y: isVisible ? 0 : -100 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      transition={{ 
+        type: 'spring', 
+        stiffness: 400, 
+        damping: 35,
+        mass: 0.8,
+      }}
       style={{
         rotateX: isHovering ? rotateX : 0,
         rotateY: isHovering ? rotateY : 0,
@@ -102,59 +107,57 @@ export function NavbarAdvanced({ isScrolled, isVisible }: NavbarAdvancedProps) {
         'perspective-1000'
       )}
     >
-      {/* Animated gradient background */}
-      <motion.div
+      {/* Clean gradient background layer - More transparent */}
+      <div
         className="absolute inset-0 -z-10"
-        animate={{
-          background: isScrolled
-            ? [
-                'linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%)',
-                'linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(59, 130, 246, 0.1) 50%, rgba(147, 51, 234, 0.1) 100%)',
-                'linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(236, 72, 153, 0.1) 50%, rgba(59, 130, 246, 0.1) 100%)',
-              ]
-            : [
-                'linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 50%, rgba(236, 72, 153, 0.05) 100%)',
-                'linear-gradient(135deg, rgba(236, 72, 153, 0.05) 0%, rgba(59, 130, 246, 0.05) 50%, rgba(147, 51, 234, 0.05) 100%)',
-                'linear-gradient(135deg, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.05) 50%, rgba(59, 130, 246, 0.05) 100%)',
-              ],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
         style={{
+          background: `
+            radial-gradient(ellipse at center, 
+              rgba(69, 133, 244, 0.15) 0%, 
+              rgba(107, 138, 230, 0.12) 15%,
+              rgba(69, 133, 244, 0.15) 30%,
+              rgba(0, 0, 0, 0.2) 60%,
+              rgba(0, 0, 0, 0.35) 85%,
+              rgba(0, 0, 0, 0.5) 100%
+            )
+          `,
           backdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'blur(16px) saturate(160%)',
           WebkitBackdropFilter: isScrolled ? 'blur(20px) saturate(180%)' : 'blur(16px) saturate(160%)',
         }}
       />
+      <div
+        className="absolute inset-0 -z-10 dark:opacity-70"
+        style={{
+          background: `
+            radial-gradient(ellipse at center, 
+              rgba(69, 133, 244, 0.2) 0%, 
+              rgba(107, 138, 230, 0.15) 15%,
+              rgba(69, 133, 244, 0.2) 30%,
+              rgba(0, 0, 0, 0.25) 60%,
+              rgba(0, 0, 0, 0.4) 85%,
+              rgba(0, 0, 0, 0.6) 100%
+            )
+          `,
+        }}
+      />
 
-      {/* Glass overlay */}
+      {/* Clean glass overlay - More transparent and classy */}
       <div
         className={cn(
           'absolute inset-0 -z-10',
           'bg-white/70 dark:bg-black/70',
-          'border-b border-black/5 dark:border-white/10',
-          'transition-all duration-500'
+          'backdrop-blur-xl backdrop-saturate-150',
+          'border-b',
+          'transition-all duration-300'
         )}
         style={{
-          opacity: isScrolled ? 0.9 : 0.7,
+          borderBottomColor: isScrolled 
+            ? 'rgba(69, 133, 244, 0.2)' 
+            : 'rgba(69, 133, 244, 0.1)',
         }}
       />
 
-      {/* Animated grid pattern */}
-      <motion.div
-        className="absolute inset-0 -z-10 opacity-20"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '20px 20px',
-          x: useTransform(x, [-0.5, 0.5], [-10, 10]),
-          y: useTransform(y, [-0.5, 0.5], [-10, 10]),
-        }}
-      />
+
 
       <div className="container mx-auto px-4 lg:px-6 w-full h-full flex items-center justify-between relative z-10">
         {/* Logo with magnetic effect */}
@@ -190,28 +193,27 @@ export function NavbarAdvanced({ isScrolled, isVisible }: NavbarAdvancedProps) {
         {/* Right side actions */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <LanguageSwitcher variant="compact" />
-          <ThemeSwitcher variant="compact" />
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Button
-              asChild
-              className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-button-primary hover:bg-button-primary-hover text-white shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <Link href={isDutch ? '/nl/contact' : '/contact'}>
-                {isDutch ? 'Contact' : 'Contact Us'}
-              </Link>
-            </Button>
-          </motion.div>
+          {/* Theme Switcher - Hidden for now */}
+          {/* <ThemeSwitcher variant="compact" /> */}
+          <Button
+            asChild
+            className="px-6 py-2.5 font-medium font-archivo text-sm"
+          >
+            <Link href={isDutch ? '/nl/contact' : '/contact'}>
+              {isDutch ? 'Contact' : 'Contact Us'}
+            </Link>
+          </Button>
         </div>
       </div>
 
-      {/* Bottom border with gradient */}
+      {/* Clean bottom border gradient - Blue only */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-px"
+        className="absolute bottom-0 left-0 right-0 h-[2px]"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: 1 }}
-        transition={{ delay: 0.3, duration: 0.8, ease: 'easeOut' }}
+        transition={{ delay: 0.3, duration: 0.5, ease: 'easeOut' }}
         style={{
-          background: 'linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent)',
+          background: 'linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(69, 133, 244, 0.7), rgba(107, 138, 230, 0.7), rgba(69, 133, 244, 0.7), rgba(0, 0, 0, 0.3))',
         }}
       />
     </motion.header>
@@ -272,22 +274,25 @@ function NavLink({ href, label, isActive, mousePosition, index }: NavLinkProps) 
       className={cn(
         'relative px-4 py-2 rounded-lg',
         'text-sm lg:text-base font-medium',
-        'transition-colors duration-200 ease-out',
+        'transition-all duration-200 ease-out',
         'group',
         isActive 
-          ? 'text-blue-500 dark:text-blue-400 font-semibold' 
-          : 'text-foreground/95 dark:text-foreground/95'
+          ? 'text-[#4585f4] dark:text-[#6B8AE6] font-semibold' 
+          : 'text-foreground/80 hover:text-[#4585f4] dark:hover:text-[#6B8AE6]'
       )}
       style={{
         transform: `translate(${linkPosition.x}px, ${linkPosition.y}px)`,
         transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
     >
-      {/* Background glow on hover - matches Solutions dropdown */}
+      {/* Clean hover background - Blue only */}
       <motion.div
-        className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 blur-xl"
+        className="absolute inset-0 rounded-lg opacity-0"
         animate={{ opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+        style={{
+          background: 'linear-gradient(135deg, rgba(69, 133, 244, 0.15) 0%, rgba(107, 138, 230, 0.12) 50%, rgba(69, 133, 244, 0.15) 100%)',
+        }}
       />
 
       {/* Simple text - no split reveal to match Solutions */}
@@ -295,13 +300,16 @@ function NavLink({ href, label, isActive, mousePosition, index }: NavLinkProps) 
         {label}
       </span>
 
-      {/* Active indicator */}
+      {/* Clean active indicator - Blue only */}
       {isActive && (
         <motion.div
-          className="absolute bottom-0 left-1/2 h-0.5 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+          className="absolute bottom-0 left-1/2 h-1 w-10 rounded-full overflow-hidden"
           initial={{ x: '-50%', scaleX: 0 }}
           animate={{ x: '-50%', scaleX: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: 'linear-gradient(90deg, #4585f4 0%, #6B8AE6 50%, #4585f4 100%)',
+          }}
         />
       )}
     </Link>

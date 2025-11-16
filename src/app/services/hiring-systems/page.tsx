@@ -9,17 +9,10 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { Users, Target, Clock, Euro, CheckCircle, ArrowRight, ArrowLeft, Filter, Star, MessageSquare } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalWorkshop } from '@/hooks/use-cal';
-
 const HiringSystemsPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  // Initialize Cal.com booking system
-  useCalWorkshop();
-
-  // Define breadcrumb items
+  const isLargeScreen = useIsLargeScreen();  // Define breadcrumb items
   const breadcrumbItems = [
     {
       title: 'Home',

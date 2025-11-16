@@ -159,3 +159,4 @@ async function validateStructuredData(url: string) {
 - [Google Structured Data Testing Tool](https://developers.google.com/search/docs/appearance/structured-data)
 - [JSON-LD Playground](https://json-ld.org/playground/)
 
+

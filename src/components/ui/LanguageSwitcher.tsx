@@ -9,67 +9,100 @@ interface LanguageSwitcherProps {
   variant?: 'default' | 'compact';
 }
 
-// Flag emoji components - Using American flag for English
-const FlagIcon: React.FC<{ code: 'nl' | 'us'; className?: string }> = ({ code, className }) => {
-  const flag = code === 'nl' ? '🇳🇱' : '🇺🇸';
-  return (
-    <span className={cn("text-lg leading-none", className)} role="img" aria-label={code === 'nl' ? 'Dutch flag' : 'American flag'}>
-      {flag}
-    </span>
-  );
-};
-
 export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ 
   className = '', 
   variant = 'compact' 
 }) => {
   const { language, setLanguage } = useLanguage();
 
-  const handleLanguageSwitch = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const newLanguage = language === 'nl' ? 'en' : 'nl';
-    // LanguageContext handles navigation automatically
-    setLanguage(newLanguage);
+  const handleLanguageSwitch = (lang: 'nl' | 'en') => {
+    if (lang !== language) {
+      setLanguage(lang);
+    }
   };
 
-  const currentFlag = language === 'nl' ? 'nl' : 'us';
   const nextLanguage = language === 'nl' ? 'English' : 'Dutch';
 
   if (variant === 'compact') {
     return (
-      <button
-        onClick={handleLanguageSwitch}
+      <div 
         className={cn(
-          "p-2 rounded-lg border transition-all duration-300 hover:scale-105",
-          "bg-glass hover:bg-accent/10 border-glass hover:border-border",
-          "flex items-center justify-center",
+          "flex items-center gap-2 text-sm font-medium",
+          "text-foreground/80",
           className
         )}
-        aria-label={`Switch to ${nextLanguage}`}
-        type="button"
+        role="group"
+        aria-label="Language switcher"
       >
-        <FlagIcon code={currentFlag} />
-        <span className="sr-only">{language === 'nl' ? 'EN' : 'NL'}</span>
-      </button>
+        <button
+          onClick={() => handleLanguageSwitch('nl')}
+          className={cn(
+            "transition-colors duration-200",
+            language === 'nl' 
+              ? "text-foreground font-medium" 
+              : "text-foreground/50 hover:text-foreground/70"
+          )}
+          aria-label="Switch to Dutch"
+          type="button"
+        >
+          NL
+        </button>
+        <span className="h-3 w-px bg-foreground/30" aria-hidden="true" />
+        <button
+          onClick={() => handleLanguageSwitch('en')}
+          className={cn(
+            "transition-colors duration-200",
+            language === 'en' 
+              ? "text-foreground font-medium" 
+              : "text-foreground/50 hover:text-foreground/70"
+          )}
+          aria-label="Switch to English"
+          type="button"
+        >
+          EN
+        </button>
+      </div>
     );
   }
 
   return (
-    <button
-      onClick={handleLanguageSwitch}
+    <div 
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-lg border transition-all duration-300",
-        "bg-glass hover:bg-accent/10 border-glass hover:border-border",
+        "flex items-center gap-3 text-sm font-medium",
+        "text-foreground/80",
         className
       )}
-      aria-label={`Switch to ${nextLanguage}`}
-      type="button"
+      role="group"
+      aria-label="Language switcher"
     >
-      <FlagIcon code={currentFlag} />
-      <span className="text-sm font-medium text-body">
-        {language === 'nl' ? 'EN' : 'NL'}
-      </span>
-    </button>
+      <button
+        onClick={() => handleLanguageSwitch('nl')}
+        className={cn(
+          "transition-colors duration-200",
+          language === 'nl' 
+            ? "text-foreground font-medium" 
+            : "text-foreground/50 hover:text-foreground/70"
+        )}
+        aria-label="Switch to Dutch"
+        type="button"
+      >
+        NL
+      </button>
+      <span className="h-4 w-px bg-foreground/30" aria-hidden="true" />
+      <button
+        onClick={() => handleLanguageSwitch('en')}
+        className={cn(
+          "transition-colors duration-200",
+          language === 'en' 
+            ? "text-foreground font-medium" 
+            : "text-foreground/50 hover:text-foreground/70"
+        )}
+        aria-label="Switch to English"
+        type="button"
+      >
+        EN
+      </button>
+    </div>
   );
 };
 

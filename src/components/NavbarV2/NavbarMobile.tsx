@@ -233,31 +233,19 @@ export function NavbarMobile({
             })}
 
             {/* Divider */}
-            <div className="pt-6 mt-4 border-t border-border space-y-4">
-              {/* Language & Theme Switchers */}
-              <div className="flex items-center justify-between px-4">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {isDutch ? 'Taal' : 'Language'}
-                </span>
+            <div className="pt-6 mt-4 border-t border-border">
+              {/* Language Switcher - Minimal style */}
+              <div className="flex items-center justify-center px-4 py-4">
                 <LanguageSwitcher variant="default" />
-              </div>
-              <div className="flex items-center justify-between px-4">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {isDutch ? 'Thema' : 'Theme'}
-                </span>
-                <ThemeSwitcher variant="default" />
               </div>
             </div>
 
-            {/* Contact CTA */}
+            {/* Contact CTA - Premium & Refined */}
             <Button
               asChild
               className={cn(
                 'w-full mt-6',
-                'bg-button-primary hover:bg-button-primary-hover',
-                'text-white shadow-button-primary',
-                'font-semibold py-3',
-                'focus:ring-2 focus:ring-button-primary focus:ring-offset-2'
+                'font-medium font-archivo py-3'
               )}
               onClick={onMenuClose}
             >

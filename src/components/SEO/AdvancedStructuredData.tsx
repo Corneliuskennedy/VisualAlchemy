@@ -1,5 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 import { generateFAQSchema, homepageFAQs } from '@/lib/seo/GEOSEO';
 import { generateKnowledgeGraphConnections } from '@/lib/seo/EntityFirstSEO';
 import { MultiSchemaInjector } from './StructuredDataInjector';
@@ -347,6 +346,34 @@ export function AdvancedStructuredData({
     schemas.push(...knowledgeGraphSchemas);
   }
 
+  // Inject structured data scripts directly (replaces Helmet)
+  useEffect(() => {
+    schemas.forEach((schema, index) => {
+      const scriptId = `advanced-structured-data-${index}`;
+      let scriptElement = document.getElementById(scriptId) as HTMLScriptElement;
+      
+      if (!scriptElement) {
+        scriptElement = document.createElement('script');
+        scriptElement.id = scriptId;
+        scriptElement.type = 'application/ld+json';
+        document.head.appendChild(scriptElement);
+      }
+      
+      scriptElement.textContent = JSON.stringify(schema);
+    });
+
+    // Cleanup function to remove scripts when component unmounts
+    return () => {
+      schemas.forEach((_, index) => {
+        const scriptId = `advanced-structured-data-${index}`;
+        const scriptElement = document.getElementById(scriptId);
+        if (scriptElement) {
+          scriptElement.remove();
+        }
+      });
+    };
+  }, [schemas]);
+
   return (
     <>
       {/* Direct injection for App Router compatibility */}
@@ -356,17 +383,6 @@ export function AdvancedStructuredData({
           data: schema,
         }))}
       />
-      
-      {/* Fallback: Helmet (may not work in App Router but doesn't hurt) */}
-      <Helmet>
-        {schemas.map((schema, index) => (
-          <script 
-            key={index}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-          />
-        ))}
-      </Helmet>
     </>
   );
 } 

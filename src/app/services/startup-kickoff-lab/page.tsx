@@ -9,7 +9,6 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { Rocket, Users, Target, Euro, CheckCircle, ArrowRight, ArrowLeft, Clock, Zap, Star, Download, ExternalLink } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalIntroCall, useCalWorkshop } from '@/hooks/use-cal';
 import Image from 'next/image';
 
 const StartupKickoffLabPage: React.FC = () => {
@@ -17,10 +16,7 @@ const StartupKickoffLabPage: React.FC = () => {
   const isNL = language === 'nl';
   const isLargeScreen = useIsLargeScreen();
   
-  useCalIntroCall();
-  useCalWorkshop();
-
-  const breadcrumbItems = [
+  useCalIntroCall();  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',

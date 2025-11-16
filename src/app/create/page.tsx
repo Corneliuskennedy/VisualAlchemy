@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { Suspense, useRef, useState, useEffect, useMemo } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { siteContent } from '@/content/siteContent';
 import { ArrowRight, CheckCircle, Sparkles, Play } from 'lucide-react';
@@ -11,34 +11,15 @@ import { useTranslations } from '@/hooks/useTranslations';
 import { UnifiedSEO } from '@/components/SEO';
 import LiveActivity from '@/components/realtime/LiveActivity';
 import SmartCTA from '@/components/personalization/SmartCTA';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
+import { useThemeSafe } from '@/hooks/useThemeSafe';
+import { useOptimizedAnimations } from '@/hooks/useOptimizedAnimations';
 
 export default function CreatePage() {
   const { createPage } = siteContent;
   const { language } = useTranslations();
   const isNL = language === 'nl';
 
-  // Bilingual content
+  // Bilingual content - defined early so it can be used in hooks
   const content = {
     hero: {
       headline: isNL
@@ -171,6 +152,106 @@ export default function CreatePage() {
         : createPage.meta.description
     }
   };
+  
+  const { mounted, isDark } = useThemeSafe();
+  const {
+    containerVariants,
+    itemVariants,
+    heroTitleVariants,
+    cardVariants,
+    fadeInUp,
+  } = useOptimizedAnimations();
+  
+  // Performance: Check for reduced motion preference
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Track when page is ready for hero animation - prevent hydration mismatch
+  const [isHeroReady, setIsHeroReady] = useState(false);
+  
+  useEffect(() => {
+    // Only set ready after mount to prevent hydration mismatch
+    if (!mounted) return;
+    
+    // Delay animation start to allow page to load
+    const timer = setTimeout(() => {
+      setIsHeroReady(true);
+    }, prefersReducedMotion ? 0 : 400);
+    
+    return () => clearTimeout(timer);
+  }, [prefersReducedMotion, mounted]);
+  
+  // Parallax scroll tracking - optimized for smooth 60fps performance
+  const heroRef = useRef<HTMLElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Consolidated scroll tracking - single scroll listener for better performance
+  const { scrollYProgress } = useScroll();
+  
+  // Memoize hero text mouse handlers to prevent recreation
+  const handleHeroTextMouseEnter = React.useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
+    if (isDark) {
+      e.currentTarget.style.textShadow = '0 4px 16px rgba(156, 163, 175, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2)';
+    } else {
+      e.currentTarget.style.textShadow = '0 2px 12px rgba(107, 114, 128, 0.15), 0 1px 6px rgba(0, 0, 0, 0.1)';
+    }
+  }, [isDark]);
+  
+  const handleHeroTextMouseLeave = React.useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
+    e.currentTarget.style.textShadow = '0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04)';
+  }, []);
+  
+  // Memoize hero headline words to prevent recreation on every render
+  const heroHeadlineWords = useMemo(() => {
+    const headline = content.hero.headline;
+    return headline.split('. ').map((word, index, array) => {
+      const isLast = index === array.length - 1;
+      const cleanWord = isLast && word.endsWith('.') ? word.slice(0, -1) : word;
+      return { word: cleanWord, isLast, index };
+    });
+  }, [content.hero.headline]);
+  
+  // Optimized hero parallax - memoize transform ranges
+  const parallaxRanges = useMemo(() => ({
+    reduced: { hero: [0, 0], content: [0, 0] },
+    normal: { 
+      hero: [0, -24], 
+      content: [0, -50],
+      layer2: [0, -30]
+    }
+  }), []);
+
+  // Hero parallax transforms
+  const heroScrollProgress = scrollYProgress;
+  const heroParallaxBase = useTransform(
+    heroScrollProgress, 
+    [0, 1], 
+    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
+  );
+  
+  const heroContentLayer1 = useTransform(
+    heroScrollProgress, 
+    [0, 1], 
+    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
+  );
+  const heroContentLayer2 = useTransform(
+    heroScrollProgress, 
+    [0, 1], 
+    prefersReducedMotion ? parallaxRanges.reduced.hero : [0, -25]
+  );
+  const heroContentLayer3 = useTransform(
+    heroScrollProgress, 
+    [0, 1], 
+    prefersReducedMotion ? parallaxRanges.reduced.hero : [0, -26]
+  );
+  const heroContentLayer4 = useTransform(
+    heroScrollProgress, 
+    [0, 1], 
+    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
+  );
+  
+  // Hero background effects
+  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.99]);
+  const heroOpacity = useTransform(heroScrollProgress, [0, 0.3, 0.7, 1], [1, 1, 0.4, 0]);
 
   return (
     <>
@@ -179,43 +260,179 @@ export default function CreatePage() {
         description={content.meta.description}
         canonicalUrl={isNL ? "https://www.octomatic.ai/nl/create" : "https://www.octomatic.ai/create"}
       />
-      <div className="min-h-screen relative font-archivo bg-[#0A0A0A]">
-        {/* Hero with Video Reel */}
-        <section className="relative min-h-[70vh] flex flex-col justify-center items-center px-4 py-32 md:py-40 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-transparent" />
+      <div className="min-h-screen relative font-archivo bg-background">
+        {/* Section 1: Premium Hero - Grey Theme Gradient Background */}
+        <motion.section 
+          ref={heroRef}
+          id="hero"
+          aria-labelledby="hero-heading"
+          className="fixed top-0 left-0 right-0 h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-[2] overflow-hidden"
+          style={{ 
+            scale: prefersReducedMotion ? 1 : heroScale,
+            opacity: heroOpacity,
+          }}
+        >
+          {/* Hero Background - Grey Theme Rich Multi-Color Premium Gradient */}
+          <div 
+            className="absolute inset-0 z-0 overflow-hidden dark:block hidden"
+            style={{
+              backgroundColor: 'rgb(8, 12, 28)',
+              background: `
+                radial-gradient(ellipse 40% 60% at 15% 35%, 
+                  rgba(156, 163, 175, 0.9) 0%,
+                  rgba(107, 114, 128, 0.7) 15%,
+                  rgba(75, 85, 99, 0.3) 35%,
+                  rgba(8, 12, 28, 0.9) 60%,
+                  rgba(8, 12, 28, 1) 100%
+                ),
+                radial-gradient(ellipse 35% 50% at 85% 25%, 
+                  rgba(209, 213, 219, 0.8) 0%,
+                  rgba(156, 163, 175, 0.6) 20%,
+                  rgba(75, 85, 99, 0.2) 45%,
+                  rgba(8, 12, 28, 0.95) 70%,
+                  rgba(8, 12, 28, 1) 100%
+                ),
+                radial-gradient(ellipse 30% 45% at 50% 95%, 
+                  rgba(156, 163, 175, 0.7) 0%,
+                  rgba(107, 114, 128, 0.4) 30%,
+                  rgba(8, 12, 28, 0.8) 60%,
+                  rgba(8, 12, 28, 1) 100%
+                ),
+                radial-gradient(ellipse 25% 40% at 30% 75%, 
+                  rgba(229, 231, 235, 0.6) 0%,
+                  rgba(156, 163, 175, 0.3) 40%,
+                  rgba(8, 12, 28, 0.85) 70%,
+                  rgba(8, 12, 28, 1) 100%
+                ),
+                radial-gradient(ellipse 25% 35% at 70% 55%, 
+                  rgba(243, 244, 246, 0.7) 0%,
+                  rgba(107, 114, 128, 0.4) 40%,
+                  rgba(8, 12, 28, 0.9) 70%,
+                  rgba(8, 12, 28, 1) 100%
+                ),
+                linear-gradient(135deg, 
+                  rgba(8, 12, 28, 0.6) 0%,
+                  rgba(8, 12, 28, 0.7) 25%,
+                  rgba(8, 12, 28, 0.85) 60%,
+                  rgba(8, 12, 28, 0.95) 100%
+                )
+              `,
+              backgroundSize: '300% 300%, 280% 280%, 260% 260%, 240% 240%, 220% 220%, 100% 100%',
+              backgroundPosition: '0% 50%, 100% 30%, 50% 100%, 25% 75%, 75% 60%, center',
+              animation: 'gradient-flow 20s ease-in-out infinite, gradient-breathe 7s ease-in-out infinite, water-wave 14s ease-in-out infinite',
+              willChange: 'background-position, transform, opacity',
+              filter: 'contrast(1.5) saturate(1.7)',
+            }}
+          />
+          {/* Light theme - Clean white background, no gradient */}
+          <div 
+            className="absolute inset-0 z-0 overflow-hidden dark:hidden bg-background"
+          />
+          
+          {/* Soft overlay for text readability - Theme-aware */}
+          <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-transparent/30 to-background/40 dark:to-background/40" />
+          
+          {/* Smooth transition gradient from hero to next section */}
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 h-48 z-[1] bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none"
+            style={{ opacity: heroOpacity }}
+          />
           <motion.div
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="max-w-4xl mx-auto text-center space-y-8 relative z-10"
+            className="max-w-5xl mx-auto text-center space-y-8 md:space-y-10 lg:space-y-12 relative z-10"
           >
-            <motion.div variants={itemVariants} className="mb-8">
-              <Sparkles className="h-16 w-16 text-purple-400 mx-auto" />
-            </motion.div>
+            {/* Clean Typography - Optimized for LCP with Enhanced Legibility */}
             <motion.h1
-              variants={itemVariants}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight"
+              id="hero-heading"
+              className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-archivo font-bold leading-[1.05] tracking-tight
+                       text-heading dark:text-white flex flex-wrap justify-center items-center gap-2 md:gap-4
+                       will-change-transform transform-gpu"
+              style={{
+                fontFamily: 'var(--font-archivo), system-ui, sans-serif',
+                textShadow: '0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04)',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility',
+                y: prefersReducedMotion ? 0 : heroContentLayer1,
+                contain: 'layout style paint',
+              }}
+              aria-label={content.hero.headline}
             >
-              {content.hero.headline}
+              {heroHeadlineWords.map(({ word, isLast, index }) => (
+                <motion.span
+                  key={`${word}-${index}`}
+                  initial={{ 
+                    opacity: 0, 
+                    y: prefersReducedMotion ? 0 : -18,
+                    x: prefersReducedMotion ? 0 : -12,
+                    scale: 0.96,
+                  }}
+                  animate={isHeroReady ? { 
+                    opacity: 1, 
+                    y: 0, 
+                    x: 0,
+                    scale: 1,
+                  } : { 
+                    opacity: 0, 
+                    y: prefersReducedMotion ? 0 : -18, 
+                    x: prefersReducedMotion ? 0 : -12,
+                    scale: 0.96,
+                  }}
+                  transition={{
+                    duration: prefersReducedMotion ? 0 : 1.1,
+                    delay: prefersReducedMotion ? 0 : (isHeroReady ? index * 0.3 : 0),
+                    ease: [0.19, 1, 0.22, 1],
+                  }}
+                  onMouseEnter={handleHeroTextMouseEnter}
+                  onMouseLeave={handleHeroTextMouseLeave}
+                  className="inline-block will-change-transform transform-gpu"
+                >
+                  {word}{isLast ? '.' : '. '}
+                </motion.span>
+              ))}
             </motion.h1>
+
+            {/* Clean Subheadline */}
             <motion.p
               variants={itemVariants}
-              className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto"
+              className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed
+                       text-muted-foreground dark:text-gray-400
+                       font-normal"
+              style={{ 
+                y: prefersReducedMotion ? 0 : heroContentLayer2,
+                opacity: heroOpacity,
+              }}
             >
               {content.hero.subline}
             </motion.p>
             
-            {/* AI-Powered Smart CTA */}
-            <motion.div variants={itemVariants}>
+            {/* AI-Powered Smart CTA - Premium Spacing */}
+            <motion.div 
+              variants={itemVariants} 
+              className="pt-8 md:pt-10 lg:pt-12"
+              style={{ 
+                y: prefersReducedMotion ? 0 : heroContentLayer3,
+                opacity: heroOpacity,
+              }}
+            >
               <SmartCTA 
                 section="hero"
                 audience="universal"
-                className="max-w-xl mx-auto"
+                className="max-w-3xl mx-auto text-center"
               />
             </motion.div>
             
-            {/* Live Activity */}
-            <motion.div variants={itemVariants} className="mt-6 flex justify-center">
+            {/* Live Activity Indicator */}
+            <motion.div 
+              variants={itemVariants} 
+              className="pt-6 md:pt-8 flex justify-center"
+              style={{ 
+                y: prefersReducedMotion ? 0 : heroContentLayer4,
+                opacity: heroOpacity,
+              }}
+            >
               <LiveActivity 
                 page="create"
                 showViewers={true}
@@ -223,125 +440,326 @@ export default function CreatePage() {
               />
             </motion.div>
           </motion.div>
-        </section>
+        </motion.section>
 
-      {/* Portfolio */}
-      <section id="portfolio" className="py-32 md:py-40 px-4">
-        <div className="max-w-7xl mx-auto">
+        {/* Parallax Content Wrapper - Content scrolls over hero with different speeds */}
+        <div 
+          ref={containerRef} 
+          className="relative z-[3]"
+          style={{
+            willChange: 'transform',
+            contain: 'layout style',
+          }}
+        >
+          {/* Spacer to create scroll space for hero - transparent so hero shows through */}
+          <div className="h-screen pointer-events-none relative z-[1]" />
+
+      {/* Portfolio - Premium Showcase */}
+      <section 
+        id="portfolio"
+        aria-labelledby="portfolio-heading"
+        className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
+        style={{ 
+          backgroundColor: 'hsl(var(--background))',
+        }}
+      >
+        {/* Subtle background image */}
+        <div 
+          className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/pexels-janhabarta-29824324.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '0px 0px -150px 0px', amount: 0.2 }}
             variants={containerVariants}
-            className="space-y-12"
+            className="space-y-12 md:space-y-16"
+            style={{ willChange: 'transform, opacity' }}
           >
+            {/* Minimal Section Header */}
             <motion.h2
+              id="portfolio-heading"
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+              className="text-center text-xs uppercase tracking-[0.15em] font-light 
+                       text-subtle dark:text-white/60"
             >
               {content.portfolio.headline}
             </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {content.portfolio.projects.map((project, index) => (
+            {/* Minimal Feature Cards - Expensive Simplicity */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {useMemo(() => {
+                const cardImages = [
+                  '/images/pexels-janhabarta-29824324.webp',
+                  '/images/pexels-liuuu-_61-2383408-34142857.webp',
+                  '/images/pexels-negativespace-34125.webp',
+                ];
+                
+                return content.portfolio.projects.map((project, index) => {
+                  const cardImage = cardImages[index] || cardImages[0];
+                  
+                  return (
                 <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02 }}
-                  className="group cursor-pointer"
+                      key={`project-${index}`}
+                      variants={cardVariants}
+                      className="group relative p-4 md:p-6 overflow-hidden
+                               border-2 border-transparent dark:border-white/40
+                               transition-all duration-500 ease-out
+                               bg-transparent dark:bg-black
+                               hover:border-border/40 dark:hover:border-gray-400/60
+                               cursor-pointer"
                 >
-                  <Card className="h-full p-6 bg-gray-900/50 border-gray-800 overflow-hidden relative">
-                    <div className="aspect-video bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-lg mb-4 flex items-center justify-center group-hover:from-purple-800/70 group-hover:to-pink-800/70 transition-all">
-                      <Play className="h-12 w-12 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" />
+                      {/* Background Image - Subtle */}
+                      <div 
+                        className="absolute inset-0 opacity-0 dark:opacity-[0.03] group-hover:opacity-0 dark:group-hover:opacity-[0.05] transition-opacity duration-500"
+                        style={{
+                          backgroundImage: `url(${cardImage})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
+                      />
+                      
+                      {/* Video Placeholder - Grey Theme */}
+                      <div className="relative z-10 aspect-video bg-gradient-to-br from-gray-600/30 to-gray-500/20 dark:from-gray-600/50 dark:to-gray-500/30 rounded-lg mb-4 flex items-center justify-center group-hover:from-gray-500/40 group-hover:to-gray-400/30 dark:group-hover:from-gray-500/70 dark:group-hover:to-gray-400/50 transition-all">
+                        <Play className="h-12 w-12 text-gray-400 dark:text-gray-300 opacity-60 dark:opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" />
                     </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-gray-400 mb-4">{project.description}</p>
+
+                      {/* Minimal Content - Tight Spacing */}
+                      <h3 className="relative z-10 text-2xl md:text-3xl font-archivo font-light mb-2 
+                                   text-heading dark:text-white
+                                   tracking-tight">
+                        {project.title}
+                      </h3>
+                      <p className="relative z-10 text-lg md:text-xl leading-relaxed 
+                                  text-muted-foreground dark:text-white/70 font-light mb-4">
+                        {project.description}
+                      </p>
                     {project.metrics && (
-                      <p className="text-purple-400 font-semibold">{project.metrics}</p>
+                        <p className="relative z-10 text-gray-500 dark:text-gray-400 font-semibold text-sm">
+                          {project.metrics}
+                        </p>
                     )}
-                  </Card>
+                    </motion.div>
+                  );
+                });
+              }, [content.portfolio.projects, cardVariants])}
                 </motion.div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Process */}
-      <section className="py-32 md:py-40 px-4 bg-gray-900/30">
-        <div className="max-w-7xl mx-auto">
+      {/* Process - Premium Feature Cards */}
+      <section 
+        id="process"
+        aria-labelledby="process-heading"
+        className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
+        style={{ 
+          backgroundColor: 'hsl(var(--background))',
+        }}
+      >
+        {/* Subtle background image */}
+        <div 
+          className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/pexels-liuuu-_61-2383408-34142857.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '0px 0px -150px 0px', amount: 0.2 }}
             variants={containerVariants}
-            className="space-y-12"
+            className="space-y-12 md:space-y-16"
+            style={{ willChange: 'transform, opacity' }}
           >
+            {/* Minimal Section Header */}
             <motion.h2
+              id="process-heading"
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+              className="text-center text-xs uppercase tracking-[0.15em] font-light 
+                       text-subtle dark:text-white/60"
             >
               {content.process.headline}
             </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {content.process.steps.map((step, index) => (
+            {/* Minimal Feature Cards - Expensive Simplicity */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {useMemo(() => {
+                const cardImages = [
+                  '/images/pexels-janhabarta-29824324.webp',
+                  '/images/pexels-liuuu-_61-2383408-34142857.webp',
+                  '/images/pexels-negativespace-34125.webp',
+                ];
+                
+                return content.process.steps.map((step, index) => {
+                  const cardImage = cardImages[index] || cardImages[0];
+                  
+                  return (
                 <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  className="relative"
+                      key={`step-${index}`}
+                      variants={cardVariants}
+                      className="group relative p-4 md:p-6 overflow-hidden
+                               border-2 border-transparent dark:border-white/40
+                               transition-all duration-500 ease-out
+                               bg-transparent dark:bg-black
+                               hover:border-border/40 dark:hover:border-gray-400/60"
                 >
-                  <Card className="h-full p-6 bg-gray-900/50 border-gray-800">
-                    <div className="space-y-4">
-                      <div className="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center">
-                        <span className="text-2xl font-bold text-white">{step.step}</span>
+                      {/* Background Image - Subtle */}
+                      <div 
+                        className="absolute inset-0 opacity-0 dark:opacity-[0.03] group-hover:opacity-0 dark:group-hover:opacity-[0.05] transition-opacity duration-500"
+                        style={{
+                          backgroundImage: `url(${cardImage})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
+                      />
+                      
+                      {/* Minimal Step Number - Grey Theme */}
+                      <div className="relative z-10 w-8 h-8 flex items-center justify-start mb-4">
+                        <div className="w-12 h-12 bg-gray-500/20 dark:bg-gray-500/30 rounded-xl flex items-center justify-center">
+                          <span className="text-2xl font-bold text-gray-500 dark:text-gray-400">{step.step}</span>
+                        </div>
                       </div>
-                      <h3 className="text-xl font-bold text-white">{step.title}</h3>
-                      <p className="text-gray-400">{step.description}</p>
-                    </div>
-                  </Card>
+
+                      {/* Minimal Content - Tight Spacing */}
+                      <h3 className="relative z-10 text-2xl md:text-3xl font-archivo font-light mb-2 
+                                   text-heading dark:text-white
+                                   tracking-tight">
+                        {step.title}
+                      </h3>
+                      <p className="relative z-10 text-lg md:text-xl leading-relaxed 
+                                  text-muted-foreground dark:text-white/70 font-light">
+                        {step.description}
+                      </p>
+                    </motion.div>
+                  );
+                });
+              }, [content.process.steps, cardVariants])}
                 </motion.div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial Section - Premium */}
       {content.testimonial && (
-        <section className="py-32 md:py-40 px-4">
-          <div className="max-w-4xl mx-auto">
+        <section 
+          id="testimonial"
+          aria-labelledby="testimonial-heading"
+          className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
+          style={{ 
+            backgroundColor: 'hsl(var(--background))',
+          }}
+        >
+          {/* Subtle background image */}
+          <div 
+            className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
+            style={{
+              backgroundImage: 'url(/images/pexels-negativespace-34125.webp)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <div className="max-w-4xl mx-auto relative z-10">
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
               variants={containerVariants}
-              className="space-y-8"
+              className="space-y-12 md:space-y-16"
+              style={{ willChange: 'transform, opacity' }}
             >
+              {/* Minimal Section Header */}
               <motion.h2
+                id="testimonial-heading"
                 variants={itemVariants}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+                className="text-center text-xs uppercase tracking-[0.15em] font-light 
+                         text-subtle dark:text-white/60"
               >
                 {content.testimonial.headline}
               </motion.h2>
+              
+              {/* Testimonial Card */}
               <motion.div
-                variants={itemVariants}
-                className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-3xl p-8 md:p-12"
+                variants={cardVariants}
+                className="group relative p-8 md:p-12 overflow-hidden
+                         border-2 border-transparent dark:border-white/40
+                         transition-all duration-500 ease-out
+                         bg-transparent dark:bg-black
+                         hover:border-border/40 dark:hover:border-gray-400/60
+                         rounded-3xl"
               >
-                <blockquote className="text-xl md:text-2xl text-white italic mb-6 leading-relaxed">
+                {/* Background Image - Subtle */}
+                <div 
+                  className="absolute inset-0 opacity-0 dark:opacity-[0.03] group-hover:opacity-0 dark:group-hover:opacity-[0.05] transition-opacity duration-500"
+                  style={{
+                    backgroundImage: 'url(/images/pexels-caner-kokcu-636242728-34671003.webp)',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+                
+                {/* Grey Theme Gradient Overlay */}
+                <div 
+                  className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none rounded-3xl"
+                  style={{
+                    background: `
+                      radial-gradient(ellipse 60% 40% at 50% 50%, 
+                        rgba(156, 163, 175, 0.1) 0%,
+                        rgba(107, 114, 128, 0.05) 50%,
+                        transparent 100%
+                      )
+                    `,
+                  }}
+                />
+                
+                <div className="relative z-10">
+                  <blockquote className="text-xl md:text-2xl lg:text-3xl text-heading dark:text-white/90 italic mb-6 leading-relaxed font-light">
                   "{content.testimonial.quote}"
                 </blockquote>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold text-lg">
+                    <div className="w-12 h-12 bg-gray-500/20 dark:bg-gray-500/30 rounded-full flex items-center justify-center">
+                      <span className="text-gray-500 dark:text-gray-400 font-bold text-lg">
                       {content.testimonial.author.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
                   <div>
-                    <p className="text-white font-semibold">{content.testimonial.author}</p>
+                      <p className="text-heading dark:text-white font-light">{content.testimonial.author}</p>
                     {content.testimonial.authorTitle && (
-                      <p className="text-gray-400 text-sm">{content.testimonial.authorTitle}</p>
+                        <p className="text-muted-foreground dark:text-white/70 text-sm font-light">{content.testimonial.authorTitle}</p>
                     )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -350,94 +768,197 @@ export default function CreatePage() {
         </section>
       )}
 
-      {/* Pricing */}
-      <section className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
+      {/* Pricing - Premium Cards */}
+      <section 
+        id="pricing"
+        aria-labelledby="pricing-heading"
+        className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
+        style={{ 
+          backgroundColor: 'hsl(var(--background))',
+        }}
+      >
+        {/* Subtle background image */}
+        <div 
+          className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
+          style={{
+            backgroundImage: 'url(/images/pexels-negativespace-34125.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="max-w-6xl mx-auto relative z-10">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '0px 0px -150px 0px', amount: 0.2 }}
             variants={containerVariants}
-            className="space-y-12"
+            className="space-y-12 md:space-y-16"
+            style={{ willChange: 'transform, opacity' }}
           >
+            {/* Minimal Section Header */}
             <motion.h2
+              id="pricing-heading"
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center"
+              className="text-center text-xs uppercase tracking-[0.15em] font-light 
+                       text-subtle dark:text-white/60"
             >
               {content.pricing.headline}
             </motion.h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {content.pricing.tiers.map((tier, index) => (
+            {/* Minimal Pricing Cards - Expensive Simplicity */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1,
+                    delayChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {useMemo(() => {
+                const cardImages = [
+                  '/images/pexels-janhabarta-29824324.webp',
+                  '/images/pexels-liuuu-_61-2383408-34142857.webp',
+                ];
+                
+                return content.pricing.tiers.map((tier, index) => {
+                  const cardImage = cardImages[index] || cardImages[0];
+                  
+                  return (
                 <motion.div
-                  key={index}
-                  variants={itemVariants}
-                >
-                  <Card className="h-full p-8 bg-gray-900/50 border-gray-800 flex flex-col">
-                    <div className="space-y-6 flex-1">
+                      key={`tier-${index}`}
+                      variants={cardVariants}
+                      className="group relative p-6 md:p-8 overflow-hidden
+                               border-2 border-transparent dark:border-white/40
+                               transition-all duration-500 ease-out
+                               bg-transparent dark:bg-black
+                               hover:border-border/40 dark:hover:border-gray-400/60
+                               flex flex-col h-full"
+                    >
+                      {/* Background Image - Subtle */}
+                      <div 
+                        className="absolute inset-0 opacity-0 dark:opacity-[0.03] group-hover:opacity-0 dark:group-hover:opacity-[0.05] transition-opacity duration-500"
+                        style={{
+                          backgroundImage: `url(${cardImage})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
+                      />
+                      
+                      {/* Content */}
+                      <div className="relative z-10 space-y-6 flex-1">
                       <div>
-                        <h3 className="text-2xl font-bold text-white mb-2">{tier.name}</h3>
-                        <div className="text-4xl font-bold text-purple-400 mb-2">{tier.price}</div>
-                        <p className="text-gray-400">{tier.description}</p>
+                          <h3 className="text-2xl md:text-3xl font-archivo font-light mb-2 
+                                       text-heading dark:text-white tracking-tight">
+                            {tier.name}
+                          </h3>
+                          <div className="text-4xl md:text-5xl font-light text-gray-500 dark:text-gray-400 mb-2">
+                            {tier.price}
+                          </div>
+                          <p className="text-lg md:text-xl leading-relaxed 
+                                      text-muted-foreground dark:text-white/70 font-light">
+                            {tier.description}
+                          </p>
                       </div>
                       <ul className="space-y-3">
                         {tier.features.map((feature, idx) => (
                           <li key={idx} className="flex items-start gap-2">
-                            <CheckCircle className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                            <span className="text-gray-300">{feature}</span>
+                              <CheckCircle className="h-5 w-5 text-gray-500 dark:text-gray-400 flex-shrink-0 mt-0.5 opacity-60 dark:opacity-80" />
+                              <span className="text-foreground dark:text-white/70 font-light">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
+                      
+                      {/* CTA Button */}
                     <Button
                       asChild
-                      className="w-full mt-6 bg-purple-600 hover:bg-purple-600/90 text-white"
+                        className="w-full mt-6 bg-gray-500 dark:bg-gray-500 hover:bg-gray-600 dark:hover:bg-gray-600 text-white relative z-10"
                     >
                       <Link href={tier.ctaLink}>
                         {tier.ctaText}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                  </Card>
+                    </motion.div>
+                  );
+                });
+              }, [content.pricing.tiers, cardVariants])}
                 </motion.div>
-              ))}
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-4 bg-gradient-to-r from-purple-900/20 to-pink-900/20">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* CTA - Premium with Grey Theme Gradient */}
+      <section 
+        id="cta"
+        aria-labelledby="cta-heading"
+        className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
+        style={{ 
+          backgroundColor: 'hsl(var(--background))',
+        }}
+      >
+        {/* Grey Theme Gradient Background */}
+        <div 
+          className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 40% at 50% 50%, 
+                rgba(156, 163, 175, 0.1) 0%,
+                rgba(107, 114, 128, 0.05) 50%,
+                transparent 100%
+              )
+            `,
+          }}
+        />
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
             variants={containerVariants}
-            className="space-y-8"
+            className="space-y-8 md:space-y-10"
+            style={{ willChange: 'transform, opacity' }}
           >
             <motion.h2
+              id="cta-heading"
               variants={itemVariants}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white"
+              className="text-5xl md:text-6xl lg:text-7xl font-archivo font-light 
+                       text-heading dark:text-white leading-[0.95] tracking-[-0.02em]"
             >
               {content.cta.headline}
             </motion.h2>
             <motion.p
               variants={itemVariants}
-              className="text-xl text-gray-300"
+              className="text-xl md:text-2xl lg:text-3xl leading-relaxed 
+                       text-body dark:text-white/90 max-w-2xl mx-auto font-light"
             >
               {content.cta.description}
             </motion.p>
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} className="pt-4">
               <SmartCTA 
                 section="cta"
                 audience="universal"
                 className="max-w-xl mx-auto"
               />
             </motion.div>
+            
+            {/* Live Activity */}
+            <motion.div variants={itemVariants} className="pt-6 flex justify-center">
+              <LiveActivity 
+                page="create"
+                showViewers={true}
+                showRecentActivity={true}
+              />
+            </motion.div>
           </motion.div>
         </div>
       </section>
+        </div>
       </div>
     </>
   );

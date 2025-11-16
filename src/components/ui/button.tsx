@@ -6,20 +6,20 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 transform-gpu",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium transition-all duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-40 disabled:cursor-not-allowed relative overflow-hidden group cursor-pointer",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90 hover:scale-105 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30",
+          "bg-white text-black border-2 border-white hover:bg-transparent hover:text-white active:scale-[0.98]",
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:scale-105 hover:-translate-y-1 hover:shadow-xl",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 active:bg-destructive/80 active:scale-[0.99] border-2 border-destructive",
         outline:
-          "border border-input bg-background shadow-sm hover:bg-secondary/20 hover:text-white hover:scale-105 hover:-translate-y-1 hover:shadow-lg",
+          "border-2 border-white bg-transparent text-white hover:bg-white hover:text-black active:scale-[0.98]",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:scale-105 hover:-translate-y-1 hover:shadow-lg",
-        ghost: "text-gray-300 hover:text-white hover:bg-secondary/20 hover:scale-105",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-transparent text-white border-2 border-white hover:bg-white hover:text-black active:scale-[0.98]",
+        ghost: "text-foreground hover:bg-black hover:text-white active:bg-black/90 border-2 border-transparent",
+        link: "text-primary underline-offset-4 hover:underline border-0",
       },
       size: {
         default: "h-9 px-4 py-2",

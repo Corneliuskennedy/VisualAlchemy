@@ -27,6 +27,7 @@ export interface HomepageContent {
     subheadline: string;
     cards: Array<{
       title: string;
+      expandedTitle?: string;
       description: string;
       ctaText: string;
       href: '/build' | '/optimize' | '/create';

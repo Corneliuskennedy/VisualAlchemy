@@ -7,6 +7,7 @@
 
 import React, { useCallback, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { Logo } from '@/components/ui/logo';
 import { Button } from '@/components/ui/button';
@@ -80,15 +81,21 @@ export function NavbarDesktop({
   }, []);
 
   return (
-    <header
+    <motion.header
       aria-label="Main Navigation"
+      initial={{ y: -100 }}
+      animate={{ y: isVisible ? 0 : -100 }}
+      transition={{ 
+        type: 'spring', 
+        stiffness: 400, 
+        damping: 35,
+        mass: 0.8,
+      }}
       className={cn(
         'fixed top-0 left-0 right-0 z-[100]',
-        'transition-all duration-300 ease-out',
         'navbar-glass',
         'hidden md:flex',
-        isScrolled && 'scrolled',
-        isVisible ? 'translate-y-0' : '-translate-y-full'
+        isScrolled && 'scrolled'
       )}
     >
       <div className="container mx-auto px-4 lg:px-6 w-full">
@@ -141,20 +148,16 @@ export function NavbarDesktop({
             {/* Language Switcher */}
             <LanguageSwitcher variant="compact" />
 
-            {/* Theme Switcher */}
-            <ThemeSwitcher variant="compact" />
+            {/* Theme Switcher - Hidden for now */}
+            {/* <ThemeSwitcher variant="compact" /> */}
 
-            {/* Contact CTA */}
+            {/* Contact CTA - Premium & Refined */}
             <Button
               asChild
               className={cn(
-                'px-4 lg:px-6 py-2',
-                'rounded-lg font-semibold',
-                'text-sm shadow-lg hover:shadow-xl',
-                'transition-all duration-200',
-                'bg-button-primary hover:bg-button-primary-hover',
-                'text-white shadow-button-primary',
-                'focus:ring-2 focus:ring-button-primary focus:ring-offset-2'
+                'px-5 lg:px-7 py-2.5 lg:py-3',
+                'font-medium font-archivo',
+                'text-sm'
               )}
             >
               <Link href={isDutch ? '/nl/contact' : '/contact'}>

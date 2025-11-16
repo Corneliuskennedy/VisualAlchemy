@@ -9,8 +9,6 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { LineChart, BarChart3, Users, Bot, Brain, FileText, ArrowRight, CheckCircle } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalWorkshop, useCalIntroCall } from '@/hooks/use-cal';
-
 // Services index page
 const ServicesPage: React.FC = () => {
   const { language, t } = useTranslations();
@@ -31,13 +29,7 @@ const ServicesPage: React.FC = () => {
       href: isNL ? '/nl/services' : '/services',
       isCurrent: true
     }
-  ];
-
-  // Initialize Cal.com embeds
-  useCalWorkshop();
-  useCalIntroCall();
-
-  // Scroll to top when component mounts
+  ];  // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);

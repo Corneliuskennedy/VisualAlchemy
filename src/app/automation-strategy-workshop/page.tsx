@@ -9,8 +9,6 @@ import GridBackground from '@/components/ui/GridBackground';
 import { CheckCircle, Target, TrendingUp, Shield, Calendar, FileText, ArrowRight, Users, BarChart3, AlertTriangle, Clock, Euro } from 'lucide-react';
 import Link from 'next/link';
 import { useIsLargeScreen } from "@/hooks/useIsLargeScreen";
-import { useCalWorkshop } from "@/hooks/use-cal";
-
 const SectionDivider = () => (
   <div className="h-px w-full bg-gradient-to-r from-transparent via-[#4585f4] to-transparent" />
 );
@@ -18,12 +16,7 @@ const SectionDivider = () => (
 const AutomationStrategyWorkshopPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  // Initialize Cal.com booking system
-  useCalWorkshop();
-
-  // Define breadcrumb items
+  const isLargeScreen = useIsLargeScreen();  // Define breadcrumb items
   const breadcrumbItems = [
     {
       title: 'Home',

@@ -9,16 +9,10 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { Calculator, Euro, Clock, TrendingUp, ArrowRight, ArrowLeft, Users, BarChart3, Target } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
-import { useCalWorkshop } from '@/hooks/use-cal';
-
 const AutomationROICalculatorPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();
-  
-  useCalWorkshop();
-
-  // Calculator state
+  const isLargeScreen = useIsLargeScreen();  // Calculator state
   const [employees, setEmployees] = useState(10);
   const [avgHourlyRate, setAvgHourlyRate] = useState(35);
   const [hoursPerWeekRepetitive, setHoursPerWeekRepetitive] = useState(8);

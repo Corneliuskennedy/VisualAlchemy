@@ -5,6 +5,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling - REMOVED scroll-snap as it causes fast/jumpy scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed navbar */
+}
+
+body {
+  /* REMOVED: scroll-snap-type - was causing fast/jumpy scrolling */
+  scroll-padding-top: 80px;
+  /* CSS containment - removed layout containment as it can affect scroll performance */
+  contain: style;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 /* Premium Theme Transitions - Optimized for smooth, professional transitions */
 /* Global transitions are now handled in utilities layer below */
 
@@ -19,44 +38,45 @@
   --theme-overlay-blur: 0px;
 }
 
-/* Smooth transitions for cards and containers - synchronized with theme */
-[class*="bg-"], [class*="border-"], [class*="text-"] {
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
+/* REMOVED: Universal selector causing CLS - moved to specific selectors above */
 
 /* Smooth transitions for elements using CSS variables */
 /* Note: CSS variables themselves don't transition, but properties using them do */
 .bg-popover,
 [data-radix-popper-content-wrapper],
 [class*="popover"] {
-  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1) !important, 
-              border-color 500ms cubic-bezier(0.4, 0, 0.2, 1) !important, 
-              color 500ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-  will-change: background-color, border-color, color;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1) !important, 
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) !important, 
+              color 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  /* Removed will-change - causes layout shifts */
+  contain: layout style paint;
 }
 
 /* Ensure dropdown menus transition smoothly on theme change */
 [role="menu"],
 [data-radix-dropdown-menu-content],
 [data-radix-dropdown-menu-content] > * {
-  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
-              color 500ms cubic-bezier(0.4, 0, 0.2, 1) !important;
-  will-change: background-color, border-color, color;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              color 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  /* Removed will-change - causes layout shifts */
+  contain: layout style paint;
 }
 
 /* Force smooth transitions on all popover children */
 [data-radix-dropdown-menu-content] * {
-  transition: background-color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
-              border-color 500ms cubic-bezier(0.4, 0, 0.2, 1), 
-              color 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1), 
+              color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  contain: layout style paint;
 }
 
-/* Exclude certain elements from transition for performance */
+/* Media elements - only opacity transitions, no layout-affecting properties */
 img, svg, video, canvas, audio, iframe, embed, object {
   transition-property: opacity;
-  transition-duration: 400ms;
+  transition-duration: 200ms;
+  /* Prevent layout shifts */
+  contain: layout style paint;
 }
 
 /* Elegant gradient radial utility */
@@ -80,6 +100,115 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
   50% {
     transform: translate(-5px, 10px);
+  }
+}
+
+/* Premium organic gradient animation - OPTIMIZED: Removed transform to prevent CLS */
+/* Only animating background-position (doesn't affect layout) */
+@keyframes gradient-flow {
+  0%, 100% {
+    background-position: 0% 50%, 100% 30%, 50% 100%, 25% 75%, 75% 60%, center;
+  }
+  16.66% {
+    background-position: 30% 70%, 70% 50%, 70% 90%, 45% 90%, 80% 80%, center;
+  }
+  33.33% {
+    background-position: 60% 30%, 40% 10%, 90% 70%, 70% 50%, 40% 35%, center;
+  }
+  50% {
+    background-position: 80% 80%, 20% 60%, 30% 95%, 60% 95%, 20% 85%, center;
+  }
+  66.66% {
+    background-position: 90% 20%, 10% 70%, 10% 85%, 90% 55%, 10% 30%, center;
+  }
+  83.33% {
+    background-position: 80% 60%, 20% 80%, 25% 90%, 80% 80%, 20% 65%, center;
+  }
+}
+
+@keyframes gradient-breathe {
+  0%, 100% {
+    opacity: 0.95;
+    filter: contrast(1.3) saturate(1.5) blur(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: contrast(1.5) saturate(1.7) blur(0.5px);
+  }
+}
+
+/* Water-like wave animation - OPTIMIZED: Removed transform to prevent CLS */
+/* Only animating background-position (doesn't affect layout) */
+@keyframes water-wave {
+  0%, 100% {
+    background-position: 0% 50%, 100% 30%, 50% 100%, 25% 75%, 75% 60%, center;
+  }
+  25% {
+    background-position: 15% 60%, 85% 40%, 60% 90%, 35% 85%, 80% 70%, center;
+  }
+  50% {
+    background-position: 30% 40%, 70% 20%, 70% 80%, 50% 65%, 50% 45%, center;
+  }
+  75% {
+    background-position: 20% 65%, 80% 45%, 45% 95%, 40% 85%, 70% 75%, center;
+  }
+}
+
+/* Light mode gradient animations - Softer and more subtle */
+@keyframes gradient-flow-light {
+  0%, 100% {
+    background-position: 0% 50%, 100% 30%, 50% 100%, 25% 75%, 75% 60%, center;
+  }
+  16.66% {
+    background-position: 25% 65%, 75% 45%, 65% 85%, 40% 85%, 75% 75%, center;
+  }
+  33.33% {
+    background-position: 50% 35%, 50% 15%, 85% 65%, 65% 45%, 45% 40%, center;
+  }
+  50% {
+    background-position: 75% 75%, 25% 55%, 35% 90%, 55% 90%, 25% 80%, center;
+  }
+  66.66% {
+    background-position: 85% 25%, 15% 65%, 15% 80%, 85% 50%, 15% 35%, center;
+  }
+  83.33% {
+    background-position: 75% 55%, 25% 75%, 30% 85%, 75% 75%, 25% 60%, center;
+  }
+}
+
+@keyframes gradient-breathe-light {
+  0%, 100% {
+    opacity: 0.98;
+    filter: contrast(1.05) saturate(1.15) blur(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: contrast(1.1) saturate(1.2) blur(0.3px);
+  }
+}
+
+@keyframes water-wave-light {
+  0%, 100% {
+    background-position: 0% 50%, 100% 30%, 50% 100%, 25% 75%, 75% 60%, center;
+  }
+  25% {
+    background-position: 12% 55%, 88% 35%, 55% 85%, 30% 80%, 75% 65%, center;
+  }
+  50% {
+    background-position: 25% 45%, 75% 25%, 65% 75%, 45% 60%, 45% 50%, center;
+  }
+  75% {
+    background-position: 18% 60%, 82% 40%, 40% 90%, 35% 80%, 65% 70%, center;
+  }
+}
+
+/* CTA Button gradient animation */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -158,67 +287,93 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
 
   .dark {
-    /* Dark mode */
-    --background: 0 0% 4%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    /* Dark mode - Pure Black & White High Contrast */
+    --background: 0 0% 0%; /* Pure black */
+    --foreground: 0 0% 100%; /* Pure white text */
+    --card: 0 0% 0%; /* Black cards matching background */
+    --card-foreground: 0 0% 100%; /* White text on black cards */
+    --popover: 0 0% 0%; /* Black popovers */
+    --popover-foreground: 0 0% 100%; /* White text */
     --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 10%; /* Very dark gray */
+    --secondary-foreground: 0 0% 100%; /* White text */
+    --muted: 0 0% 15%; /* Dark gray */
+    --muted-foreground: 0 0% 80%; /* Light gray text */
     --accent: 221 83% 53%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 3.7% 25%;
-    --input: 217 33% 17%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 100%; /* White borders */
+    --input: 0 0% 0%; /* Black inputs */
     --ring: 221 83% 53%;
     
-    /* Design System Colors - Dark Mode */
-    --primary-bg: #0A0A0A;
-    --secondary-bg: #1A1A1A;
-    --surface: #2A2A2A;
+    /* Design System Colors - Dark Mode (Black & White) */
+    --primary-bg: #000000; /* Pure black */
+    --secondary-bg: #000000; /* Pure black */
+    --surface: #000000; /* Black surfaces */
     --primary-brand: #4585f4;
     --startup-accent: #FF6B35;
     --startup-accent-hover: #E55D2B;
     --sme-accent: #4585f4;
     --sme-accent-hover: #3B73D9;
-    --text-primary: #FFFFFF;
-    --text-secondary: #E5E5E5;
-    --text-muted: #9CA3AF;
-    --text-disabled: #6B7280;
-    --border-default: rgba(255, 255, 255, 0.1);
-    --border-hover: rgba(255, 255, 255, 0.2);
-    --border-focus: #4585f4;
+    --text-primary: #FFFFFF; /* Pure white */
+    --text-secondary: #FFFFFF; /* White */
+    --text-muted: #CCCCCC; /* Light gray for muted text */
+    --text-disabled: #666666;
+    --border-default: rgba(255, 255, 255, 0.3); /* White borders - thicker */
+    --border-hover: rgba(255, 255, 255, 0.6);
+    --border-focus: #FFFFFF;
     
-    /* Extended Theme Variables - Dark Mode */
-    --navbar-bg: #0A0A0A;
-    --navbar-bg-opacity: rgba(10, 10, 10, 0.95);
-    --card-bg: rgba(255, 255, 255, 0.02);
-    --card-border: rgba(255, 255, 255, 0.05);
+    /* Extended Theme Variables - Dark Mode (Black & White) */
+    --navbar-bg: #000000; /* Pure black navbar */
+    --navbar-bg-opacity: rgba(0, 0, 0, 0.98);
+    --card-bg: #000000; /* Black cards */
+    --card-border: rgba(255, 255, 255, 0.4); /* Thick white borders */
     --button-primary: #4585f4;
     --button-primary-hover: #3B73D9;
-    --button-primary-shadow: rgba(69, 133, 244, 0.25);
+    --button-primary-shadow: rgba(69, 133, 244, 0.3);
     --gradient-start: #4585f4;
     --gradient-end: #6B8AE6;
-    --overlay-bg: rgba(0, 0, 0, 0.15);
-    --grid-bg: rgba(69, 133, 244, 0.15);
-    --glass-bg: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --overlay-bg: rgba(0, 0, 0, 0.5);
+    --grid-bg: rgba(255, 255, 255, 0.05);
+    --glass-bg: rgba(0, 0, 0, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.3);
     
-    /* Optimized Text Colors - Dark Mode (WCAG AA+ contrast) */
-    --text-heading: #FFFFFF; /* High contrast for headings */
-    --text-body: #F1F5F9; /* Body text */
-    --text-subtle: #CBD5E1; /* Secondary text */
-    --text-muted-light: #94A3B8; /* Muted text */
-    --text-on-primary: #FFFFFF; /* Text on primary buttons */
-    --text-link: #60A5FA; /* Links (lighter for dark bg) */
-    --text-link-hover: #93C5FD; /* Link hover */
+    /* Text Colors - Dark Mode (All White) */
+    --text-heading: #FFFFFF; /* White headings */
+    --text-body: #FFFFFF; /* White body text */
+    --text-subtle: #CCCCCC; /* Light gray for subtle text */
+    --text-muted-light: #999999; /* Gray for muted text */
+    --text-on-primary: #FFFFFF; /* White text on buttons */
+    --text-link: #FFFFFF; /* White links */
+    --text-link-hover: #CCCCCC; /* Light gray on hover */
+  }
+  
+  /* Enhanced hero H1 text shadow for dark mode */
+  .dark h1#hero-heading {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dark h1#hero-heading:hover {
+    text-shadow: 0 4px 16px rgba(69, 133, 244, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Slider card hover effects - fade overlays on hover */
+  .group:hover .gradient-overlay {
+    opacity: 0.2 !important;
+  }
+  .group:hover .dark-overlay {
+    opacity: 0.3 !important;
+  }
+  
+  /* Enhanced hero H1 text shadow for light mode */
+  h1#hero-heading {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+  
+  h1#hero-heading:hover {
+    text-shadow: 0 2px 12px rgba(59, 130, 246, 0.2), 0 1px 6px rgba(0, 0, 0, 0.1);
   }
 
   * {
@@ -230,6 +385,10 @@ img, svg, video, canvas, audio, iframe, embed, object {
     /* Ensure light theme is applied globally */
     color: hsl(var(--foreground));
     background-color: hsl(var(--background));
+  /* Prevent layout shifts from font loading */
+  font-display: optional;
+  /* CSS containment to prevent child layout shifts */
+  contain: layout style;
   }
   
   /* Force light theme colors when not in dark mode */
@@ -663,64 +822,79 @@ img, svg, video, canvas, audio, iframe, embed, object {
   }
 }
 
-/* Smooth theme transitions for all theme-aware properties */
-* {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
+/* CRITICAL CLS FIX: Removed universal * selector - causes massive layout shifts */
+/* Only apply transitions to specific elements that need them - prevents flashing */
 
 /* Enhanced transitions for key elements - synchronized with theme overlay */
 body {
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
-              color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: background-color, color;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Removed will-change - causes layout shifts when not transitioning */
 }
 
 /* Smooth page transitions - premium feel */
 html {
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: background-color;
+  transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  /* Removed will-change - causes layout shifts */
 }
 
-/* Ensure CSS variables transition smoothly */
-[style*="--"] {
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
-              color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+/* Theme-aware elements only - specific selectors prevent universal flashing */
+[class*="bg-"]:not(img):not(svg):not(video):not(canvas),
+[class*="border-"]:not(img):not(svg):not(video):not(canvas),
+[class*="text-"]:not(img):not(svg):not(video):not(canvas) {
+  transition-property: background-color, border-color, color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Exclude interactive elements from transitions during initial render */
+button, a, input, select, textarea {
+  transition-property: background-color, border-color, color, opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Cards and containers - smooth but fast transitions */
+.card, [class*="card"], [class*="Card"] {
+  transition-property: background-color, border-color, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  /* CSS containment to prevent layout shifts */
+  contain: layout style paint;
 }
 
 /* Professional Navbar Styles - Expert Design */
 /* Glassmorphism + Smart Contrast + Elegant Typography */
 
-/* Navbar background with sophisticated glassmorphism */
+/* Clean Navbar background */
 .navbar-glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1) inset,
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05) inset,
               0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
 }
 
 .dark .navbar-glass {
-  background: rgba(10, 10, 10, 0.8);
+  background: rgba(0, 0, 0, 0.95);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
               0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
-/* Scrolled state - more opaque and defined */
+/* Scrolled state */
 .navbar-glass.scrolled {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.98);
   border-bottom-color: rgba(0, 0, 0, 0.12);
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1) inset,
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05) inset,
               0 8px 16px -4px rgba(0, 0, 0, 0.08);
 }
 
 .dark .navbar-glass.scrolled {
-  background: rgba(10, 10, 10, 0.95);
-  border-bottom-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.98);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
               0 8px 16px -4px rgba(0, 0, 0, 0.5);
 }

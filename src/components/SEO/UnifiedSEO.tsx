@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { AdvancedStructuredData } from './AdvancedStructuredData';
 import { StructuredDataInjector } from './StructuredDataInjector';
@@ -268,84 +267,128 @@ export function UnifiedSEO({
     }
   };
 
+  // Use useEffect to set document head elements (replaces Helmet)
+  useEffect(() => {
+    // Set HTML lang attribute
+    document.documentElement.lang = detectedLanguage;
+
+    // Set title
+    document.title = title;
+
+    // Helper function to update or create meta tag
+    const setMetaTag = (name: string, content: string, attribute: 'name' | 'property' | 'httpEquiv' = 'name') => {
+      let element = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement;
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, name);
+        document.head.appendChild(element);
+      }
+      element.content = content;
+    };
+
+    // Helper function to update or create link tag
+    const setLinkTag = (rel: string, href: string, hrefLang?: string) => {
+      const selector = hrefLang 
+        ? `link[rel="${rel}"][hreflang="${hrefLang}"]`
+        : `link[rel="${rel}"]`;
+      let element = document.querySelector(selector) as HTMLLinkElement;
+      if (!element) {
+        element = document.createElement('link');
+        element.rel = rel;
+        if (hrefLang) element.hreflang = hrefLang;
+        document.head.appendChild(element);
+      }
+      element.href = href;
+    };
+
+    // Set meta tags
+    setMetaTag('description', description);
+    if (keywords) {
+      setMetaTag('keywords', Array.isArray(keywords) ? keywords.join(', ') : keywords);
+    }
+
+    // Canonical URL
+    setLinkTag('canonical', canonicalUrl);
+
+    // Hreflang links
+    hreflangLinks.forEach(({ lang, href }) => {
+      setLinkTag('alternate', href, lang);
+    });
+
+    // Open Graph tags
+    setMetaTag('og:url', canonicalUrl, 'property');
+    setMetaTag('og:type', ogType, 'property');
+    setMetaTag('og:title', title, 'property');
+    setMetaTag('og:description', description, 'property');
+    setMetaTag('og:image', ogImage, 'property');
+    setMetaTag('og:image:alt', ogImageAlt, 'property');
+    setMetaTag('og:site_name', 'Octomatic', 'property');
+    setMetaTag('og:locale', detectedLanguage === 'nl' ? 'nl_NL' : 'en_US', 'property');
+
+    // Twitter Card tags
+    setMetaTag('twitter:card', twitterCard);
+    setMetaTag('twitter:site', twitterSite);
+    if (twitterCreator) setMetaTag('twitter:creator', twitterCreator);
+    setMetaTag('twitter:title', title);
+    setMetaTag('twitter:description', description);
+    setMetaTag('twitter:image', ogImage);
+    setMetaTag('twitter:image:alt', ogImageAlt);
+
+    // Article specific meta tags
+    if ((pageType === 'article' || pageType === 'blogPost') && author) {
+      setMetaTag('article:author', author, 'property');
+    }
+    if ((pageType === 'article' || pageType === 'blogPost') && publishedTime) {
+      setMetaTag('article:published_time', publishedTime, 'property');
+    }
+    if ((pageType === 'article' || pageType === 'blogPost') && modifiedTime) {
+      setMetaTag('article:modified_time', modifiedTime, 'property');
+    }
+
+    // Robots meta tag
+    setMetaTag('robots', noIndex 
+      ? 'noindex, nofollow' 
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    );
+
+    // Language and region targeting
+    setMetaTag('language', detectedLanguage === 'nl' ? 'nl-NL' : 'en-US');
+    setMetaTag('content-language', detectedLanguage === 'nl' ? 'nl-NL' : 'en-US', 'httpEquiv');
+
+    // Geographic targeting
+    setMetaTag('geo.region', 'NL-NH');
+    setMetaTag('geo.placename', 'Amsterdam');
+    setMetaTag('geo.position', '52.3676;4.9041');
+    setMetaTag('ICBM', '52.3676, 4.9041');
+
+    // Additional hreflang links (if different from main ones)
+    const cleanPath = pathname.replace(/^\/nl/, '') || '/';
+    const enUrl = `${BASE_URL}${cleanPath}`;
+    const nlUrl = `${BASE_URL}/nl${cleanPath}`;
+    
+    // Ensure all hreflang links are set
+    setLinkTag('alternate', enUrl, 'en');
+    setLinkTag('alternate', nlUrl, 'nl');
+    setLinkTag('alternate', enUrl, 'x-default');
+
+    // Inject structured data script
+    const scriptId = `structured-data-${pageType}-${pathname.replace(/\//g, '-')}`;
+    let scriptElement = document.getElementById(scriptId) as HTMLScriptElement;
+    if (!scriptElement) {
+      scriptElement = document.createElement('script');
+      scriptElement.id = scriptId;
+      scriptElement.type = 'application/ld+json';
+      document.head.appendChild(scriptElement);
+    }
+    scriptElement.textContent = JSON.stringify(generateStructuredData());
+  }, [
+    detectedLanguage, title, description, keywords, canonicalUrl, ogType, ogImage, ogImageAlt,
+    twitterCard, twitterSite, twitterCreator, pageType, author, publishedTime, modifiedTime,
+    noIndex, pathname, hreflangLinks
+  ]);
+
   return (
     <>
-      <Helmet>
-        {/* CRITICAL FIX: Set HTML lang to match detected language */}
-        <html lang={detectedLanguage} />
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        {keywords && <meta name="keywords" content={Array.isArray(keywords) ? keywords.join(', ') : keywords} />}
-
-        {/* Canonical URL */}
-        <link rel="canonical" href={canonicalUrl} />
-
-        {/* FIXED: Hreflang tags without duplicates */}
-        {hreflangLinks.map(({ lang, href }) => (
-          <link key={lang} rel="alternate" hrefLang={lang} href={href} />
-        ))}
-
-        {/* Open Graph - ensure URL matches canonical */}
-        <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:type" content={ogType} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={ogImage} />
-        <meta property="og:image:alt" content={ogImageAlt} />
-        <meta property="og:site_name" content="Octomatic" />
-        <meta property="og:locale" content={detectedLanguage === 'nl' ? 'nl_NL' : 'en_US'} />
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content={twitterCard} />
-        <meta name="twitter:site" content={twitterSite} />
-        {twitterCreator && <meta name="twitter:creator" content={twitterCreator} />}
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={ogImage} />
-        <meta name="twitter:image:alt" content={ogImageAlt} />
-        
-        {/* Article specific meta tags */}
-        {(pageType === 'article' || pageType === 'blogPost') && author && (
-          <meta property="article:author" content={author} />
-        )}
-        {(pageType === 'article' || pageType === 'blogPost') && publishedTime && (
-          <meta property="article:published_time" content={publishedTime} />
-        )}
-        {(pageType === 'article' || pageType === 'blogPost') && modifiedTime && (
-          <meta property="article:modified_time" content={modifiedTime} />
-        )}
-
-        {/* Enhanced Indexing */}
-        {noIndex && <meta name="robots" content="noindex, nofollow" />}
-        {!noIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
-
-        {/* Language and region targeting */}
-        <meta name="language" content={detectedLanguage === 'nl' ? 'nl-NL' : 'en-US'} />
-        <meta httpEquiv="content-language" content={detectedLanguage === 'nl' ? 'nl-NL' : 'en-US'} />
-        
-        {/* Hreflang for internationalization */}
-        {(() => {
-          const cleanPath = pathname.replace(/^\/nl/, '') || '/';
-          return (
-            <>
-              <link rel="alternate" hrefLang="en" href={`${BASE_URL}${cleanPath}`} />
-              <link rel="alternate" hrefLang="nl" href={`${BASE_URL}/nl${cleanPath}`} />
-              <link rel="alternate" hrefLang="x-default" href={`${BASE_URL}${cleanPath}`} />
-            </>
-          );
-        })()}
-
-        {/* Geographic targeting */}
-        <meta name="geo.region" content="NL-NH" />
-        <meta name="geo.placename" content="Amsterdam" />
-        <meta name="geo.position" content="52.3676;4.9041" />
-        <meta name="ICBM" content="52.3676, 4.9041" />
-
-        {/* Structured data - Note: Helmet may not inject this in App Router */}
-        <script type="application/ld+json">
-          {JSON.stringify(generateStructuredData())}
-        </script>
-      </Helmet>
       
       {/* Direct structured data injection (works in App Router) */}
       <StructuredDataInjector 

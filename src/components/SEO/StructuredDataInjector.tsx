@@ -115,3 +115,4 @@ export function MultiSchemaInjector({ schemas }: MultiSchemaInjectorProps) {
 
 export default StructuredDataInjector;
 
+

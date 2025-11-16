@@ -15,7 +15,7 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar, Sparkles, Rocket, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -120,7 +120,7 @@ const CTA_CONTENT = {
   },
 };
 
-export const SmartCTA: React.FC<SmartCTAProps> = ({
+const SmartCTAComponent: React.FC<SmartCTAProps> = ({
   section = 'unknown',
   audience = 'universal',
   className = '',
@@ -133,7 +133,14 @@ export const SmartCTA: React.FC<SmartCTAProps> = ({
   const [content, setContent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Use refs to track previous values and prevent unnecessary updates
+  const previousIntentRef = React.useRef<IntentScore | null>(null);
+  const previousContentIdRef = React.useRef<string | null>(null);
+  const isMountedRef = React.useRef(true);
+
   useEffect(() => {
+    isMountedRef.current = true;
+    
     // Initialize content optimizer
     const optimizer = getContentOptimizer();
     const contentData = CTA_CONTENT[language];
@@ -177,19 +184,32 @@ export const SmartCTA: React.FC<SmartCTAProps> = ({
       ? detectedIntent 
       : { ...detectedIntent, type: audience };
     
-    setIntent(finalIntent);
-
     // Get optimized content
     const optimizedContent = optimizer.getOptimizedContent(finalIntent);
-    setContent(optimizedContent);
+
+    // Only update state if values actually changed
+    if (!previousIntentRef.current || 
+        previousIntentRef.current.type !== finalIntent.type ||
+        previousIntentRef.current.confidence !== finalIntent.confidence) {
+      setIntent(finalIntent);
+      previousIntentRef.current = finalIntent;
+    }
+
+    if (!previousContentIdRef.current || 
+        previousContentIdRef.current !== optimizedContent.id) {
+      setContent(optimizedContent);
+      previousContentIdRef.current = optimizedContent.id;
+    }
 
     // Record impression
     optimizer.recordImpression(optimizedContent.id, finalIntent.type);
-
     setIsLoading(false);
 
-    // Update intent periodically
+    // Update intent periodically - but only if actually changed
     const interval = setInterval(() => {
+      // Check if component is still mounted
+      if (!isMountedRef.current) return;
+
       const newIntent = detector.detectIntent();
       let finalNewIntent: IntentScore;
       if (newIntent.confidence > 0.6) {
@@ -201,16 +221,30 @@ export const SmartCTA: React.FC<SmartCTAProps> = ({
         };
       }
       
-      if (finalNewIntent.confidence > finalIntent.confidence) {
-        setIntent(finalNewIntent);
+      // Only update if confidence improved AND intent/type actually changed
+      const previousIntent = previousIntentRef.current;
+      if (previousIntent && 
+          finalNewIntent.confidence > previousIntent.confidence &&
+          (finalNewIntent.type !== previousIntent.type || 
+           finalNewIntent.confidence !== previousIntent.confidence)) {
         const newContent = optimizer.getOptimizedContent(finalNewIntent);
-        setContent(newContent);
-        optimizer.recordImpression(newContent.id, finalNewIntent.type);
+        
+        // Only update if content actually changed
+        if (previousContentIdRef.current !== newContent.id) {
+          setIntent(finalNewIntent);
+          setContent(newContent);
+          previousIntentRef.current = finalNewIntent;
+          previousContentIdRef.current = newContent.id;
+          optimizer.recordImpression(newContent.id, finalNewIntent.type);
+        }
       }
-    }, 5000); // Check every 5 seconds
+    }, 10000); // Increased to 10 seconds - less frequent checks
 
-    return () => clearInterval(interval);
-  }, [language, audience]);
+    return () => {
+      isMountedRef.current = false;
+      clearInterval(interval);
+    };
+  }, [language, audience]); // Only re-run if language or audience changes
 
   const handleClick = () => {
     if (!content || !intent) return;
@@ -246,71 +280,89 @@ export const SmartCTA: React.FC<SmartCTAProps> = ({
     : Calendar;
 
   return (
-    <div className={`space-y-5 md:space-y-6 ${className}`}>
-      {/* Premium Headline with Refined Typography - Enhanced Contrast */}
-      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold 
-                     text-[#0F172A] dark:text-white
-                     tracking-tight leading-tight">
+    <div className={`space-y-8 md:space-y-10 ${className}`}>
+      {/* Premium Headline - Refined Typography */}
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-archivo font-bold 
+                     text-heading dark:text-white
+                     tracking-[-0.02em] leading-[1.1]
+                     max-w-2xl mx-auto">
         {content.content.headline}
       </h2>
 
-      {/* Premium Offer Badge with Sleek Design */}
-      {content.content.offer && (
-        <div className="inline-flex items-center gap-2 
-                        bg-gradient-to-r from-[#4585f4]/10 via-[#4585f4]/15 to-[#6B8AE6]/10
-                        dark:from-[#4585f4]/20 dark:via-[#4585f4]/25 dark:to-[#6B8AE6]/20
-                        border border-[#4585f4]/30 dark:border-[#4585f4]/40
-                        backdrop-blur-sm
-                        rounded-xl px-5 py-2.5
-                        shadow-lg shadow-[#4585f4]/10
-                        transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#4585f4]/20">
-          <p className="text-sm md:text-base font-semibold 
-                       text-[#4585f4] dark:text-[#6B8AE6]
-                       tracking-tight">
-            {content.content.offer}
-          </p>
-        </div>
-      )}
+      {/* Premium Button Group - World-Class Design */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Secondary CTA - Refined & Sophisticated */}
+        {content.content.offer && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleClick();
+            }}
+            type="button"
+            className="group relative
+                       bg-transparent
+                       text-heading dark:text-white
+                       border-2 border-white
+                       px-9 py-4 md:px-11 md:py-4.5
+                       text-sm md:text-base font-medium font-archivo
+                       tracking-[-0.01em]
+                       transition-all duration-300 ease-in-out
+                       hover:bg-white
+                       hover:text-black
+                       hover:border-white
+                       hover:shadow-[0_4px_12px_rgba(255,255,255,0.2)]
+                       active:scale-[0.98]
+                       whitespace-nowrap
+                       overflow-hidden
+                       will-change-transform
+                       cursor-pointer"
+          >
+            {/* Elegant background slide effect */}
+            <span className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out origin-left" />
+            <span className="relative z-10 font-medium">{content.content.offer}</span>
+          </button>
+        )}
 
-      {/* Premium CTA Button with Sophisticated Effects */}
-      <Button
-        onClick={handleClick}
-        size="lg"
-        className="group relative 
-                   bg-gradient-to-r from-[#4585f4] via-[#5A8FF5] to-[#6B8AE6]
-                   dark:from-[#4585f4] dark:via-[#5A8FF5] dark:to-[#6B8AE6]
-                   text-white 
-                   px-12 py-8 
-                   text-lg md:text-xl font-semibold 
-                   rounded-2xl 
-                   transition-all duration-500 ease-out
-                   overflow-hidden
-                   shadow-2xl shadow-[#4585f4]/25
-                   hover:shadow-3xl hover:shadow-[#4585f4]/40
-                   hover:scale-[1.02]
-                   active:scale-[0.98]
-                   transform-gpu
-                   border border-[#4585f4]/20"
-        data-cta="smart"
-        data-intent={intent.type}
-        data-confidence={intent.confidence.toFixed(2)}
-        data-variant-id={content.id}
-      >
-        {/* Shine effect on hover */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                       -translate-x-full group-hover:translate-x-full 
-                       transition-transform duration-1000 ease-out" />
-        
-        {/* Subtle inner glow */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 
-                       group-hover:opacity-100 transition-opacity duration-500" />
-        
-        <span className="relative z-10 flex items-center gap-3">
-          {content.content.cta}
-          <Icon className="h-5 w-5 md:h-6 md:w-6 transition-all duration-300 
-                          group-hover:translate-x-1 group-hover:scale-110" />
-        </span>
-      </Button>
+        {/* Primary CTA - Bold & Intentional */}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            handleClick();
+          }}
+          type="button"
+          className="group relative
+                     bg-white
+                     text-black
+                     border-2 border-white
+                     px-11 py-4 md:px-14 md:py-4.5
+                     text-sm md:text-base font-medium font-archivo
+                     tracking-[-0.01em]
+                     transition-all duration-300 ease-in-out
+                     hover:bg-transparent
+                     hover:text-white
+                     hover:border-white
+                     hover:shadow-[0_8px_24px_rgba(255,255,255,0.25)]
+                     active:scale-[0.98]
+                     flex items-center justify-center gap-3
+                     flex-1 sm:flex-none
+                     overflow-hidden
+                     will-change-transform
+                     cursor-pointer"
+          data-cta="smart"
+          data-intent={intent.type}
+          data-confidence={intent.confidence.toFixed(2)}
+          data-variant-id={content.id}
+        >
+          {/* Elegant hover background slide */}
+          <span className="absolute inset-0 bg-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out origin-right" />
+          
+          <span className="relative z-10 flex items-center gap-3">
+            <span className="font-medium">{content.content.cta}</span>
+            <Icon className="h-4 w-4 md:h-5 md:w-5 transition-all duration-300 ease-out
+                            group-hover:translate-x-1.5 group-hover:scale-110" />
+          </span>
+        </button>
+      </div>
 
       {/* Debug info - Only visible in development mode */}
       {typeof window !== 'undefined' && window.location.hostname === 'localhost' && (
@@ -322,6 +374,9 @@ export const SmartCTA: React.FC<SmartCTAProps> = ({
     </div>
   );
 };
+
+export const SmartCTA = React.memo(SmartCTAComponent);
+SmartCTA.displayName = 'SmartCTA';
 
 export default SmartCTA;
 

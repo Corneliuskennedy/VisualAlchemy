@@ -4,18 +4,13 @@ import animatePlugin from "tailwindcss-animate";
 
 const config = {
     darkMode: ["class"],
+    // Tailwind v3+ uses 'content' instead of 'purge'
     content: [
         "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/lib/**/*.{js,ts}",
         "./src/hooks/**/*.{js,ts,jsx,tsx}",
-    ],
-    safelist: [
-        'opacity-0', 'opacity-100',
-        'animate-spin',
-        'prose', 'prose-invert',
-        'bg-green-50', 'border-green-200', 'text-green-700',
     ],
     prefix: "",
     theme: {
