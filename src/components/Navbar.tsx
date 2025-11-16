@@ -8,9 +8,7 @@ import Cookies from "js-cookie";
 import { Flag } from "./ui/flag";
 import useLanguage from "@/contexts/LanguageContext";
 import { Logo } from "./ui/logo";
-// DISABLED: Cal.com hook - temporarily removed to fix SSR build issues
-// Cal.com buttons have data-cal-* attributes and will work if initialized globally
-// import { useCalIntroCall } from '@/hooks/use-cal';
+// Cal.com integration removed - buttons use data-cal-* attributes for external script initialization
 import { ThemeSwitcher } from "./ui/ThemeSwitcher";
 
 interface NavItemProps {
