@@ -9,10 +9,13 @@ import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { TrendingUp, Clock, Euro, Users, ArrowRight, ArrowLeft, CheckCircle, Target, BarChart3 } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
+
 const OurWorkPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
+  const isLargeScreen = useIsLargeScreen();
+
+  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',
