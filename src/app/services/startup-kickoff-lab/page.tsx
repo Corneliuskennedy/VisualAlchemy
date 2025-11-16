@@ -15,8 +15,8 @@ const StartupKickoffLabPage: React.FC = () => {
   const { language } = useTranslations();
   const isNL = language === 'nl';
   const isLargeScreen = useIsLargeScreen();
-  
-  useCalIntroCall();  const breadcrumbItems = [
+
+  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',
