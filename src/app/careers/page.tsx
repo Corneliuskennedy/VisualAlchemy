@@ -1,5 +1,8 @@
 'use client';
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 import React, { Suspense } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from '@/components/ui/button';

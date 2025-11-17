@@ -81,6 +81,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   // Combined initialization and sync effect - reduces cascading updates
   useEffect(() => {
+    // Ensure we're on the client side
+    if (typeof window === 'undefined') return;
+    if (!pathname) return;
+    
     const urlLang = getLanguageFromPath(pathname);
     
     // Initialization phase
@@ -97,18 +101,20 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       if (savedLang) {
         setLanguageState(savedLang);
         // Navigate to correct URL if needed
-        if (savedLang === 'nl' && !pathname.startsWith('/nl')) {
+        if (savedLang === 'nl' && !pathname.startsWith('/nl') && router) {
           const newPath = `/nl${pathname === '/' ? '' : pathname}`;
           router.replace(newPath);
         }
       } else {
         // Check browser language as last resort
         try {
-          const browserLang = navigator.language.toLowerCase();
-          if (browserLang.startsWith('nl')) {
-            setLanguageState('nl');
-            if (!pathname.startsWith('/nl')) {
-              router.replace(`/nl${pathname === '/' ? '' : pathname}`);
+          if (typeof navigator !== 'undefined') {
+            const browserLang = navigator.language.toLowerCase();
+            if (browserLang.startsWith('nl')) {
+              setLanguageState('nl');
+              if (!pathname.startsWith('/nl') && router) {
+                router.replace(`/nl${pathname === '/' ? '' : pathname}`);
+              }
             }
           }
         } catch {
@@ -141,6 +147,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // Set language function - updates state and navigates to correct URL
   const setLanguage = useCallback((newLanguage: Language) => {
     if (newLanguage === language) return;
+    if (typeof window === 'undefined' || !router) return;
     
     isNavigating.current = true;
     setLanguageState(newLanguage);

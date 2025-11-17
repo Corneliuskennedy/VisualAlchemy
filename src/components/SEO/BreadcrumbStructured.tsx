@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { Helmet } from 'react-helmet-async';
+import { StructuredDataInjector, MultiSchemaInjector } from './StructuredDataInjector';
 import useLanguage from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
 
@@ -87,22 +89,34 @@ const BreadcrumbStructured: React.FC<BreadcrumbStructuredProps> = ({
   
   const localContextData = addLocalContext();
   
+  // Prepare schemas for injection
+  const schemas = [];
+  if (showStructuredData) {
+    schemas.push({
+      id: 'breadcrumb',
+      data: breadcrumbStructuredData
+    });
+    
+    if (localContextData) {
+      schemas.push({
+        id: 'local-context',
+        data: localContextData
+      });
+    }
+  }
+
   return (
     <>
-      {/* Add structured data */}
-      {showStructuredData && (
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify(breadcrumbStructuredData)}
-          </script>
-          
-          {/* Add Amsterdam local context if available */}
-          {localContextData && (
-            <script type="application/ld+json">
-              {JSON.stringify(localContextData)}
-            </script>
-          )}
-        </Helmet>
+      {/* Add structured data using StructuredDataInjector */}
+      {showStructuredData && schemas.length > 0 && (
+        schemas.length === 1 ? (
+          <StructuredDataInjector 
+            data={schemas[0].data}
+            id="breadcrumb-structured-data"
+          />
+        ) : (
+          <MultiSchemaInjector schemas={schemas} />
+        )
       )}
       
       {/* Visual breadcrumb component */}
