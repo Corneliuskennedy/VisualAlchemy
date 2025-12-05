@@ -13,6 +13,13 @@ import { getVideoUrl } from '@/lib/video-utils';
 export default function Home() {
   const prefersReducedMotion = useReducedMotion();
   const [isHeroReady, setIsHeroReady] = useState(false);
+  const [videoUrl, setVideoUrl] = useState<string>('');
+  
+  useEffect(() => {
+    const url = getVideoUrl('WebsiteTeaser.mp4');
+    setVideoUrl(url);
+    console.log('Video URL:', url);
+  }, []);
   
   const {
     containerVariants,
@@ -367,15 +374,28 @@ export default function Home() {
                 <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
                   backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
                 }} />
-                <video
-                  src={getVideoUrl('WebsiteTeaser.mp4')}
-                  controls
-                  className="w-full h-full object-cover relative z-10"
-                  preload="metadata"
-                  playsInline
-                >
-                  Your browser does not support the video tag.
-                </video>
+                {videoUrl ? (
+                  <video
+                    src={videoUrl}
+                    controls
+                    className="w-full h-full object-cover relative z-10"
+                    preload="metadata"
+                    playsInline
+                    onError={(e) => {
+                      console.error('Video load error:', e);
+                      console.error('Video URL:', videoUrl);
+                    }}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-500">
+                    <div className="text-center">
+                      <p className="text-sm font-mono mb-2">Loading video...</p>
+                      <p className="text-xs text-gray-600">WebsiteTeaser.mp4</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -519,9 +539,12 @@ export default function Home() {
               The Portfolio Round
             </motion.h2>
             
-            <div className="inline-block px-4 py-2 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-8 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-              ALLOCATION: 2/5 REMAINING
+            <div className="inline-block px-4 py-2 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              EARLY-BIRD DISCOUNT: 2/5 CLAIMED
             </div>
+            <p className="text-sm text-gray-400 mb-8 font-mono text-center" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              Discounted pricing for the first 5 clients. <span className="text-[#10b981] font-semibold">3 spots remaining.</span>
+            </p>
             
             <div className="mb-8">
               <div className="flex items-center justify-center gap-4 mb-4">
