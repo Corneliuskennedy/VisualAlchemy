@@ -3,8 +3,6 @@
 import React, { Suspense } from 'react';
 // Removed translation dependency for Visual Alchemy (English-only)
 import { Button } from '@/components/ui/button';
-import { UnifiedSEO } from '@/components/SEO';
-import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import GridBackground from '@/components/ui/GridBackground';
 import { CheckCircle, Target, TrendingUp, Shield, Calendar, FileText, ArrowRight, Users, BarChart3, AlertTriangle, Clock, Euro } from 'lucide-react';
 import Link from 'next/link';
