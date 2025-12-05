@@ -1,5 +1,9 @@
 'use client';
 
+// Force dynamic rendering to avoid translation dependency issues
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 import { useQuery } from "@tanstack/react-query";
 import { blogSupabase as supabase } from '@/lib/supabaseClients';
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
