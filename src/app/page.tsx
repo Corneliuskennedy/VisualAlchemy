@@ -291,7 +291,7 @@ export default function Home() {
           {/* CTA Button */}
           <motion.div 
             variants={itemVariants} 
-            className="pt-8 md:pt-10 lg:pt-12"
+            className="pt-8 md:pt-10 lg:pt-12 pb-20"
           >
             <Button
               onClick={() => {
@@ -306,32 +306,32 @@ export default function Home() {
             </Button>
           </motion.div>
           
-          {/* Scroll Indicator */}
+          {/* Scroll Indicator - Positioned below button */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={isHeroReady ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 1.5, duration: 0.5 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10"
           >
             <div 
-              className="flex flex-col items-center gap-2 cursor-pointer group"
+              className="flex flex-col items-center gap-1 cursor-pointer group"
               onClick={() => {
                 const videoSection = document.getElementById('the-video');
                 videoSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
             >
-              <p className="text-xs text-[#10b981] font-mono uppercase tracking-wider mb-2 group-hover:text-[#34d399] transition-colors" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              <p className="text-xs text-[#10b981] font-mono uppercase tracking-wider group-hover:text-[#34d399] transition-colors" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                 Scroll to Watch
               </p>
               <motion.div
-                animate={{ y: [0, 8, 0] }}
+                animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-6 h-10 border-2 border-[#10b981]/50 rounded-full flex items-start justify-center p-2 group-hover:border-[#10b981] transition-colors"
+                className="w-5 h-8 border-2 border-[#10b981]/50 rounded-full flex items-start justify-center p-1.5 group-hover:border-[#10b981] transition-colors"
               >
                 <motion.div
-                  animate={{ y: [0, 12, 0] }}
+                  animate={{ y: [0, 10, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-1.5 h-1.5 bg-[#10b981] rounded-full"
+                  className="w-1 h-1 bg-[#10b981] rounded-full"
                 />
               </motion.div>
             </div>
@@ -342,7 +342,7 @@ export default function Home() {
       {/* The Video Section - The Moneymaker */}
       <section 
         id="the-video" 
-        className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5"
+        className="pt-8 md:pt-12 pb-20 md:pb-32 px-4 relative z-10 bg-[#050505] border-y border-white/5"
         style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
@@ -354,25 +354,19 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
             variants={fadeInUp}
-            className="mb-12 text-center"
+            className="mb-8 md:mb-12 text-center"
           >
-            <div 
-              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4"
-              style={{ fontFamily: 'var(--font-mono), monospace' }}
-            >
-              // THE PROOF
-            </div>
             <motion.h2 
               variants={fadeInUp}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
             >
-              See It In <span className="text-[#10b981]">Action</span>
+              From <span className="text-gray-400">Audio</span> to <span className="text-[#10b981]">Captivating Visuals</span>
             </motion.h2>
             <motion.p
               variants={fadeInUp}
-              className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+              className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed"
             >
-              This is what <span className="text-[#10b981] font-semibold">+2,000 subscribers</span> and <span className="text-[#10b981] font-semibold">117,000 views</span> looks like. One video. One client.
+              Watch how we transform raw audio files into high-retention visual content that keeps audiences engaged.
             </motion.p>
           </motion.div>
           
