@@ -31,11 +31,6 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
 
   return (
     <>
-      <UnifiedSEO 
-        title={isNL ? "Automatisering Workshop | Blauwdruk" : "Automation Strategy Workshop"}
-        description={isNL ? "Datagedreven automatiseringsroadmap met gegarandeerd ROI. Workshop voor Nederlandse MKB. Stop met gokken, start met plannen." : "Stop guessing which processes to automate. Get a data-driven automation roadmap with guaranteed ROI through our strategic workshop for Dutch SMEs."}
-      />
-
       <Suspense fallback={<div className="min-h-screen bg-background animate-pulse" />}>
         <div className="min-h-screen bg-background">
           {/* Navigation Header */}
@@ -46,10 +41,6 @@ const AutomationStrategyWorkshopPage: React.FC = () => {
             
             <div className="container mx-auto px-4 relative z-10">
               <div className="flex justify-between items-center mb-12">
-                <BreadcrumbStructured 
-                  items={breadcrumbItems} 
-                  pageType="service"
-                />
                 
                 {/* Back to Home link */}
                 <Link
