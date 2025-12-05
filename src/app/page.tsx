@@ -15,19 +15,81 @@ export default function Home() {
   const [isHeroReady, setIsHeroReady] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [posterUrl, setPosterUrl] = useState<string>('');
+  const [isPosterGenerated, setIsPosterGenerated] = useState(false);
+  const videoRef = React.useRef<HTMLVideoElement>(null);
   
   useEffect(() => {
     const url = getVideoUrl('WebsiteTeaser.mp4');
     setVideoUrl(url);
     
-    // Try to get poster image, fallback to generating from video
+    // Try to get poster image from Supabase
     const poster = getVideoUrl('WebsiteTeaser-poster.jpg');
     if (poster && poster !== url) {
       setPosterUrl(poster);
     }
     
     console.log('Video URL:', url);
+    console.log('Poster URL:', poster);
   }, []);
+  
+  // Generate poster from video first frame
+  const generatePoster = React.useCallback(() => {
+    if (!videoRef.current || posterUrl || isPosterGenerated) return;
+    
+    const video = videoRef.current;
+    if (video.readyState < 2 || video.videoWidth === 0) return;
+    
+    try {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      
+      if (!ctx) return;
+      
+      // Seek to a frame that's likely to have content (not black)
+      const originalTime = video.currentTime;
+      video.currentTime = 0.5; // Try 0.5 seconds instead of 0.1
+      
+      const handleSeeked = () => {
+        try {
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+          
+          // Check if the image is not just black
+          const imageData = ctx.getImageData(0, 0, Math.min(100, canvas.width), Math.min(100, canvas.height));
+          const pixels = imageData.data;
+          let hasContent = false;
+          
+          for (let i = 0; i < pixels.length; i += 4) {
+            const r = pixels[i];
+            const g = pixels[i + 1];
+            const b = pixels[i + 2];
+            // If any pixel is not black/dark, we have content
+            if (r > 20 || g > 20 || b > 20) {
+              hasContent = true;
+              break;
+            }
+          }
+          
+          if (hasContent) {
+            setPosterUrl(dataUrl);
+            setIsPosterGenerated(true);
+            video.poster = dataUrl;
+          }
+          
+          video.currentTime = originalTime;
+        } catch (err) {
+          console.warn('Poster generation failed:', err);
+        }
+        video.removeEventListener('seeked', handleSeeked);
+      };
+      
+      video.addEventListener('seeked', handleSeeked, { once: true });
+    } catch (err) {
+      console.warn('Poster generation setup failed:', err);
+    }
+  }, [posterUrl, isPosterGenerated]);
   
   const {
     containerVariants,
@@ -384,35 +446,31 @@ export default function Home() {
                 }} />
                 {videoUrl ? (
                   <>
-                    {/* Safari-compatible poster overlay */}
+                    {/* Show overlay only if no poster is available */}
                     {!posterUrl && (
                       <div 
-                        className="absolute inset-0 z-20 bg-[#050505] flex items-center justify-center cursor-pointer group"
+                        className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer group bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#050505]"
                         onClick={(e) => {
-                          const video = e.currentTarget.nextElementSibling as HTMLVideoElement;
+                          const video = videoRef.current;
                           if (video) {
-                            video.play();
+                            video.play().catch(err => console.error('Play failed:', err));
                             e.currentTarget.style.display = 'none';
                           }
                         }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.opacity = '0.95';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.opacity = '1';
-                        }}
                       >
-                        <div className="text-center">
-                          <div className="w-20 h-20 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center mb-4 group-hover:bg-white/20 transition-colors mx-auto">
-                            <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                        <div className="text-center p-8">
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#10b981]/20 to-[#059669]/10 border-2 border-[#10b981]/30 flex items-center justify-center mb-4 group-hover:from-[#10b981]/30 group-hover:to-[#059669]/20 transition-all mx-auto shadow-lg shadow-[#10b981]/20">
+                            <svg className="w-12 h-12 text-[#10b981] ml-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M8 5v14l11-7z"/>
                             </svg>
                           </div>
-                          <p className="text-xs text-gray-400 font-mono uppercase tracking-wider">Click to Play</p>
+                          <p className="text-sm text-[#10b981] font-mono uppercase tracking-wider mb-2">Video Preview</p>
+                          <p className="text-xs text-gray-500 font-mono">Click to Play</p>
                         </div>
                       </div>
                     )}
                     <video
+                      ref={videoRef}
                       src={videoUrl}
                       controls
                       className="w-full h-full object-cover relative z-10"
@@ -420,38 +478,17 @@ export default function Home() {
                       playsInline
                       poster={posterUrl || undefined}
                       onLoadedMetadata={(e) => {
-                        // Generate poster thumbnail from first frame for Safari if no static poster exists
                         const video = e.currentTarget;
-                        if (!posterUrl && !video.poster && video.readyState >= 2 && video.videoWidth > 0) {
-                          try {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            const ctx = canvas.getContext('2d');
-                            if (ctx) {
-                              const currentTime = video.currentTime;
-                              video.currentTime = 0.1;
-                              const handleSeeked = () => {
-                                try {
-                                  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                                  const generatedPoster = canvas.toDataURL('image/jpeg', 0.85);
-                                  video.poster = generatedPoster;
-                                  video.currentTime = currentTime;
-                                  // Hide overlay if poster was generated
-                                  const overlay = video.previousElementSibling as HTMLElement;
-                                  if (overlay && overlay.style) {
-                                    overlay.style.display = 'none';
-                                  }
-                                } catch (err) {
-                                  console.warn('Could not generate video poster:', err);
-                                }
-                                video.removeEventListener('seeked', handleSeeked);
-                              };
-                              video.addEventListener('seeked', handleSeeked, { once: true });
-                            }
-                          } catch (err) {
-                            console.warn('Poster generation failed:', err);
-                          }
+                        // Generate poster if we don't have one
+                        if (!posterUrl && video.readyState >= 2 && video.videoWidth > 0) {
+                          setTimeout(() => generatePoster(), 100);
+                        }
+                      }}
+                      onCanPlay={(e) => {
+                        const video = e.currentTarget;
+                        // Try generating poster when video can play
+                        if (!posterUrl && !isPosterGenerated) {
+                          generatePoster();
                         }
                       }}
                       onPlay={(e) => {
