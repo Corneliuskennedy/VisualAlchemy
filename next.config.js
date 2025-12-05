@@ -232,6 +232,15 @@ const nextConfig = {
   // Exclude unnecessary pages from build (Visual Alchemy only needs homepage and contact)
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
+  // Exclude _old-pages directory from build
+  webpack: (config, { isServer }) => {
+    config.module.rules.push({
+      test: /_old-pages/,
+      use: 'ignore-loader'
+    });
+    return config;
+  },
+  
   async headers() {
     return [
       {
