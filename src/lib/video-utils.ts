@@ -114,11 +114,21 @@ export async function uploadVideo(
 export function getVideoUrl(path: string): string {
   if (!path) return '';
   
+  // Ensure path doesn't start with a slash
+  const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+  
   const { data } = supabase.storage
     .from(VIDEO_BUCKET)
-    .getPublicUrl(path);
+    .getPublicUrl(cleanPath);
 
-  return data.publicUrl;
+  const url = data.publicUrl;
+  
+  // Log in development to help debug
+  if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+    console.log(`[Video Utils] Generated URL for "${cleanPath}":`, url);
+  }
+
+  return url;
 }
 
 /**
