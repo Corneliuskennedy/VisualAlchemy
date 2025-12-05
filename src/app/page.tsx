@@ -151,11 +151,11 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section - Normal Scroll */}
+      {/* Hero Section - Reduced Height */}
       <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 overflow-hidden pt-24 border-y border-white/5"
+        className="relative min-h-[70vh] flex flex-col justify-center items-center px-4 py-20 md:py-28 overflow-hidden pt-24 border-y border-white/5"
         style={{
           backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
@@ -294,15 +294,177 @@ export default function Home() {
             className="pt-8 md:pt-10 lg:pt-12"
           >
             <Button
-              onClick={scrollToProof}
+              onClick={() => {
+                const videoSection = document.getElementById('the-video');
+                videoSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
               size="lg"
               className="bg-[#10b981] hover:bg-[#059669] text-black font-semibold text-lg px-8 py-6 rounded-sm border-2 border-[#10b981] transition-all duration-300 font-mono"
               style={{ fontFamily: 'var(--font-mono), monospace' }}
             >
-              View The Case Study
+              Watch The Proof
             </Button>
           </motion.div>
+          
+          {/* Scroll Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isHeroReady ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ delay: 1.5, duration: 0.5 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+          >
+            <div 
+              className="flex flex-col items-center gap-2 cursor-pointer group"
+              onClick={() => {
+                const videoSection = document.getElementById('the-video');
+                videoSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+            >
+              <p className="text-xs text-[#10b981] font-mono uppercase tracking-wider mb-2 group-hover:text-[#34d399] transition-colors" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                Scroll to Watch
+              </p>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-6 h-10 border-2 border-[#10b981]/50 rounded-full flex items-start justify-center p-2 group-hover:border-[#10b981] transition-colors"
+              >
+                <motion.div
+                  animate={{ y: [0, 12, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="w-1.5 h-1.5 bg-[#10b981] rounded-full"
+                />
+              </motion.div>
+            </div>
+          </motion.div>
         </motion.div>
+      </section>
+      
+      {/* The Video Section - The Moneymaker */}
+      <section 
+        id="the-video" 
+        className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={fadeInUp}
+            className="mb-12 text-center"
+          >
+            <div 
+              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              // THE PROOF
+            </div>
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            >
+              See It In <span className="text-[#10b981]">Action</span>
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+            >
+              This is what <span className="text-[#10b981] font-semibold">+2,000 subscribers</span> and <span className="text-[#10b981] font-semibold">117,000 views</span> looks like. One video. One client.
+            </motion.p>
+          </motion.div>
+          
+          {/* Video Comparison - Monitor Style */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="backdrop-blur-md bg-black/40 border-2 border-[#10b981]/30 p-2 rounded-sm shadow-2xl shadow-[#10b981]/10"
+          >
+            {/* Monitor Frame */}
+            <div className="border-2 border-white/10 p-2 bg-black/60">
+              <div className="aspect-video bg-[#050505] border border-white/5 overflow-hidden relative">
+                {/* Monitor Scan Lines Effect */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
+                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
+                }} />
+                {videoUrl ? (
+                  <>
+                    {/* Show overlay only if no poster is available */}
+                    {!posterUrl && (
+                      <div 
+                        className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer group bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#050505]"
+                        onClick={(e) => {
+                          const video = videoRef.current;
+                          if (video) {
+                            video.play().catch(err => console.error('Play failed:', err));
+                            e.currentTarget.style.display = 'none';
+                          }
+                        }}
+                      >
+                        <div className="text-center p-8">
+                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#10b981]/20 to-[#059669]/10 border-2 border-[#10b981]/30 flex items-center justify-center mb-4 group-hover:from-[#10b981]/30 group-hover:to-[#059669]/20 transition-all mx-auto shadow-lg shadow-[#10b981]/20">
+                            <svg className="w-12 h-12 text-[#10b981] ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                          <p className="text-sm text-[#10b981] font-mono uppercase tracking-wider mb-2">Video Preview</p>
+                          <p className="text-xs text-gray-500 font-mono">Click to Play</p>
+                        </div>
+                      </div>
+                    )}
+                    <video
+                      ref={videoRef}
+                      src={videoUrl}
+                      controls
+                      className="w-full h-full object-cover relative z-10"
+                      preload="metadata"
+                      playsInline
+                      poster={posterUrl || undefined}
+                      onLoadedMetadata={(e) => {
+                        const video = e.currentTarget;
+                        // Generate poster if we don't have one
+                        if (!posterUrl && video.readyState >= 2 && video.videoWidth > 0) {
+                          setTimeout(() => generatePoster(), 100);
+                        }
+                      }}
+                      onCanPlay={(e) => {
+                        const video = e.currentTarget;
+                        // Try generating poster when video can play
+                        if (!posterUrl && !isPosterGenerated) {
+                          generatePoster();
+                        }
+                      }}
+                      onPlay={(e) => {
+                        // Hide overlay when video starts playing
+                        const overlay = e.currentTarget.previousElementSibling as HTMLElement;
+                        if (overlay && overlay.style) {
+                          overlay.style.display = 'none';
+                        }
+                      }}
+                      onError={(e) => {
+                        console.error('Video load error:', e);
+                        console.error('Video URL:', videoUrl);
+                      }}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </>
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-gray-500">
+                    <div className="text-center">
+                      <p className="text-sm font-mono mb-2">Loading video...</p>
+                      <p className="text-xs text-gray-600">FInalWebsiteVideo.mp4</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </section>
         
       {/* The Proof Section */}
@@ -425,95 +587,6 @@ export default function Home() {
                 <p className="text-xs text-gray-400 font-mono text-center italic" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   Fig 1.1: Actual retention & subscriber velocity from the pilot deployment.
                 </p>
-              </div>
-            </div>
-          </motion.div>
-          
-          {/* Video Comparison - Monitor Style */}
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="backdrop-blur-md bg-black/40 border-2 border-white/20 p-2 rounded-sm"
-          >
-            {/* Monitor Frame */}
-            <div className="border-2 border-white/10 p-2 bg-black/60">
-              <div className="aspect-video bg-[#050505] border border-white/5 overflow-hidden relative">
-                {/* Monitor Scan Lines Effect */}
-                <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
-                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
-                }} />
-                {videoUrl ? (
-                  <>
-                    {/* Show overlay only if no poster is available */}
-                    {!posterUrl && (
-                      <div 
-                        className="absolute inset-0 z-20 flex items-center justify-center cursor-pointer group bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#050505]"
-                        onClick={(e) => {
-                          const video = videoRef.current;
-                          if (video) {
-                            video.play().catch(err => console.error('Play failed:', err));
-                            e.currentTarget.style.display = 'none';
-                          }
-                        }}
-                      >
-                        <div className="text-center p-8">
-                          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#10b981]/20 to-[#059669]/10 border-2 border-[#10b981]/30 flex items-center justify-center mb-4 group-hover:from-[#10b981]/30 group-hover:to-[#059669]/20 transition-all mx-auto shadow-lg shadow-[#10b981]/20">
-                            <svg className="w-12 h-12 text-[#10b981] ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 5v14l11-7z"/>
-                            </svg>
-                          </div>
-                          <p className="text-sm text-[#10b981] font-mono uppercase tracking-wider mb-2">Video Preview</p>
-                          <p className="text-xs text-gray-500 font-mono">Click to Play</p>
-                        </div>
-                      </div>
-                    )}
-                    <video
-                      ref={videoRef}
-                      src={videoUrl}
-                      controls
-                      className="w-full h-full object-cover relative z-10"
-                      preload="metadata"
-                      playsInline
-                      poster={posterUrl || undefined}
-                      onLoadedMetadata={(e) => {
-                        const video = e.currentTarget;
-                        // Generate poster if we don't have one
-                        if (!posterUrl && video.readyState >= 2 && video.videoWidth > 0) {
-                          setTimeout(() => generatePoster(), 100);
-                        }
-                      }}
-                      onCanPlay={(e) => {
-                        const video = e.currentTarget;
-                        // Try generating poster when video can play
-                        if (!posterUrl && !isPosterGenerated) {
-                          generatePoster();
-                        }
-                      }}
-                      onPlay={(e) => {
-                        // Hide overlay when video starts playing
-                        const overlay = e.currentTarget.previousElementSibling as HTMLElement;
-                        if (overlay && overlay.style) {
-                          overlay.style.display = 'none';
-                        }
-                      }}
-                      onError={(e) => {
-                        console.error('Video load error:', e);
-                        console.error('Video URL:', videoUrl);
-                      }}
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </>
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-500">
-                    <div className="text-center">
-                      <p className="text-sm font-mono mb-2">Loading video...</p>
-                      <p className="text-xs text-gray-600">FInalWebsiteVideo.mp4</p>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </motion.div>
