@@ -11,7 +11,7 @@ import { Calendar, User, ArrowLeft } from "lucide-react";
 import { useRouter } from 'next/navigation';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from '@/hooks/useTranslations';
+// Removed translation dependency for Visual Alchemy (English-only)
 import { useEffect, useState, Suspense } from "react";
 import { UnifiedSEO } from '@/components/SEO';
 import { getBlogImageSrcSet, getBlogImageUrl } from '@/lib/image-utils';

@@ -207,6 +207,11 @@ const nextConfig = {
       { source: '/terms', destination: '/terms-of-service', permanent: true },
     ];
   },
+  // Skip building pages that aren't needed for Visual Alchemy
+  async generateBuildId() {
+    return 'visual-alchemy-build';
+  },
+
   async rewrites() {
     return [
       {
@@ -224,6 +229,9 @@ const nextConfig = {
       },
     ];
   },
+  // Exclude unnecessary pages from build (Visual Alchemy only needs homepage and contact)
+  pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
+  
   async headers() {
     return [
       {
