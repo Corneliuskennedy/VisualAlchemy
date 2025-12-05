@@ -19,11 +19,11 @@ export default function Home() {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   
   useEffect(() => {
-    const url = getVideoUrl('WebsiteTeaser.mp4');
+    const url = getVideoUrl('FInalWebsiteVideo.mp4');
     setVideoUrl(url);
     
-    // Try to get poster image from Supabase
-    const poster = getVideoUrl('WebsiteTeaser-poster.jpg');
+    // Get poster image from Supabase
+    const poster = getVideoUrl('openart_bkOTVqnL_upscaled.png');
     if (poster && poster !== url) {
       setPosterUrl(poster);
     }
@@ -510,7 +510,7 @@ export default function Home() {
                   <div className="w-full h-full flex items-center justify-center text-gray-500">
                     <div className="text-center">
                       <p className="text-sm font-mono mb-2">Loading video...</p>
-                      <p className="text-xs text-gray-600">WebsiteTeaser.mp4</p>
+                      <p className="text-xs text-gray-600">FInalWebsiteVideo.mp4</p>
                     </div>
                   </div>
                 )}
