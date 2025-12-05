@@ -381,6 +381,35 @@ export default function Home() {
                     className="w-full h-full object-cover relative z-10"
                     preload="metadata"
                     playsInline
+                    onLoadedMetadata={(e) => {
+                      // Generate poster thumbnail from first frame for Safari
+                      const video = e.currentTarget;
+                      if (!video.poster && video.readyState >= 2) {
+                        try {
+                          const canvas = document.createElement('canvas');
+                          canvas.width = video.videoWidth || 1920;
+                          canvas.height = video.videoHeight || 1080;
+                          const ctx = canvas.getContext('2d');
+                          if (ctx) {
+                            // Seek to first frame
+                            const currentTime = video.currentTime;
+                            video.currentTime = 0.1;
+                            video.addEventListener('seeked', () => {
+                              try {
+                                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                const posterUrl = canvas.toDataURL('image/jpeg', 0.85);
+                                video.poster = posterUrl;
+                                video.currentTime = currentTime;
+                              } catch (err) {
+                                console.warn('Could not generate video poster:', err);
+                              }
+                            }, { once: true });
+                          }
+                        } catch (err) {
+                          console.warn('Poster generation failed:', err);
+                        }
+                      }
+                    }}
                     onError={(e) => {
                       console.error('Video load error:', e);
                       console.error('Video URL:', videoUrl);
