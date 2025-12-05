@@ -6,19 +6,16 @@ export const dynamic = 'force-dynamic';
 
 import React, { Suspense } from 'react';
 
-import { useTranslations } from '@/hooks/useTranslations';
+// Removed translation dependency for Visual Alchemy (English-only)
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { UnifiedSEO } from '@/components/SEO';
-import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { MapPin, Users, Target, Award, ArrowRight, ArrowLeft, Calendar, Briefcase, GraduationCap } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import Image from 'next/image';
 
 const AboutPage: React.FC = () => {
-  const { language } = useTranslations();
-  const isNL = language === 'nl';
+  const isNL = false; // English-only for Visual Alchemy
   const isLargeScreen = useIsLargeScreen();
 
   // Define breadcrumb items
@@ -101,15 +98,6 @@ const AboutPage: React.FC = () => {
 
   return (
     <>
-      {/* Cal.com temporarily disabled to fix SSR build issues */}
-      {/* <CalIntroCallClient /> */}
-      <UnifiedSEO 
-        title={isNL ? "Over Octomatic - AI Automatisering Experts Amsterdam | Kennet Timmers" : "About Octomatic - AI Automation Experts Amsterdam | Kennet Timmers"}
-        description={isNL ? "Leer over Octomatic's missie om Nederlandse bedrijven te helpen schalen door AI automatisering. Lokale ondersteuning vanuit Naarden kantoor." : "Learn about Octomatic's mission to help Dutch businesses scale through AI automation. Local support from Naarden office."}
-        canonicalUrl={isNL ? "https://www.octomatic.ai/nl/about" : "https://www.octomatic.ai/about"}
-        keywords={isNL ? "Octomatic, Kennet Timmers, AI automatisering, Amsterdam, bedrijfsautomatisering" : "Octomatic, Kennet Timmers, AI automation, Amsterdam, business automation"}
-      />
-
       <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
         <div className="min-h-screen bg-[#0A0A0A]">
           {/* Hero Section */}
@@ -119,13 +107,6 @@ const AboutPage: React.FC = () => {
             </div>
             
             <div className="container mx-auto px-4 relative z-10">
-              {/* Breadcrumb */}
-              <div className="mb-8">
-                <BreadcrumbStructured 
-                  items={breadcrumbItems} 
-                  pageType="about"
-                />
-              </div>
 
               {/* Back Button */}
               <Button 
