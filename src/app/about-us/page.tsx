@@ -7,7 +7,6 @@ export const runtime = 'nodejs';
 
 import React, { Suspense } from 'react';
 
-import { useTranslations } from '@/hooks/useTranslations';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { UnifiedSEO } from '@/components/SEO';
@@ -18,8 +17,7 @@ import GridBackground from '@/components/ui/GridBackground';
 import Image from 'next/image';
 
 const AboutUsPage: React.FC = () => {
-  const { language } = useTranslations();
-  const isNL = language === 'nl';
+  const isNL = false; // English-only for Visual Alchemy
   const isLargeScreen = useIsLargeScreen();
 
   // Define breadcrumb items
