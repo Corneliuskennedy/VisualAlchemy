@@ -1,7 +1,7 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+// Removed translation dependency for Visual Alchemy (English-only)
 import { Button } from '@/components/ui/button';
 import { UnifiedSEO } from '@/components/SEO';
 import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
@@ -14,8 +14,7 @@ const SectionDivider = () => (
 );
 
 const AutomationStrategyWorkshopPage: React.FC = () => {
-  const { language } = useTranslations();
-  const isNL = language === 'nl';
+  const isNL = false; // English-only for Visual Alchemy
   const isLargeScreen = useIsLargeScreen();  // Define breadcrumb items
   const breadcrumbItems = [
     {
