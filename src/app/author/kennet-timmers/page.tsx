@@ -101,15 +101,6 @@ const KennetTimmersPage: React.FC = () => {
 
   return (
     <>
-      <UnifiedSEO 
-        title={isNL ? "Kennet Timmers - AI Automatisering Expert | Octomatic" : "Kennet Timmers - AI Automation Expert | Octomatic"}
-        description={isNL ? "Kennet Timmers, oprichter van Octomatic. 6+ jaar ervaring in AI automatisering, 150+ Nederlandse bedrijven geholpen, €2.3M+ besparingen gerealiseerd." : "Kennet Timmers, founder of Octomatic. 6+ years experience in AI automation, helped 150+ Dutch businesses, realized €2.3M+ in savings."}
-        canonicalUrl={isNL ? "https://www.octomatic.ai/nl/author/kennet-timmers" : "https://www.octomatic.ai/author/kennet-timmers"}
-        keywords={isNL ? "Kennet Timmers, AI automatisering expert, oprichter Octomatic, Amsterdam" : "Kennet Timmers, AI automation expert, Octomatic founder, Amsterdam"}
-        author="Kennet Timmers"
-        pageType="about"
-      />
-
       <Suspense fallback={<div className="min-h-screen bg-[#0A0A0A] animate-pulse" />}>
         <div className="min-h-screen bg-[#0A0A0A]">
           <section className="py-16 md:py-20 relative bg-[#0A0A0A]">
@@ -118,12 +109,6 @@ const KennetTimmersPage: React.FC = () => {
             </div>
             
             <div className="container mx-auto px-4 relative z-10">
-              <div className="mb-8">
-                <BreadcrumbStructured 
-                  items={breadcrumbItems} 
-                  pageType="about"
-                />
-              </div>
 
               <Button 
                 variant="ghost" 
