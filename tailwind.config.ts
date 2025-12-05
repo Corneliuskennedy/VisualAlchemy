@@ -72,6 +72,7 @@ const config = {
             fontFamily: {
                 sans: ["var(--font-sans)", ...fontFamily.sans], // Inter for body & UI
                 archivo: ["var(--font-archivo)", ...fontFamily.sans], // Archivo for headlines
+                mono: ["var(--font-mono)", ...fontFamily.mono], // JetBrains Mono for data
             },
             keyframes: {
                 "accordion-down": {

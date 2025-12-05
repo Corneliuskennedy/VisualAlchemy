@@ -34,11 +34,7 @@ import {
 import RuleExplanation from './RuleExplanation';
 import RuleMatchingSummary from './RuleMatchingSummary';
 
-// Enhanced logging function
-const projectViewLog = (message: string, data?: any) => {
-  const timestamp = new Date().toISOString();
-  console.log(`📋 [${timestamp}] EnhancedProjectView: ${message}`, data || '');
-};
+// Removed debug logging - use proper logger utility if needed
 
 // Enhanced interfaces for V2 schema
 interface ProjectV2 {
@@ -146,8 +142,6 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
   // Fetch project rules with enhanced data
   const fetchProjectRules = async () => {
     try {
-      projectViewLog('Fetching project rules for:', project.id);
-      
       const { data: rulesData, error: rulesError } = await supabase
         .from('project_rules')
         .select(`
@@ -174,7 +168,6 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
         .order('matched_at', { ascending: false });
 
       if (rulesError) {
-        projectViewLog('Error fetching project rules:', rulesError);
         setError('Failed to load project rules');
         return;
       }
@@ -191,7 +184,7 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
             .order('reliability_score', { ascending: false });
 
           if (sourcesError) {
-            projectViewLog('Error fetching sources for rule:', { ruleId: projectRule.rules.id, error: sourcesError });
+            // Silently handle source fetch errors
           }
 
           return {
@@ -202,10 +195,8 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
       );
 
       setProjectRules(rulesWithSources);
-      projectViewLog('Project rules loaded:', rulesWithSources.length);
       
     } catch (err) {
-      projectViewLog('Exception in fetchProjectRules:', err);
       setError('Failed to load project rules');
     } finally {
       setLoading(false);
@@ -219,7 +210,6 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
   ) => {
     try {
       setUpdatingRule(projectRuleId);
-      projectViewLog('Updating project rule:', { projectRuleId, updates });
 
       const { error } = await supabase
         .from('project_rules')
@@ -230,7 +220,6 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
         .eq('id', projectRuleId);
 
       if (error) {
-        projectViewLog('Error updating project rule:', error);
         throw new Error('Failed to update rule');
       }
 
@@ -241,11 +230,9 @@ const EnhancedProjectView: React.FC<EnhancedProjectViewProps> = ({
           : rule
       ));
 
-      projectViewLog('Project rule updated successfully');
       onProjectUpdate();
       
     } catch (err) {
-      projectViewLog('Exception in updateProjectRule:', err);
       throw err;
     } finally {
       setUpdatingRule(null);

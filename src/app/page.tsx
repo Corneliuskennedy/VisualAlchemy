@@ -1,59 +1,19 @@
 'use client';
 
-import React, { Suspense, useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowRight, Rocket, TrendingUp, Sparkles, Users, Clock, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { useThemeSafe } from '@/hooks/useThemeSafe';
+import { Mic, Cpu, Rocket, DollarSign, Building2, Palette, Shield, Brain, TrendingUp, Library, Settings } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Image from 'next/image';
 import { useOptimizedAnimations } from '@/hooks/useOptimizedAnimations';
-import { useHomepage, useCommon } from '@/hooks/useContent';
-import SmartCTA from '@/components/personalization/SmartCTA';
-import LiveActivity from '@/components/realtime/LiveActivity';
-import TeamSection from '@/components/sections/TeamSection';
-import { CenterModeSlider } from '@/components/ui/CenterModeSlider';
-import { UnifiedSEO } from '@/components/SEO/UnifiedSEO';
-import { getContentFreshness } from '@/lib/seo/ContentFreshness';
+import { getVideoUrl } from '@/lib/video-utils';
 
-// Animation variants now come from useOptimizedAnimations hook
-
-const iconMap = {
-  '/build': Rocket,
-  '/optimize': TrendingUp,
-  '/create': Sparkles,
-};
-
-const featureIcons = {
-  expertise: Users,
-  speed: Clock,
-  data: BarChart3,
-};
-
-// Available logos from public folder
-const clientLogos = [
-  { name: 'Monuta', image: '/logo/monuta.svg' },
-  { name: 'Vilaverde', image: '/logo/vilaverde.svg' },
-  { name: 'GTA Hood Expert', image: '/logo/gtahoodexpert.svg' },
-];
-
-/**
- * HomeContent Component
- * 
- * Main homepage component featuring:
- * - Premium hero section with visual storytelling
- * - AI-powered segmentation engine (startup vs SME)
- * - Social proof and trust signals
- * - Team showcase section
- * - Multiple conversion-optimized CTAs
- * 
- * @component
- * @returns {JSX.Element} The homepage content
- */
-function HomeContent() {
-  const { mounted, isDark } = useThemeSafe();
+export default function Home() {
+  const prefersReducedMotion = useReducedMotion();
+  const [isHeroReady, setIsHeroReady] = useState(false);
+  
   const {
     containerVariants,
     itemVariants,
@@ -61,193 +21,112 @@ function HomeContent() {
     cardVariants,
     fadeInUp,
   } = useOptimizedAnimations();
-  
-  // Get language-aware content from unified system - memoized
-  const homepage = useHomepage();
-  const common = useCommon();
-  
-  // Performance: Check for reduced motion preference
-  const prefersReducedMotion = useReducedMotion();
-  
-  // Track when page is ready for hero animation - prevent hydration mismatch
-  const [isHeroReady, setIsHeroReady] = useState(false);
-  
+
   useEffect(() => {
-    // Only set ready after mount to prevent hydration mismatch
-    if (!mounted) return;
-    
-    // Delay animation start to allow page to load
     const timer = setTimeout(() => {
       setIsHeroReady(true);
-    }, prefersReducedMotion ? 0 : 400); // 400ms delay for page load
-    
+    }, prefersReducedMotion ? 0 : 400);
     return () => clearTimeout(timer);
-  }, [prefersReducedMotion, mounted]);
-  
-  // Parallax scroll tracking - optimized for smooth 60fps performance
-  const heroRef = useRef<HTMLElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Consolidated scroll tracking - single scroll listener for better performance
-  // Use window scroll to reduce overhead from multiple element scrolls
-  const { scrollYProgress } = useScroll();
-  
-  // Reuse same scroll progress for both hero and content (smoother, less overhead)
-  // Note: scrollYProgress is a motion value, no need to memoize
-  const heroScrollProgress = scrollYProgress;
-  const contentScrollProgress = scrollYProgress;
+  }, [prefersReducedMotion]);
 
-  // Memoize hero text mouse handlers to prevent recreation
+  // Memoize hero headline words
+  const heroHeadlineWords = useMemo(() => {
+    const headline = "Your Audio. My Visuals. Unfair Retention.";
+    return headline.split('. ').map((word, index, array) => {
+      const isLast = index === array.length - 1;
+      const cleanWord = isLast && word.endsWith('.') ? word.slice(0, -1) : word;
+      return { word: cleanWord, isLast, index };
+    });
+  }, []);
+
+  // Text hover effects - Emerald theme
   const handleHeroTextMouseEnter = React.useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
-    if (isDark) {
-      e.currentTarget.style.textShadow = '0 4px 16px rgba(69, 133, 244, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2)';
-    } else {
-      e.currentTarget.style.textShadow = '0 2px 12px rgba(59, 130, 246, 0.15), 0 1px 6px rgba(0, 0, 0, 0.1)';
-    }
-  }, [isDark]);
+    e.currentTarget.style.textShadow = '0 4px 16px rgba(16, 185, 129, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2)';
+  }, []);
   
   const handleHeroTextMouseLeave = React.useCallback((e: React.MouseEvent<HTMLSpanElement>) => {
     e.currentTarget.style.textShadow = '0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04)';
   }, []);
 
-  // Memoize hero headline words to prevent recreation on every render
-  const heroHeadlineWords = useMemo(() => {
-    return homepage.hero.headline.split('. ').map((word, index, array) => {
-      const isLast = index === array.length - 1;
-      const cleanWord = isLast && word.endsWith('.') ? word.slice(0, -1) : word;
-      return { word: cleanWord, isLast, index };
-    });
-  }, [homepage.hero.headline]);
-  
-  // Optimized hero parallax - memoize transform ranges to prevent recalculation
-  const parallaxRanges = useMemo(() => ({
-    reduced: { hero: [0, 0], content: [0, 0] },
-    normal: { 
-      hero: [0, -24], 
-      content: [0, -50],
-      layer2: [0, -30]
-    }
-  }), []);
-
-  // Optimized hero parallax - simplified to single transform calculation
-  // Reduced motion: disable parallax if user prefers reduced motion
-  const heroParallaxBase = useTransform(
-    heroScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
-  );
-  
-  // Hero content layers - simplified calculations (fewer transforms = smoother)
-  // Use simple multipliers instead of chained transforms
-  const heroContentLayer1 = useTransform(
-    heroScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
-  );
-  const heroContentLayer2 = useTransform(
-    heroScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.hero : [0, -25]
-  );
-  const heroContentLayer3 = useTransform(
-    heroScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.hero : [0, -26]
-  );
-  const heroContentLayer4 = useTransform(
-    heroScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.hero : parallaxRanges.normal.hero
-  );
-  
-  // Page content layers - single simplified transform
-  const parallaxLayer1 = useTransform(
-    contentScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.content : parallaxRanges.normal.content
-  );
-  
-  const parallaxLayer2 = useTransform(
-    contentScrollProgress, 
-    [0, 1], 
-    prefersReducedMotion ? parallaxRanges.reduced.content : parallaxRanges.normal.layer2
-  );
-  
-  // Hero background effects - optimized fade transition
-  const heroScale = useTransform(heroScrollProgress, [0, 1], [1, 0.99]);
-  const heroOpacity = useTransform(heroScrollProgress, [0, 0.3, 0.7, 1], [1, 1, 0.4, 0]);
-  
-
-  const handleCTAClick = () => {
-    const segmentationSection = document.getElementById('segmentation-engine');
-    if (segmentationSection) {
-      segmentationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+  const scrollToProof = () => {
+    const proofSection = document.getElementById('the-proof');
+    proofSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
-    <div className="min-h-screen relative font-archivo bg-background">
-      {/* Skip to main content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-button-primary focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-button-primary focus:ring-offset-2"
-      >
-        {common.skipToContent}
-      </a>
+    <div className="min-h-screen bg-[#050505] text-white relative">
+      {/* Minimal Floating Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 md:px-8 py-4 backdrop-blur-md bg-[#050505]/80 border-b border-white/5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="font-mono font-bold text-sm tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+            VISUAL_ALCHEMY
+          </div>
+          <div className="flex items-center gap-4 font-mono text-xs text-gray-400" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+            <a 
+              href="https://www.octomatic.ai" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-[#10b981] transition-colors"
+            >
+              part of octomatic.ai
+            </a>
+          </div>
+        </div>
+      </nav>
 
-      {/* Section 1: Premium Hero - Beautiful Gradient Background */}
-      <motion.section 
-        ref={heroRef}
+      {/* Hero Section - Normal Scroll */}
+      <section 
         id="hero"
         aria-labelledby="hero-heading"
-        className="fixed top-0 left-0 right-0 h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 z-[2] overflow-hidden"
-        style={{ 
-          scale: prefersReducedMotion ? 1 : heroScale,
-          opacity: heroOpacity,
+        className="relative min-h-screen flex flex-col justify-center items-center px-4 py-24 md:py-32 overflow-hidden pt-24 border-y border-white/5"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
         }}
       >
-        {/* Hero Background - Theme-aware Rich Multi-Color Premium Gradient */}
+        {/* Hero Background - Emerald Theme Rich Multi-Color Premium Gradient */}
         <div 
-          className="absolute inset-0 z-0 overflow-hidden dark:block hidden"
+          className="absolute inset-0 z-0 overflow-hidden"
           style={{
+            backgroundColor: '#050505',
             background: `
               radial-gradient(ellipse 40% 60% at 15% 35%, 
-                rgba(100, 150, 255, 0.9) 0%,
-                rgba(80, 130, 240, 0.7) 15%,
-                rgba(30, 70, 170, 0.3) 35%,
-                rgba(8, 12, 28, 0.9) 60%,
-                rgba(8, 12, 28, 1) 100%
+                rgba(16, 185, 129, 0.9) 0%,
+                rgba(5, 150, 105, 0.7) 15%,
+                rgba(4, 120, 87, 0.3) 35%,
+                rgba(5, 5, 5, 0.9) 60%,
+                rgba(5, 5, 5, 1) 100%
               ),
               radial-gradient(ellipse 35% 50% at 85% 25%, 
-                rgba(180, 120, 255, 0.8) 0%,
-                rgba(150, 100, 230, 0.6) 20%,
-                rgba(50, 40, 130, 0.2) 45%,
-                rgba(8, 12, 28, 0.95) 70%,
-                rgba(8, 12, 28, 1) 100%
+                rgba(52, 211, 153, 0.8) 0%,
+                rgba(16, 185, 129, 0.6) 20%,
+                rgba(4, 120, 87, 0.2) 45%,
+                rgba(5, 5, 5, 0.95) 70%,
+                rgba(5, 5, 5, 1) 100%
               ),
               radial-gradient(ellipse 30% 45% at 50% 95%, 
-                rgba(100, 150, 255, 0.7) 0%,
-                rgba(60, 110, 220, 0.4) 30%,
-                rgba(8, 12, 28, 0.8) 60%,
-                rgba(8, 12, 28, 1) 100%
+                rgba(16, 185, 129, 0.7) 0%,
+                rgba(5, 150, 105, 0.4) 30%,
+                rgba(5, 5, 5, 0.8) 60%,
+                rgba(5, 5, 5, 1) 100%
               ),
               radial-gradient(ellipse 25% 40% at 30% 75%, 
-                rgba(255, 180, 200, 0.6) 0%,
-                rgba(200, 120, 200, 0.3) 40%,
-                rgba(8, 12, 28, 0.85) 70%,
-                rgba(8, 12, 28, 1) 100%
+                rgba(110, 231, 183, 0.6) 0%,
+                rgba(16, 185, 129, 0.3) 40%,
+                rgba(5, 5, 5, 0.85) 70%,
+                rgba(5, 5, 5, 1) 100%
               ),
               radial-gradient(ellipse 25% 35% at 70% 55%, 
-                rgba(120, 200, 255, 0.7) 0%,
-                rgba(60, 140, 210, 0.4) 40%,
-                rgba(8, 12, 28, 0.9) 70%,
-                rgba(8, 12, 28, 1) 100%
+                rgba(167, 243, 208, 0.7) 0%,
+                rgba(5, 150, 105, 0.4) 40%,
+                rgba(5, 5, 5, 0.9) 70%,
+                rgba(5, 5, 5, 1) 100%
               ),
               linear-gradient(135deg, 
-                rgba(8, 12, 28, 0.6) 0%,
-                rgba(8, 12, 28, 0.7) 25%,
-                rgba(8, 12, 28, 0.85) 60%,
-                rgba(8, 12, 28, 0.95) 100%
+                rgba(5, 5, 5, 0.6) 0%,
+                rgba(5, 5, 5, 0.7) 25%,
+                rgba(5, 5, 5, 0.85) 60%,
+                rgba(5, 5, 5, 0.95) 100%
               )
             `,
             backgroundSize: '300% 300%, 280% 280%, 260% 260%, 240% 240%, 220% 220%, 100% 100%',
@@ -257,30 +136,22 @@ function HomeContent() {
             filter: 'contrast(1.5) saturate(1.7)',
           }}
         />
-        {/* Light theme - Clean white background, no gradient */}
-        <div 
-          className="absolute inset-0 z-0 overflow-hidden dark:hidden bg-background"
-        />
         
-        {/* Soft overlay for text readability - Theme-aware */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-transparent/30 to-background/40 dark:to-background/40" />
+        {/* Soft overlay for text readability */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-transparent/30 to-[#050505]/40" />
         
-        {/* Smooth transition gradient from hero to next section */}
-        <motion.div 
-          className="absolute bottom-0 left-0 right-0 h-48 z-[1] bg-gradient-to-b from-transparent via-background/50 to-background pointer-events-none"
-          style={{ opacity: heroOpacity }}
-        />
         <motion.div
           initial="hidden"
-          animate="visible"
+          animate={isHeroReady ? "visible" : "hidden"}
           variants={containerVariants}
           className="max-w-5xl mx-auto text-center space-y-8 md:space-y-10 lg:space-y-12 relative z-10"
         >
-          {/* Clean Typography - Optimized for LCP with Enhanced Legibility */}
+          {/* Clean Typography - Optimized for LCP */}
           <motion.h1
             id="hero-heading"
+            variants={heroTitleVariants}
             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-archivo font-bold leading-[1.05] tracking-tight
-                     text-heading dark:text-white flex flex-wrap justify-center items-center gap-2 md:gap-4
+                     text-white flex flex-wrap justify-center items-center gap-2 md:gap-4
                      will-change-transform transform-gpu"
             style={{
               fontFamily: 'var(--font-archivo), system-ui, sans-serif',
@@ -288,18 +159,17 @@ function HomeContent() {
               WebkitFontSmoothing: 'antialiased',
               MozOsxFontSmoothing: 'grayscale',
               textRendering: 'optimizeLegibility',
-              y: prefersReducedMotion ? 0 : heroContentLayer1,
               contain: 'layout style paint',
-            }}
-            aria-label={homepage.hero.headline}
+            } as React.CSSProperties}
+            aria-label="Your Audio. My Visuals. Unfair Retention."
           >
             {heroHeadlineWords.map(({ word, isLast, index }) => (
               <motion.span
                 key={`${word}-${index}`}
                 initial={{ 
                   opacity: 0, 
-                  y: prefersReducedMotion ? 0 : -18, // Slightly reduced for smoother feel
-                  x: prefersReducedMotion ? 0 : -12, // Slightly reduced for smoother feel
+                  y: prefersReducedMotion ? 0 : -18,
+                  x: prefersReducedMotion ? 0 : -12,
                   scale: 0.96,
                 }}
                 animate={isHeroReady ? { 
@@ -314,15 +184,20 @@ function HomeContent() {
                   scale: 0.96,
                 }}
                 transition={{
-                  duration: prefersReducedMotion ? 0 : 1.1, // Slower: increased from 0.85s to 1.1s
-                  delay: prefersReducedMotion ? 0 : (isHeroReady ? index * 0.3 : 0), // Slightly longer stagger: 0.3s instead of 0.25s
-                  ease: [0.19, 1, 0.22, 1], // Smoother easing curve for more elegant feel
+                  duration: prefersReducedMotion ? 0 : 1.1,
+                  delay: prefersReducedMotion ? 0 : (isHeroReady ? index * 0.3 : 0),
+                  ease: [0.19, 1, 0.22, 1],
                 }}
                 onMouseEnter={handleHeroTextMouseEnter}
                 onMouseLeave={handleHeroTextMouseLeave}
                 className="inline-block will-change-transform transform-gpu"
               >
-                {word}{isLast ? '.' : '. '}
+                {word === "My" || word === "Visuals" || word === "Unfair" || word === "Retention" ? (
+                  <span className="text-[#10b981]">{word}</span>
+                ) : (
+                  word
+                )}
+                {isLast ? '.' : '. '}
               </motion.span>
             ))}
           </motion.h1>
@@ -331,326 +206,653 @@ function HomeContent() {
           <motion.p
             variants={itemVariants}
             className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed
-                     text-muted-foreground dark:text-gray-400
-                     font-normal"
-            style={{ 
-              y: prefersReducedMotion ? 0 : heroContentLayer2,
-              opacity: heroOpacity,
-            }}
+                     text-gray-400 font-normal"
           >
-            {homepage.hero.subline}
+            I build high-performance Visual Assets for finance creators. You speak. I engineer the rest. Zero Administrative Drag.
           </motion.p>
-
-          {/* AI-Powered Smart CTA - Premium Spacing */}
+          
+          {/* CTA Button */}
           <motion.div 
             variants={itemVariants} 
             className="pt-8 md:pt-10 lg:pt-12"
-            style={{ 
-              y: prefersReducedMotion ? 0 : heroContentLayer3,
-              opacity: heroOpacity,
-            }}
           >
-            <SmartCTA 
-              section="hero"
-              audience="universal"
-              className="max-w-3xl mx-auto text-center"
-            />
-          </motion.div>
-
-          {/* Live Activity Indicator */}
-          <motion.div 
-            variants={itemVariants} 
-            className="pt-6 md:pt-8 flex justify-center"
-            style={{ 
-              y: prefersReducedMotion ? 0 : heroContentLayer4,
-              opacity: heroOpacity,
-            }}
-          >
-            <LiveActivity 
-              page="homepage"
-              showViewers={true}
-              showRecentActivity={true}
-            />
+            <Button
+              onClick={scrollToProof}
+              size="lg"
+              className="bg-[#10b981] hover:bg-[#059669] text-black font-semibold text-lg px-8 py-6 rounded-sm border-2 border-[#10b981] transition-all duration-300 font-mono"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              View The Case Study
+            </Button>
           </motion.div>
         </motion.div>
-      </motion.section>
-
-      {/* Parallax Content Wrapper - Content scrolls over hero with different speeds */}
-      <div 
-        ref={containerRef} 
-        className="relative z-[3]"
-        style={{
-          willChange: 'transform',
-          contain: 'layout style',
-        }}
-      >
-        {/* Spacer to create scroll space for hero - transparent so hero shows through */}
-        <div className="h-screen pointer-events-none relative z-[1]" />
+      </section>
         
-        {/* Section 2: Minimal Slider - Expensive Simplicity */}
-        <section 
-          className="snap-start relative bg-background pb-16 md:pb-20"
-          style={{ 
-            backgroundColor: 'hsl(var(--background))',
-          }}
-        >
-          <div className="bg-background relative z-10" style={{ backgroundColor: 'hsl(var(--background))' }}>
-            <CenterModeSlider
-              headline={homepage.segmentation.headline}
-              cards={useMemo(() => homepage.segmentation.cards.map((card) => ({
-                title: card.title,
-                expandedTitle: card.expandedTitle,
-                description: card.description,
-                ctaText: card.ctaText,
-                href: card.href,
-              })), [homepage.segmentation.cards])}
-            />
-          </div>
-        </section>
-
-        {/* Section 3: Minimal Social Proof - Expensive Simplicity */}
-        <section 
-          id="social-proof"
-          aria-labelledby="social-proof-heading"
-          className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
-          style={{ 
-            backgroundColor: 'hsl(var(--background))',
-          }}
-        >
-          {/* Subtle background image */}
-          <div 
-            className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
-            style={{
-              backgroundImage: 'url(/images/pexels-tom-christensen-2078453-32755715.webp)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <div className="max-w-6xl mx-auto relative z-10">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
-              variants={containerVariants}
-              className="space-y-8"
-              style={{ willChange: 'transform, opacity' }}
+      {/* The Proof Section */}
+      <section id="the-proof" className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={fadeInUp}
+            className="mb-4 text-center"
+          >
+            <div 
+              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
             >
-              {/* Minimal Section Header */}
-              <motion.h2
-                id="social-proof-heading"
-                variants={itemVariants}
-                className="text-center text-xs uppercase tracking-[0.15em] font-light 
-                           text-subtle dark:text-white/60"
-              >
-                {homepage.socialProof.headline}
-              </motion.h2>
-
-              {/* Minimal Logo Grid - Minimal Padding */}
-              <div className="max-w-5xl mx-auto py-6 px-4">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 items-center justify-items-center">
-                  {useMemo(() => {
-                    // Memoize error handler - shared across all logos
-                    const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
-                      e.currentTarget.style.display = 'none';
-                    };
-                    
-                    return clientLogos.map((logo) => (
-                      <motion.div
-                        key={logo.name}
-                        variants={itemVariants}
-                        className="grayscale opacity-40 dark:opacity-50 dark:brightness-0 dark:invert transition-opacity duration-500"
-                        whileHover={{ opacity: 1 }}
-                      >
-                        <img
-                          src={logo.image}
-                          alt={logo.name}
-                          className="h-10 md:h-12 w-auto max-w-[180px] object-contain"
-                          onError={handleError}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </motion.div>
-                    ));
-                  }, [itemVariants])}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Section 4: Minimal Why Us - Expensive Simplicity */}
-        <section 
-          id="why-us"
-          aria-labelledby="why-us-heading"
-          className="py-16 md:py-20 px-6 md:px-8 relative snap-start bg-background overflow-hidden"
-          style={{ 
-            backgroundColor: 'hsl(var(--background))',
-          }}
-        >
-          {/* Subtle background image */}
-          <div 
-            className="absolute inset-0 opacity-0 dark:opacity-[0.02] pointer-events-none"
-            style={{
-              backgroundImage: 'url(/images/pexels-ro-diaz-2156842533-34405633.webp)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <div className="max-w-6xl mx-auto relative z-10">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '0px 0px -150px 0px', amount: 0.2 }}
-              variants={containerVariants}
-              className="space-y-12 md:space-y-16"
-              style={{ willChange: 'transform, opacity' }}
+              PROOF OF MECHANISM
+            </div>
+            <motion.h2 
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-16"
             >
-              {/* Minimal Asymmetrical Layout - Tight Spacing */}
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-start">
-                {/* Left Column - Narrower Text Block */}
-                <motion.div 
-                  variants={itemVariants} 
-                  className="md:col-span-2 space-y-4"
-                >
-                  <motion.h2
-                    id="why-us-heading"
-                    variants={fadeInUp}
-                    className="text-5xl md:text-6xl lg:text-7xl font-archivo font-light 
-                             text-heading dark:text-white leading-[0.95] tracking-[-0.02em]"
-                  >
-                    {homepage.whyUs.headline}
-                  </motion.h2>
-                </motion.div>
-
-                {/* Right Column - Wider Description */}
-                <motion.div 
-                  variants={itemVariants}
-                  className="md:col-span-3 space-y-2"
-                >
-                  <motion.p
-                    variants={fadeInUp}
-                    className="text-xl md:text-2xl lg:text-3xl leading-relaxed 
-                             text-body dark:text-white/90 max-w-none font-light"
-                  >
-                    {homepage.whyUs.description}
-                  </motion.p>
-                </motion.div>
-              </div>
-
-            {/* Minimal Feature Cards - Expensive Simplicity */}
+              Subject: <span className="text-[#10b981]">Black Swan Capitalist</span>
+            </motion.h2>
+          </motion.div>
+          
+          {/* Simple Stats Grid */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={containerVariants}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+          >
             <motion.div 
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.1,
-                    delayChildren: 0.1,
-                  },
-                },
-              }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 rounded-sm"
             >
-              {useMemo(() => {
-                // Memoize card images array - prevent recreation on every render
-                const cardImages = [
-                  '/images/pexels-janhabarta-29824324.webp',
-                  '/images/pexels-liuuu-_61-2383408-34142857.webp',
-                  '/images/pexels-negativespace-34125.webp',
-                ];
-                
-                return homepage.whyUs.points.map((point, index) => {
-                  const Icon = Object.values(featureIcons)[index];
-                  const cardImage = cardImages[index] || cardImages[0];
-                  
-                  return (
-                    <motion.div
-                      key={`feature-${index}`}
-                      variants={cardVariants}
-                      className="group relative p-4 md:p-6 overflow-hidden
-                               border-2 border-transparent dark:border-white/40
-                               transition-all duration-500 ease-out
-                               bg-transparent dark:bg-black
-                               hover:border-border/40 dark:hover:border-white/60"
-                    >
-                      {/* Background Image - Subtle */}
-                      <div 
-                        className="absolute inset-0 opacity-0 dark:opacity-[0.03] group-hover:opacity-0 dark:group-hover:opacity-[0.05] transition-opacity duration-500"
-                        style={{
-                          backgroundImage: `url(${cardImage})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                        }}
-                      />
-                      
-                      {/* Minimal Icon - Smaller, More Subtle */}
-                      {Icon && (
-                        <div className="relative z-10 w-8 h-8 flex items-center justify-start mb-4">
-                          <Icon className="h-5 w-5 text-[#4585f4] dark:text-white opacity-60 dark:opacity-80" />
-                        </div>
-                      )}
-
-                      {/* Minimal Content - Tight Spacing */}
-                      <h3 className="relative z-10 text-2xl md:text-3xl font-archivo font-light mb-2 
-                                   text-heading dark:text-white
-                                   tracking-tight">
-                        {point.title}
-                      </h3>
-                      <p className="relative z-10 text-lg md:text-xl leading-relaxed 
-                                  text-muted-foreground dark:text-white/70 font-light">
-                        {point.description}
-                      </p>
-                    </motion.div>
-                  );
-                });
-              }, [homepage.whyUs.points, cardVariants])}
+              <div 
+                className="text-5xl md:text-6xl font-mono font-bold text-[#10b981] mb-2" 
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                +2,000
+              </div>
+              <div className="text-gray-400 text-xs uppercase tracking-wider font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                GROWTH FROM 1 VIDEO
+              </div>
             </motion.div>
-
-            {/* Minimal Final CTA - Tight Spacing */}
-            <motion.div
-              variants={itemVariants}
-              className="text-center pt-8 md:pt-12"
+            
+            <motion.div 
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 rounded-sm"
             >
-              <SmartCTA 
-                section="final-cta"
-                audience="universal"
-                className="max-w-lg mx-auto"
-              />
+              <div 
+                className="text-5xl md:text-6xl font-mono font-bold text-[#10b981] mb-2" 
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                117,000
+              </div>
+              <div className="text-gray-400 text-xs uppercase tracking-wider font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                VS 44K AVG STANDARD UPLOAD
+              </div>
+            </motion.div>
+            
+            <motion.div 
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 rounded-sm"
+            >
+              <div 
+                className="text-5xl md:text-6xl font-mono font-bold text-[#10b981] mb-2" 
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                300%
+              </div>
+              <div className="text-gray-400 text-xs uppercase tracking-wider font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                PERFORMANCE INCREASE
+              </div>
             </motion.div>
           </motion.div>
-          </div>
-        </section>
-
-        {/* Section 5: Team Section - No parallax to avoid conflicts */}
-        <div 
-          className="bg-background relative z-10"
-          style={{ 
-            backgroundColor: 'hsl(var(--background))',
-          }}
-        >
-          <TeamSection />
+          
+          {/* Verified Analytics Data */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={fadeInUp}
+            className="mb-16"
+          >
+            <div 
+              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4 text-center"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              // VERIFIED_ANALYTICS_DATA
+            </div>
+            <div className="backdrop-blur-md bg-black/40 border-2 border-[#10b981]/30 p-6 rounded-sm relative overflow-hidden">
+              {/* Green Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/10 via-transparent to-[#10b981]/10 pointer-events-none" />
+              <div className="relative">
+                {/* Two Proof Images - Stacked for Better Legibility */}
+                <div className="space-y-6 mb-4">
+                  <div className="bg-[#050505] border border-[#10b981]/20 rounded-sm overflow-hidden">
+                    <Image
+                      src="/images/video_1_proof.png"
+                      alt="Video Proof 1 - Analytics Data"
+                      width={1200}
+                      height={900}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                  <div className="bg-[#050505] border border-[#10b981]/20 rounded-sm overflow-hidden">
+                    <Image
+                      src="/images/Video_2_proof.png"
+                      alt="Video Proof 2 - Analytics Data"
+                      width={1200}
+                      height={900}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400 font-mono text-center italic" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Fig 1.1: Actual retention & subscriber velocity from the pilot deployment.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+          
+          {/* Video Comparison - Monitor Style */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="backdrop-blur-md bg-black/40 border-2 border-white/20 p-2 rounded-sm"
+          >
+            {/* Monitor Frame */}
+            <div className="border-2 border-white/10 p-2 bg-black/60">
+              <div className="aspect-video bg-[#050505] border border-white/5 overflow-hidden relative">
+                {/* Monitor Scan Lines Effect */}
+                <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{
+                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
+                }} />
+                <video
+                  src={getVideoUrl('WebsiteTeaser.mp4')}
+                  controls
+                  className="w-full h-full object-cover relative z-10"
+                  preload="metadata"
+                  playsInline
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* The Mechanism Section */}
+      <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <motion.h2 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-center"
+          >
+            The Mechanism
+          </motion.h2>
+          <motion.p
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-xl text-gray-400 mb-16 text-center max-w-3xl mx-auto font-mono"
+            style={{ fontFamily: 'var(--font-mono), monospace' }}
+          >
+            A binary input/output system. No creative meetings. No revisions hell.
+          </motion.p>
+          
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={containerVariants}
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
+            {/* Card 1: The Input */}
+            <motion.div 
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-6 md:p-8 rounded-sm"
+            >
+              <div className="w-12 h-12 rounded-sm bg-[#10b981]/20 flex items-center justify-center mb-6 border border-[#10b981]/30">
+                <Mic className="h-6 w-6 text-[#10b981]" />
+              </div>
+              <h3 
+                className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                1. RAW INPUT
+              </h3>
+              <p className="text-gray-400 leading-relaxed">
+                Upload your raw audio file. No lighting, no camera, no setup. Just your voice and your alpha.
+              </p>
+            </motion.div>
+
+            {/* Card 2: The Alchemy */}
+            <motion.div 
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-6 md:p-8 rounded-sm"
+            >
+              <div className="w-12 h-12 rounded-sm bg-[#10b981]/20 flex items-center justify-center mb-6 border border-[#10b981]/30">
+                <Cpu className="h-6 w-6 text-[#10b981]" />
+              </div>
+              <h3 
+                className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                2. VISUAL ENGINEERING
+              </h3>
+              <p className="text-gray-400 leading-relaxed">
+                    I apply the 'Visual Essay' framework. Narrative Architecture & Data Visualization are engineered manually.
+              </p>
+            </motion.div>
+
+            {/* Card 3: The Output */}
+            <motion.div 
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-6 md:p-8 rounded-sm"
+            >
+              <div className="w-12 h-12 rounded-sm bg-[#10b981]/20 flex items-center justify-center mb-6 border border-[#10b981]/30">
+                <Rocket className="h-6 w-6 text-[#10b981]" />
+              </div>
+              <h3 
+                className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                3. ASSET DEPLOYMENT
+              </h3>
+              <p className="text-gray-400 leading-relaxed">
+                Receive a 4K, algorithm-ready asset within 48 hours. Plug it into YouTube. Watch the retention graph flatline.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* The Leverage Equation */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={cardVariants}
+            className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 md:p-10 rounded-sm mt-12"
+          >
+            <div className="text-center">
+              <h3 
+                className="text-2xl md:text-3xl font-bold mb-4 font-mono uppercase tracking-wider"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                The Leverage Equation
+              </h3>
+              <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
+                Stop competing on 'Production Value.' Compete on Density. You provide the intellect; I provide the visual adrenaline. This is how you scale trust without scaling effort.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* The Portfolio Round Section */}
+      <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={cardVariants}
+            className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 md:p-12 rounded-sm text-center"
+          >
+            <motion.h2
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeInUp}
+              className="text-3xl md:text-4xl font-bold mb-8 font-mono uppercase tracking-wider"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              The Portfolio Round
+            </motion.h2>
+            
+            <div className="inline-block px-4 py-2 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-8 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              ALLOCATION: 2/5 REMAINING
+            </div>
+            
+            <div className="mb-8">
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <span 
+                  className="text-3xl text-gray-500 line-through font-mono" 
+                  style={{ fontFamily: 'var(--font-mono), monospace' }}
+                >
+                  €1,250
+                </span>
+                <span 
+                  className="text-6xl md:text-7xl font-mono font-bold text-[#10b981]"
+                  style={{ fontFamily: 'var(--font-mono), monospace' }}
+                >
+                  €597
+                </span>
+              </div>
+            </div>
+            
+            <div className="space-y-4 mb-8 text-left max-w-md mx-auto">
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
+                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>Audio Analysis</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
+                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>Visual Narrative</span>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
+                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>48h Delivery</span>
+              </div>
+            </div>
+            
+            {/* The Zero-Risk Protocol */}
+            <div className="backdrop-blur-md bg-black/60 border-2 border-[#10b981]/40 p-6 rounded-sm mb-8 relative overflow-hidden">
+              {/* Warning-style border glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/5 via-transparent to-[#10b981]/5 pointer-events-none" />
+              <div className="relative">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30 flex-shrink-0">
+                    <Shield className="h-5 w-5 text-[#10b981]" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 
+                      className="text-lg font-bold mb-2 font-mono uppercase tracking-wider text-[#10b981]"
+                      style={{ fontFamily: 'var(--font-mono), monospace' }}
+                    >
+                      The Zero-Risk Protocol
+                    </h3>
+                    <p className="text-sm text-gray-300 leading-relaxed">
+                      If the visual asset doesn't outperform your channel average retention in the first 60 seconds, I will refund the entire €597. The contract is voided. You pay €0. You keep the asset.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Founder/Operator Section */}
+      <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+        }}
+      >
+        <div className="max-w-5xl mx-auto">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+            variants={cardVariants}
+            className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 md:p-10 rounded-sm"
+          >
+            {/* Classified Personnel File Header */}
+            <div className="mb-8 pb-4 border-b border-white/10">
+              <div 
+                className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-2"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                CLASSIFIED PERSONNEL FILE
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2">
+                Built by an Engineer, Not an Artist.
+              </h2>
+              <div className="flex flex-col md:flex-row md:items-center md:gap-4 mt-4">
+                <div className="font-mono text-lg text-white" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Kennet Timmers
+                </div>
+                <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Founder, Octomatic.ai
+                </div>
+              </div>
+            </div>
+
+            {/* Two Column Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
+              {/* Image/Avatar Column */}
+              <div className="flex flex-col items-center md:items-start md:h-full">
+                <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden mb-4 flex items-center justify-center">
+                  <img 
+                    src="/images/Visual_alchemy_photo_kennet.png" 
+                    alt="Kennet Timmers" 
+                    className="w-full h-full object-contain max-h-full"
+                  />
+                </div>
+              </div>
+
+              {/* Credentials Column */}
+              <div className="space-y-6">
+                {/* Body Copy */}
+                <div className="space-y-4">
+                  <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                    I don't just 'edit videos.' I architect information flows.
+                  </p>
+                  <p className="text-base md:text-lg text-gray-400 leading-relaxed">
+                    With a background as <strong className="text-white">Academy Lead at Be Informed</strong> (RegTech) and <strong className="text-white">Head of Operations</strong>, I treat your content like a software product: structured, optimized, and engineered for retention.
+                  </p>
+                </div>
+
+                {/* Track Record Micro-Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                  {/* Academy Architect */}
+                  <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInUp}
+                    className="flex flex-col items-start gap-2"
+                  >
+                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                      <Library className="h-5 w-5 text-[#10b981]" />
+                    </div>
+                    <div className="font-bold text-lg text-white">Academy Architect</div>
+                    <div className="text-sm text-gray-400 leading-relaxed">
+                      Former Academy Lead (Be Informed)
+                    </div>
+                    <div 
+                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                      style={{ fontFamily: 'var(--font-mono), monospace' }}
+                    >
+                      I didn't just work in RegTech; I built the education system from the ground up. I know exactly how to structure complex data so audiences <em>understand</em> and <em>retain</em> it.
+                    </div>
+                  </motion.div>
+
+                  {/* Head of Operations */}
+                  <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInUp}
+                    className="flex flex-col items-start gap-2"
+                  >
+                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                      <Settings className="h-5 w-5 text-[#10b981]" />
+                    </div>
+                    <div className="font-bold text-lg text-white">Head of Operations</div>
+                    <div className="text-sm text-gray-400 leading-relaxed">
+                      Founder at Octomatic
+                    </div>
+                    <div 
+                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                      style={{ fontFamily: 'var(--font-mono), monospace' }}
+                    >
+                      I build automation systems for SMEs to eliminate 20+ hours of drag. My delivery pipeline is zero-friction. You upload; I deploy. No administrative chaos.
+                    </div>
+                  </motion.div>
+
+                  {/* ML Certified */}
+                  <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInUp}
+                    className="flex flex-col items-start gap-2"
+                  >
+                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                      <Brain className="h-5 w-5 text-[#10b981]" />
+                    </div>
+                    <div className="font-bold text-lg text-white">ML Certified</div>
+                    <div className="text-sm text-gray-400 leading-relaxed">
+                      <span className="text-[#10b981] font-semibold">Stanford</span> / DeepLearning.AI
+                    </div>
+                    <div 
+                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                      style={{ fontFamily: 'var(--font-mono), monospace' }}
+                    >
+                      Specialized in Machine Learning & Model Deployment. I don't use 'magic' tools; I use engineered workflows to upscale, animate, and visualize your alpha.
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Operational Protocols Section */}
+      <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="mb-8 text-center"
+          >
+            <div 
+              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              OPERATIONAL PROTOCOLS
+            </div>
+            <h2 
+              className="text-3xl md:text-4xl font-bold mb-12 font-mono uppercase tracking-wider"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              FREQUENTLY ASKED QUESTIONS
+            </h2>
+          </motion.div>
+          
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+          >
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem 
+                value="item-1" 
+                className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Is this 100% AI?
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  No. The strategy and narrative are human-engineered. AI is used for visual generation and upscaling only.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem 
+                value="item-2" 
+                className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Do I own the rights?
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  Yes. You own 100% of the asset and project files upon delivery.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem 
+                value="item-3" 
+                className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  What if I hate it?
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  We do one round of 'Calibration' revisions. If you still hate it, you don't pay.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.h2 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8"
+          >
+            Ready to Engineer Virality?
+          </motion.h2>
+          <motion.p 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto"
+          >
+            Secure your allocation. Transform your content into high-retention, viral-ready videos.
+          </motion.p>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="mb-8"
+          >
+            <Link href="/contact">
+              <Button
+                size="lg"
+                className="bg-[#10b981] hover:bg-[#059669] text-black font-semibold text-lg px-12 py-6 rounded-sm border-2 border-[#10b981] transition-all duration-300 font-mono"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                Secure Allocation
+              </Button>
+            </Link>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="space-y-2"
+          >
+            <p className="text-sm text-gray-500 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              Visual Alchemy is part of{' '}
+              <a 
+                href="https://www.octomatic.ai" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-[#10b981] hover:underline transition-colors"
+              >
+                octomatic.ai
+              </a>
+            </p>
+            <p className="text-xs text-gray-600 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              Amsterdam, NL
+            </p>
+          </motion.div>
+        </div>
+      </section>
     </div>
-  );
-}
-
-export default function Home() {
-  // Content freshness for 2025 SEO (lastModified)
-  const freshness = getContentFreshness('/');
-
-  return (
-    <>
-      <UnifiedSEO
-        title="Build. Optimize. Create. | Octomatic"
-        description="We build the automated systems and create the engaging content that drives intelligent growth."
-        pageType="home"
-        modifiedTime={freshness.modifiedTime}
-        publishedTime={freshness.publishedTime}
-      />
-      <Suspense fallback={null}>
-        <HomeContent />
-      </Suspense>
-    </>
   );
 }

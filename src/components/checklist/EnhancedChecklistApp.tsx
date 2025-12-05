@@ -32,10 +32,7 @@ import EnhancedProjectView from './EnhancedProjectView';
 import AppHeader from './AppHeader';
 
 // Enhanced logging function
-const checklistLog = (message: string, data?: any) => {
-  const timestamp = new Date().toISOString();
-  console.log(`📋 [${timestamp}] EnhancedChecklistApp: ${message}`, data || '');
-};
+// Removed debug logging - use proper logger utility if needed
 
 // Enhanced interfaces for V2 schema
 interface ProjectV2 {
@@ -127,25 +124,13 @@ const EnhancedChecklistApp: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [retryCount, setRetryCount] = useState(0);
 
-  // Debug auth state
-  useEffect(() => {
-    checklistLog('Auth state changed:', {
-      hasUser: !!user,
-      userEmail: user?.email || 'no email',
-      hasSession: !!session,
-      authLoading,
-      sessionAccessToken: session?.access_token ? 'present' : 'missing',
-      sessionExpiry: session?.expires_at ? new Date(session.expires_at * 1000).toISOString() : 'no expiry'
-    });
-  }, [user, session, authLoading]);
+  // Auth state monitoring removed - use proper logger if needed
 
   // Fetch user profile with enhanced error handling
   const fetchUserProfile = async () => {
     if (!user?.id) return;
 
     try {
-      checklistLog('Fetching user profile for:', user.id);
-      
       const { data, error } = await supabase
         .from('user_profiles')
         .select('*')
@@ -154,7 +139,6 @@ const EnhancedChecklistApp: React.FC = () => {
 
       if (error) {
         if (error.code === 'PGRST116') {
-          checklistLog('No profile found, creating default profile');
           info('Setting up your profile...', { duration: 3000 });
           
           const { data: newProfile, error: createError } = await supabase
@@ -172,7 +156,6 @@ const EnhancedChecklistApp: React.FC = () => {
             .single();
 
           if (createError) {
-            checklistLog('Error creating profile:', createError);
             showError('Failed to create user profile. Please try again.', {
               action: {
                 label: 'Retry',
@@ -183,10 +166,8 @@ const EnhancedChecklistApp: React.FC = () => {
           } else {
             setProfile(newProfile);
             success('Profile created successfully!');
-            checklistLog('Profile created successfully:', newProfile);
           }
         } else {
-          checklistLog('Error fetching profile:', error);
           showError('Failed to load user profile. Please check your connection.', {
             action: {
               label: 'Retry',
@@ -197,10 +178,8 @@ const EnhancedChecklistApp: React.FC = () => {
         }
       } else {
         setProfile(data);
-        checklistLog('Profile loaded successfully:', data);
       }
     } catch (err) {
-      checklistLog('Exception in fetchUserProfile:', err);
       showError('An unexpected error occurred while loading your profile.', {
         action: {
           label: 'Retry',
@@ -216,8 +195,6 @@ const EnhancedChecklistApp: React.FC = () => {
     if (!user?.id) return;
 
     try {
-      checklistLog('Fetching projects for user:', user.id);
-      
       const { data, error } = await supabase
         .from('projects_v2')
         .select('*')
@@ -225,11 +202,9 @@ const EnhancedChecklistApp: React.FC = () => {
         .order('created_at', { ascending: false });
 
       if (error) {
-        checklistLog('Error fetching projects:', error);
         setError('Failed to load projects');
       } else {
         setProjects(data || []);
-        checklistLog('Projects loaded:', data?.length || 0);
         
         // Fetch progress for each project
         if (data && data.length > 0) {
@@ -237,7 +212,6 @@ const EnhancedChecklistApp: React.FC = () => {
         }
       }
     } catch (err) {
-      checklistLog('Exception in fetchProjects:', err);
       setError('Failed to load projects');
     }
   };
@@ -260,7 +234,6 @@ const EnhancedChecklistApp: React.FC = () => {
           .eq('project_id', projectId);
 
         if (error) {
-          checklistLog('Error fetching project rules:', error);
           return null;
         }
 
@@ -293,16 +266,14 @@ const EnhancedChecklistApp: React.FC = () => {
       });
 
       setProjectProgress(progressMap);
-      checklistLog('Project progress loaded for projects:', Object.keys(progressMap));
     } catch (err) {
-      checklistLog('Exception in fetchProjectsProgress:', err);
+      // Silently handle progress fetch errors
     }
   };
 
   // Create project using V2 schema and rule engine with enhanced feedback
   const handleCreateProject = async (projectData: ProjectData) => {
     try {
-      checklistLog('Creating new project:', projectData);
       info('Creating your GDPR compliance project...', { duration: 0 });
       
       // Create project configuration for rule engine
@@ -337,7 +308,6 @@ const EnhancedChecklistApp: React.FC = () => {
         .single();
 
       if (projectError) {
-        checklistLog('Error creating project:', projectError);
         showError('Failed to create project. Please try again.', {
           action: {
             label: 'Retry',
@@ -347,7 +317,6 @@ const EnhancedChecklistApp: React.FC = () => {
         throw new Error('Failed to create project');
       }
 
-      checklistLog('Project created successfully:', project);
       success('Project created successfully!');
 
       // Show rule evaluation progress
@@ -359,10 +328,8 @@ const EnhancedChecklistApp: React.FC = () => {
       });
 
       if (evaluationError) {
-        checklistLog('Error evaluating project rules:', evaluationError);
         warning('Project created, but rule evaluation failed. You can retry from the project page.');
       } else {
-        checklistLog('Project rules evaluated successfully');
         success('GDPR rules evaluated successfully!');
       }
 
@@ -374,7 +341,6 @@ const EnhancedChecklistApp: React.FC = () => {
       setCurrentView('project');
       
     } catch (err) {
-      checklistLog('Exception in handleCreateProject:', err);
       if (!(err as Error).message.includes('Failed to create project')) {
         showError('An unexpected error occurred while creating your project.', {
           action: {

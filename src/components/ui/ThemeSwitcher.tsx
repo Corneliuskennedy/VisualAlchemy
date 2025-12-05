@@ -29,17 +29,10 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   const toggleTheme = useCallback(() => {
     // Prevent rapid clicks during transition
     if (isTransitioningRef.current) {
-      console.log('[ThemeSwitcher] Toggle blocked - already transitioning');
       return;
     }
     
     const newTheme = theme === 'dark' ? 'light' : 'dark';
-    console.log('[ThemeSwitcher] Toggling theme', {
-      from: theme,
-      to: newTheme,
-      duration: prefersReducedMotion ? 150 : 400,
-      timestamp: new Date().toISOString(),
-    });
     
     setIsTransitioning(true);
     isTransitioningRef.current = true;
@@ -49,10 +42,6 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
     // Reset transition state after animation completes
     const duration = prefersReducedMotion ? 150 : 400;
     setTimeout(() => {
-      console.log('[ThemeSwitcher] Transition state reset', {
-        theme: newTheme,
-        timestamp: new Date().toISOString(),
-      });
       setIsTransitioning(false);
       isTransitioningRef.current = false;
     }, duration);

@@ -60,16 +60,6 @@ const DropdownMenuContent = React.forwardRef<
     forceMount?: boolean;
   }
 >(({ className, sideOffset = 4, forceMount, ...props }, ref) => {
-  // Debug logging for dropdown content renders
-  React.useEffect(() => {
-    console.log('[DropdownMenuContent] Rendered', {
-      className,
-      sideOffset,
-      forceMount,
-      timestamp: new Date().toISOString(),
-    });
-  });
-
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content

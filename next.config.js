@@ -55,14 +55,16 @@ const nextConfig = {
     } : false,
   },
   // Performance budgets to catch regressions early
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     // Cal.com package has been completely removed - no exclusion needed
     
     if (!isServer) {
+      // Only show performance warnings in production builds
+      // Dev mode bundles are intentionally larger (source maps, etc.)
       config.performance = {
         maxAssetSize: 250000, // 250 kB
         maxEntrypointSize: 250000, // 250 kB
-        hints: 'warning', // Warn instead of error to not break builds
+        hints: dev ? false : 'warning', // Suppress warnings in dev mode
       };
       
       // Optimize chunk splitting for better code splitting
@@ -253,7 +255,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://*.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co https://*.cal.com https://vitals.vercel-insights.com; frame-src https://*.cal.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live https://*.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; media-src 'self' https://*.supabase.co blob:; connect-src 'self' https://*.supabase.co https://*.cal.com https://vitals.vercel-insights.com https://*.octomatic.ai https://n8n.octomatic.ai; frame-src https://*.cal.com;",
           },
         ],
       },
