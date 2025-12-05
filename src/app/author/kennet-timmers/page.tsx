@@ -1,20 +1,19 @@
 'use client';
 
 import React, { Suspense } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+// Removed translation dependency for Visual Alchemy (English-only)
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { UnifiedSEO } from '@/components/SEO';
-import BreadcrumbStructured from '@/components/SEO/BreadcrumbStructured';
 import { User, MapPin, Calendar, ExternalLink, ArrowRight, ArrowLeft, Linkedin, Github, Mail } from 'lucide-react';
 import { useIsLargeScreen } from '@/hooks/useIsLargeScreen';
 import GridBackground from '@/components/ui/GridBackground';
 import Image from 'next/image';
 
 const KennetTimmersPage: React.FC = () => {
-  const { language } = useTranslations();
-  const isNL = language === 'nl';
-  const isLargeScreen = useIsLargeScreen();  const breadcrumbItems = [
+  const isNL = false; // English-only for Visual Alchemy
+  const isLargeScreen = useIsLargeScreen();
+  
+  const breadcrumbItems = [
     {
       title: 'Home',
       titleNL: 'Home',
