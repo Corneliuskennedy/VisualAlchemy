@@ -71,8 +71,10 @@ img {
 }
         ` }} />
         
-        {/* Favicon */}
+        {/* Favicon - Octomatic */}
+        <link rel="icon" href="/faviconOctomatic.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/logo/octomatic-200.png" />
         
         {/* Theme color */}
         <meta name="theme-color" content="#050505" />
