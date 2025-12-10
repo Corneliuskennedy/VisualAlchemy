@@ -96,13 +96,20 @@ img {
         <meta property="og:image:alt" content="Visual Alchemy - Viral Visuals for Finance Creators" />
         <meta property="og:site_name" content="Visual Alchemy" />
         <meta property="og:locale" content="en_US" />
+        {/* Facebook App ID - Add your Facebook App ID here if you have one */}
+        {/* <meta property="fb:app_id" content="YOUR_FACEBOOK_APP_ID" /> */}
         
-        {/* Twitter */}
+        {/* Twitter / X */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@octomatic_ai" />
+        <meta name="twitter:creator" content="@octomatic_ai" />
         <meta name="twitter:title" content="Visual Alchemy | Viral Visuals for Finance Creators" />
         <meta name="twitter:description" content="Turn raw audio into high-retention Visual Essays. No camera required." />
         <meta name="twitter:image" content="https://visuals.octomatic.ai/images/Graph_Image_visual_Alchemy.png" />
         <meta name="twitter:image:alt" content="Visual Alchemy - Viral Visuals for Finance Creators" />
+        
+        {/* LinkedIn - Uses Open Graph tags, but adding specific tags for better compatibility */}
+        <meta property="og:image:secure_url" content="https://visuals.octomatic.ai/images/Graph_Image_visual_Alchemy.png" />
         
         {/* Robots */}
         <meta name="robots" content="index, follow" />
