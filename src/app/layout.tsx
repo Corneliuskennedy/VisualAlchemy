@@ -90,6 +90,7 @@ img {
         <meta property="og:title" content="Visual Alchemy | Viral Visuals for Finance Creators" />
         <meta property="og:description" content="Turn raw audio into high-retention Visual Essays. No camera required." />
         <meta property="og:image" content="https://visuals.octomatic.ai/images/Graph_Image_visual_Alchemy.png" />
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1201" />
         <meta property="og:image:height" content="631" />
         <meta property="og:image:alt" content="Visual Alchemy - Viral Visuals for Finance Creators" />
