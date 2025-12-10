@@ -86,10 +86,10 @@ img {
         
         {/* Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://visual-alchemy.com/" />
+        <meta property="og:url" content="https://visuals.octomatic.ai/" />
         <meta property="og:title" content="Visual Alchemy | Viral Visuals for Finance Creators" />
         <meta property="og:description" content="Turn raw audio into high-retention Visual Essays. No camera required." />
-        <meta property="og:image" content="https://visual-alchemy.com/images/Graph_Image_visual_Alchemy.png" />
+        <meta property="og:image" content="https://visuals.octomatic.ai/images/Graph_Image_visual_Alchemy.png" />
         <meta property="og:image:width" content="1201" />
         <meta property="og:image:height" content="631" />
         <meta property="og:image:alt" content="Visual Alchemy - Viral Visuals for Finance Creators" />
@@ -100,14 +100,14 @@ img {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Visual Alchemy | Viral Visuals for Finance Creators" />
         <meta name="twitter:description" content="Turn raw audio into high-retention Visual Essays. No camera required." />
-        <meta name="twitter:image" content="https://visual-alchemy.com/images/Graph_Image_visual_Alchemy.png" />
+        <meta name="twitter:image" content="https://visuals.octomatic.ai/images/Graph_Image_visual_Alchemy.png" />
         <meta name="twitter:image:alt" content="Visual Alchemy - Viral Visuals for Finance Creators" />
         
         {/* Robots */}
         <meta name="robots" content="index, follow" />
         
         {/* Canonical */}
-        <link rel="canonical" href="https://visual-alchemy.com/" />
+        <link rel="canonical" href="https://visuals.octomatic.ai/" />
         
         {/* Performance: Resource Hints */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
