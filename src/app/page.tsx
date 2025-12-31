@@ -108,7 +108,7 @@ export default function Home() {
 
   // Memoize hero headline words
   const heroHeadlineWords = useMemo(() => {
-    const headline = "Your Audio. My Visuals. Unfair Retention.";
+    const headline = "You Speak. We Architect The Visuals.";
     return headline.split('. ').map((word, index, array) => {
       const isLast = index === array.length - 1;
       const cleanWord = isLast && word.endsWith('.') ? word.slice(0, -1) : word;
@@ -269,7 +269,7 @@ export default function Home() {
                 onMouseLeave={handleHeroTextMouseLeave}
                 className="inline-block will-change-transform transform-gpu"
               >
-                {word === "My" || word === "Visuals" || word === "Unfair" || word === "Retention" ? (
+                {word === "We" || word === "Architect" || word === "The" || word === "Visuals" ? (
                   <span className="text-[#10b981]">{word}</span>
                 ) : (
                   word
@@ -280,13 +280,17 @@ export default function Home() {
           </motion.h1>
 
           {/* Clean Subheadline */}
-          <motion.p
+          <motion.div
             variants={itemVariants}
-            className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed
-                     text-gray-400 font-normal"
+            className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed text-gray-400 font-normal space-y-4"
           >
-            I build high-performance Visual Assets for finance creators. You speak. I engineer the rest. Zero Administrative Drag.
-          </motion.p>
+            <p className="text-[#10b981] font-semibold">
+              100% Done-For-You.
+            </p>
+            <p>
+              We build high-performance Visual Assets for finance creators. We don't sell a tool—we sell your time back. You provide the audio; we engineer the retention.
+            </p>
+          </motion.div>
           
           {/* CTA Button */}
           <motion.div 
@@ -595,24 +599,24 @@ export default function Home() {
         }}
       >
         <div className="max-w-6xl mx-auto">
-          <motion.h2 
+          <motion.h2
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-center"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-center font-mono uppercase tracking-wider"
+            style={{ fontFamily: 'var(--font-mono), monospace' }}
           >
-            The Mechanism
+            THE ENGINEERING PROTOCOL
           </motion.h2>
           <motion.p
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-xl text-gray-400 mb-16 text-center max-w-3xl mx-auto font-mono"
-            style={{ fontFamily: 'var(--font-mono), monospace' }}
+            className="text-xl text-gray-400 mb-16 text-center max-w-3xl mx-auto"
           >
-            A binary input/output system. No creative meetings. No revisions hell.
+            We don't just "edit." We rebuild your content using a 3-stage proprietary pipeline to maximize retention.
           </motion.p>
           
           <motion.div 
@@ -622,7 +626,7 @@ export default function Home() {
             variants={containerVariants}
             className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            {/* Card 1: The Input */}
+            {/* Card 1: High-Fidelity Input */}
             <motion.div 
               variants={cardVariants}
               className="relative backdrop-blur-md bg-black/40 border border-white/10 p-6 md:p-8 rounded-sm"
@@ -634,14 +638,17 @@ export default function Home() {
                 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
                 style={{ fontFamily: 'var(--font-mono), monospace' }}
               >
-                1. RAW INPUT
+                1. HIGH-FIDELITY INPUT
               </h3>
-              <p className="text-gray-400 leading-relaxed">
-                Upload your raw audio file. No lighting, no camera, no setup. Just your voice and your alpha.
+              <p className="text-gray-400 leading-relaxed mb-3">
+                Upload your raw source file. We accept High-Quality Microphone Audio or 4K Talking Head Footage.
+              </p>
+              <p className="text-gray-500 text-sm italic leading-relaxed">
+                (Note: Better input equals better output. We recommend a dedicated mic for maximum authority.)
               </p>
             </motion.div>
 
-            {/* Card 2: The Alchemy */}
+            {/* Card 2: The Black Box Engineering */}
             <motion.div 
               variants={cardVariants}
               className="relative backdrop-blur-md bg-black/40 border border-white/10 p-6 md:p-8 rounded-sm"
@@ -653,11 +660,22 @@ export default function Home() {
                 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
                 style={{ fontFamily: 'var(--font-mono), monospace' }}
               >
-                2. VISUAL ENGINEERING
+                2. THE "BLACK BOX" ENGINEERING (Us)
               </h3>
-              <p className="text-gray-400 leading-relaxed">
-                    I apply the 'Visual Essay' framework. Narrative Architecture & Data Visualization are engineered manually.
+              <p className="text-gray-400 leading-relaxed mb-3">
+                We apply a multi-layered transformation to your content:
               </p>
+              <ul className="text-gray-400 leading-relaxed space-y-2 text-sm">
+                <li>
+                  <span className="text-[#10b981] font-semibold">The 30-Second Hook Calibration:</span> We manually re-architect the first 30 seconds of your video—using aggressive pacing and visual density—to lock the viewer in immediately.
+                </li>
+                <li>
+                  <span className="text-[#10b981] font-semibold">Scene-by-Scene Visual Synthesis:</span> We illustrate your narrative using a hybrid engine of Gen-AI animation, premium stock assets, and custom motion graphics. We switch between your face (if provided) and our visuals for optimal engagement.
+                </li>
+                <li>
+                  <span className="text-[#10b981] font-semibold">Sonic Architecture:</span> We score your video with custom sound design and adaptive music that reacts to the emotion of your script.
+                </li>
+              </ul>
             </motion.div>
 
             {/* Card 3: The Output */}
@@ -672,10 +690,10 @@ export default function Home() {
                 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider"
                 style={{ fontFamily: 'var(--font-mono), monospace' }}
               >
-                3. ASSET DEPLOYMENT
+                3. ASSET DEPLOYMENT (Us)
               </h3>
               <p className="text-gray-400 leading-relaxed">
-                Receive a 4K, algorithm-ready asset within 48 hours. Plug it into YouTube. Watch the retention graph flatline.
+                Receive a broadcast-ready 4K asset within 48 hours. Plug it into YouTube. Watch the retention graph flatline.
               </p>
             </motion.div>
           </motion.div>
@@ -797,134 +815,274 @@ export default function Home() {
           backgroundSize: '40px 40px',
         }}
       >
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
-            variants={cardVariants}
-            className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 md:p-10 rounded-sm"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="mb-12 text-center"
           >
-            {/* Classified Personnel File Header */}
-            <div className="mb-8 pb-4 border-b border-white/10">
-              <div 
-                className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-2"
-                style={{ fontFamily: 'var(--font-mono), monospace' }}
-              >
-                CLASSIFIED PERSONNEL FILE
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">
-                Built by an Engineer, Not an Artist.
-              </h2>
-              <div className="flex flex-col md:flex-row md:items-center md:gap-4 mt-4">
-                <div className="font-mono text-lg text-white" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                  Kennet Timmers
-                </div>
-                <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                  Founder, Octomatic.ai
-                </div>
-              </div>
+            <div 
+              className="text-xs uppercase tracking-widest text-gray-500 font-mono mb-4"
+              style={{ fontFamily: 'var(--font-mono), monospace' }}
+            >
+              CLASSIFIED PERSONNEL FILE
             </div>
-
-            {/* Two Column Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
-              {/* Image/Avatar Column */}
-              <div className="flex flex-col items-center md:items-start md:h-full">
-                <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden mb-4 flex items-center justify-center">
-                  <img 
-                    src="/images/Visual_alchemy_photo_kennet.png" 
-                    alt="Kennet Timmers" 
-                    className="w-full h-full object-contain max-h-full"
-                  />
-                </div>
-              </div>
-
-              {/* Credentials Column */}
-              <div className="space-y-6">
-                {/* Body Copy */}
-                <div className="space-y-4">
-                  <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
-                    I don't just 'edit videos.' I architect information flows.
-                  </p>
-                  <p className="text-base md:text-lg text-gray-400 leading-relaxed">
-                    With a background as <strong className="text-white">Academy Lead at Be Informed</strong> (RegTech) and <strong className="text-white">Head of Operations</strong>, I treat your content like a software product: structured, optimized, and engineered for retention.
-                  </p>
-                </div>
-
-                {/* Track Record Micro-Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
-                  {/* Academy Architect */}
-                  <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeInUp}
-                    className="flex flex-col items-start gap-2"
-                  >
-                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
-                      <Library className="h-5 w-5 text-[#10b981]" />
-                    </div>
-                    <div className="font-bold text-lg text-white">Academy Architect</div>
-                    <div className="text-sm text-gray-400 leading-relaxed">
-                      Former Academy Lead (Be Informed)
-                    </div>
-                    <div 
-                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
-                      style={{ fontFamily: 'var(--font-mono), monospace' }}
-                    >
-                      I didn't just work in RegTech; I built the education system from the ground up. I know exactly how to structure complex data so audiences <em>understand</em> and <em>retain</em> it.
-                    </div>
-                  </motion.div>
-
-                  {/* Head of Operations */}
-                  <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeInUp}
-                    className="flex flex-col items-start gap-2"
-                  >
-                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
-                      <Settings className="h-5 w-5 text-[#10b981]" />
-                    </div>
-                    <div className="font-bold text-lg text-white">Head of Operations</div>
-                    <div className="text-sm text-gray-400 leading-relaxed">
-                      Founder at Octomatic
-                    </div>
-                    <div 
-                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
-                      style={{ fontFamily: 'var(--font-mono), monospace' }}
-                    >
-                      I build automation systems for SMEs to eliminate 20+ hours of drag. My delivery pipeline is zero-friction. You upload; I deploy. No administrative chaos.
-                    </div>
-                  </motion.div>
-
-                  {/* ML Certified */}
-                  <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={fadeInUp}
-                    className="flex flex-col items-start gap-2"
-                  >
-                    <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
-                      <Brain className="h-5 w-5 text-[#10b981]" />
-                    </div>
-                    <div className="font-bold text-lg text-white">ML Certified</div>
-                    <div className="text-sm text-gray-400 leading-relaxed">
-                      <span className="text-[#10b981] font-semibold">Stanford</span> / DeepLearning.AI
-                    </div>
-                    <div 
-                      className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
-                      style={{ fontFamily: 'var(--font-mono), monospace' }}
-                    >
-                      Specialized in Machine Learning & Model Deployment. I don't use 'magic' tools; I use engineered workflows to upscale, animate, and visualize your alpha.
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-2">
+              Executed for Growth, Not Just Views.
+            </h2>
           </motion.div>
+
+          {/* Two Cards Grid - Stacked vertically */}
+          <div className="grid grid-cols-1 gap-6 md:gap-8">
+            {/* Kennet's Card */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 md:p-10 rounded-sm"
+            >
+              {/* Header */}
+              <div className="mb-8 pb-4 border-b border-white/10">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                  Built by an Engineer, Not an Artist.
+                </h3>
+                <div className="flex flex-col md:flex-row md:items-center md:gap-4 mt-4">
+                  <div className="font-mono text-lg text-white" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                    Kennet Timmers
+                  </div>
+                  <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                    Founder, Octomatic.ai
+                  </div>
+                </div>
+              </div>
+
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
+                {/* Image Column - Left */}
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
+                    <img 
+                      src="/images/Visual_alchemy_photo_kennet.png" 
+                      alt="Kennet Timmers" 
+                      className="w-full h-full object-contain max-h-full"
+                    />
+                  </div>
+                </div>
+
+                {/* Credentials Column */}
+                <div className="space-y-6">
+                  {/* Body Copy */}
+                  <div className="space-y-4">
+                    <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+                      I don't just 'edit videos.' I architect information flows.
+                    </p>
+                    <p className="text-base md:text-lg text-gray-400 leading-relaxed">
+                      With a background as <strong className="text-white">Academy Lead at Be Informed</strong> (RegTech) and <strong className="text-white">Head of Operations</strong>, I treat your content like a software product: structured, optimized, and engineered for retention.
+                    </p>
+                  </div>
+
+                  {/* Track Record Micro-Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                    {/* Academy Architect */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <Library className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">Academy Architect</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        Former Academy Lead (Be Informed)
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        I didn't just work in RegTech; I built the education system from the ground up. I know exactly how to structure complex data so audiences <em>understand</em> and <em>retain</em> it.
+                      </div>
+                    </motion.div>
+
+                    {/* Head of Operations */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <Settings className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">Head of Operations</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        Founder at Octomatic
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        I build automation systems for SMEs to eliminate 20+ hours of drag. My delivery pipeline is zero-friction. You upload; I deploy. No administrative chaos.
+                      </div>
+                    </motion.div>
+
+                    {/* ML Certified */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <Brain className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">ML Certified</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        <span className="text-[#10b981] font-semibold">Stanford</span> / DeepLearning.AI
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        Specialized in Machine Learning & Model Deployment. I don't use 'magic' tools; I use engineered workflows to upscale, animate, and visualize your alpha.
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Johna's Card */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '0px 0px -100px 0px', amount: 0.2 }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border border-white/10 p-8 md:p-10 rounded-sm"
+            >
+              {/* Header */}
+              <div className="mb-8 pb-4 border-b border-white/10">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                  Creativity without conversion is useless.
+                </h3>
+                <div className="flex flex-col md:flex-row md:items-center md:gap-4 mt-4">
+                  <div className="font-mono text-lg text-white" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                    Johna McCormick
+                  </div>
+                  <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                    Head of Growth & Partnerships, Visual Alchemy
+                  </div>
+                </div>
+              </div>
+
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
+                {/* Image Column - Left */}
+                <div className="flex flex-col items-center md:items-start">
+                  <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
+                    <img 
+                      src="/images/Visual_alchemy_photo_johna.png" 
+                      alt="Johna" 
+                      className="w-full h-full object-contain max-h-full"
+                    />
+                  </div>
+                </div>
+
+                {/* Credentials Column */}
+                <div className="space-y-6">
+                  {/* Body Copy */}
+                  <div className="space-y-4">
+                    <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
+                      "Creativity without conversion is useless. I bridge the gap between 'Viral Content' and 'Business Growth'."
+                    </p>
+                    <p className="text-base md:text-lg text-gray-400 leading-relaxed">
+                      With a background in <strong className="text-white">Enterprise Solutions at Amazon</strong> and <strong className="text-white">Director-level Marketing roles</strong>, I ensure your content isn't just 'watched'—it's leveraged. I treat your channel like a high-performance asset class.
+                    </p>
+                  </div>
+
+                  {/* Track Record Micro-Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10">
+                    {/* Enterprise DNA */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <Building2 className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">Enterprise DNA</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        Former Solutions Specialist (Amazon)
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        I come from the world of high-velocity logistics and enterprise workflows. I don't believe in 'creative chaos.' I believe in deadlines, precision, and operational excellence.
+                      </div>
+                    </motion.div>
+
+                    {/* Director of Strategy */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <TrendingUp className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">Director of Strategy</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        Marketing & Growth Specialist
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        I've led marketing divisions to capture market share in competitive US sectors. I understand that a video is actually a funnel. My job is to ensure your visuals convert attention into authority.
+                      </div>
+                    </motion.div>
+
+                    {/* US Operations */}
+                    <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={fadeInUp}
+                      className="flex flex-col items-start gap-2"
+                    >
+                      <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
+                        <DollarSign className="h-5 w-5 text-[#10b981]" />
+                      </div>
+                      <div className="font-bold text-lg text-white">US Operations</div>
+                      <div className="text-sm text-gray-400 leading-relaxed">
+                        Houston, Texas HQ
+                      </div>
+                      <div 
+                        className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
+                        style={{ fontFamily: 'var(--font-mono), monospace' }}
+                      >
+                        Managing the Western Hemisphere. While the engineering happens in the lab, the deals and partnerships are managed on US time. I am the bridge between your business and our production line.
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -964,10 +1122,10 @@ export default function Home() {
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                  Is this 100% AI?
+                  Is this just an AI tool like Runway or Sora?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-gray-400">
-                  No. The strategy and narrative are human-engineered. AI is used for visual generation and upscaling only.
+                  No. AI tools require you to spend hours prompting, selecting, and editing. We are a Done-For-You Production Service. We use AI to work faster, but our human Directors build the video. You save 20+ hours per upload because you don't touch the tools—we do.
                 </AccordionContent>
               </AccordionItem>
               
@@ -976,15 +1134,27 @@ export default function Home() {
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                  Do I own the rights?
+                  Is this 100% AI?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-gray-400">
-                  Yes. You own 100% of the asset and project files upon delivery.
+                  No. The strategy, pacing, and storytelling are human-engineered. AI is strictly used for visual generation and upscaling.
                 </AccordionContent>
               </AccordionItem>
               
               <AccordionItem 
                 value="item-3" 
+                className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Do I own the rights?
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  Yes. You own 100% of the final video and project files upon delivery.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem 
+                value="item-4" 
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>

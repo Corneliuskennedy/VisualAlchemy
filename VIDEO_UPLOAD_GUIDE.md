@@ -235,3 +235,5 @@ function VideoUploadField() {
    - Supabase Storage includes CDN
    - Consider Cloudflare for additional caching
 
+
+

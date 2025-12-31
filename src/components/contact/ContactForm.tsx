@@ -1,8 +1,10 @@
+'use client';
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail, User, Send, MessageSquare, CheckCircle, RotateCcw, Video } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 type ProjectType = 'single-video' | 'series' | 'channel-rebrand' | 'other';
 
@@ -33,9 +35,28 @@ export const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.name || !formData.email || !formData.projectType) {
+      toast({
+        variant: "destructive",
+        title: 'Missing required fields',
+        description: 'Please fill in all required fields.',
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     const webhookUrl = 'https://n8n.octomatic.ai/webhook/13fcbe25-af1b-453d-bfc7-d16b08227e47';
+
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      projectType: formData.projectType,
+      message: formData.message || '',
+      source: 'visual-alchemy-contact',
+    };
 
     try {
       const response = await fetch(webhookUrl, {
@@ -43,23 +64,30 @@ export const ContactForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          projectType: formData.projectType,
-          message: formData.message || '',
-          source: 'visual-alchemy-contact',
-        }),
+        body: JSON.stringify(payload),
       });
 
+      const responseText = await response.text();
+
       if (response.ok) {
-        setShowSuccess(true);
-        toast({
-          title: 'Request deployed',
-          description: 'Response within 24 hours.',
+        // Reset form first, then show success
+        setFormData({
+          name: '',
+          email: '',
+          projectType: '',
+          message: ''
         });
+        
+        // Use setTimeout to ensure state updates are processed
+        setTimeout(() => {
+          setShowSuccess(true);
+          toast({
+            title: 'Request deployed',
+            description: 'Response within 24 hours.',
+          });
+        }, 100);
       } else {
-        throw new Error(`Webhook submission failed with status: ${response.status}`);
+        throw new Error(`Webhook submission failed with status: ${response.status}. Response: ${responseText}`);
       }
     } catch (error) {
       console.error('Contact form submission error:', error);
@@ -72,14 +100,15 @@ export const ContactForm = () => {
       // Check if it's a network/CORS error
       const isNetworkError = errorMessage.includes('Failed to fetch') || 
                             errorMessage.includes('NetworkError') ||
-                            errorMessage.includes('CORS');
+                            errorMessage.includes('CORS') ||
+                            errorMessage.includes('Network request failed');
       
       toast({
         variant: "destructive",
         title: isNetworkError ? 'Connection error' : 'Error sending message',
         description: isNetworkError 
           ? 'Unable to connect. Please check your connection or email kennet@octomatic.ai directly.'
-          : 'Please try again or email kennet@octomatic.ai directly.',
+          : `Error: ${errorMessage}. Please try again or email kennet@octomatic.ai directly.`,
       });
     } finally {
       setIsLoading(false);

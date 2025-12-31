@@ -1,5 +1,6 @@
 import { Inter, Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 // Typography System: Archivo + Inter + JetBrains Mono (for data)
 const archivo = Archivo({ 
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={`dark ${archivo.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth" className={`dark ${archivo.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         {/* Critical CSS - Inlined for faster FCP/LCP */}
         <style dangerouslySetInnerHTML={{ __html: `
@@ -125,6 +126,7 @@ img {
         <main className="min-h-screen">
           {children}
         </main>
+        <Toaster />
       </body>
     </html>
   );
