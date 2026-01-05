@@ -4,7 +4,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Mic, Cpu, Rocket, DollarSign, Building2, Palette, Shield, Brain, TrendingUp, Library, Settings } from 'lucide-react';
+import { Mic, Cpu, Rocket, DollarSign, Building2, Palette, Brain, TrendingUp, Library, Settings } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Image from 'next/image';
 import { useOptimizedAnimations } from '@/hooks/useOptimizedAnimations';
@@ -108,7 +108,7 @@ export default function Home() {
 
   // Memoize hero headline words
   const heroHeadlineWords = useMemo(() => {
-    const headline = "You Speak. We Architect The Visuals.";
+    const headline = "Visual Narrative Assets for High-Growth Creators.";
     return headline.split('. ').map((word, index, array) => {
       const isLast = index === array.length - 1;
       const cleanWord = isLast && word.endsWith('.') ? word.slice(0, -1) : word;
@@ -269,7 +269,7 @@ export default function Home() {
                 onMouseLeave={handleHeroTextMouseLeave}
                 className="inline-block will-change-transform transform-gpu"
               >
-                {word === "We" || word === "Architect" || word === "The" || word === "Visuals" ? (
+                {word === "Visual" || word === "Narrative" || word === "Assets" || word === "High-Growth" || word === "Creators" ? (
                   <span className="text-[#10b981]">{word}</span>
                 ) : (
                   word
@@ -284,11 +284,8 @@ export default function Home() {
             variants={itemVariants}
             className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto leading-relaxed text-gray-400 font-normal space-y-4"
           >
-            <p className="text-[#10b981] font-semibold">
-              100% Done-For-You.
-            </p>
             <p>
-              We build high-performance Visual Assets for finance creators. We don't sell a tool—we sell your time back. You provide the audio; we engineer the retention.
+              We turn audio into visual experiences that demand attention. Currently accepting 3 Founding Partners to join our 2026 AI-Production pipeline.
             </p>
           </motion.div>
           
@@ -670,7 +667,7 @@ export default function Home() {
                   <span className="text-[#10b981] font-semibold">The 30-Second Hook Calibration:</span> We manually re-architect the first 30 seconds of your video—using aggressive pacing and visual density—to lock the viewer in immediately.
                 </li>
                 <li>
-                  <span className="text-[#10b981] font-semibold">Scene-by-Scene Visual Synthesis:</span> We illustrate your narrative using a hybrid engine of Gen-AI animation, premium stock assets, and custom motion graphics. We switch between your face (if provided) and our visuals for optimal engagement.
+                  <span className="text-[#10b981] font-semibold">Scene-by-Scene Visual Synthesis:</span> We use a Hybrid Synthesis Engine. This combines high-fidelity AI-generated stills, custom motion graphics, and strategic AI animation. We don't flood the screen with movement for the sake of it; we deploy 'Visual Adrenaline' exactly where the data says the viewer is about to look away.
                 </li>
                 <li>
                   <span className="text-[#10b981] font-semibold">Sonic Architecture:</span> We score your video with custom sound design and adaptive music that reacts to the emotion of your script.
@@ -692,8 +689,11 @@ export default function Home() {
               >
                 3. ASSET DEPLOYMENT (Us)
               </h3>
-              <p className="text-gray-400 leading-relaxed">
+              <p className="text-gray-400 leading-relaxed mb-3">
                 Receive a broadcast-ready 4K asset within 48 hours. Plug it into YouTube. Watch the retention graph flatline.
+              </p>
+              <p className="text-gray-500 text-sm italic leading-relaxed">
+                (Our systems are optimized for the 10-minute High-Retention Narrative—the "Goldilocks Zone" for YouTube's algorithm to maximize both Watch Time and Completion Rate.)
               </p>
             </motion.div>
           </motion.div>
@@ -721,88 +721,127 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Portfolio Round Section */}
+      {/* Pricing Section */}
       <section className="py-20 md:py-32 px-4 relative z-10 bg-[#050505] border-y border-white/5">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={cardVariants}
-            className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 md:p-12 rounded-sm text-center"
+            variants={fadeInUp}
+            className="text-center mb-16"
           >
-            <motion.h2
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              Pricing
+            </h2>
+          </motion.div>
+
+          {/* Pricing Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12">
+            {/* Single Asset */}
+            <motion.div 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeInUp}
-              className="text-3xl md:text-4xl font-bold mb-8 font-mono uppercase tracking-wider"
-              style={{ fontFamily: 'var(--font-mono), monospace' }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 rounded-sm text-center"
             >
-              The Portfolio Round
-            </motion.h2>
-            
-            <div className="inline-block px-4 py-2 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-              EARLY-BIRD DISCOUNT: 2/5 CLAIMED
-            </div>
-            <p className="text-sm text-gray-400 mb-8 font-mono text-center" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-              Discounted pricing for the first 5 clients. <span className="text-[#10b981] font-semibold">3 spots remaining.</span>
-            </p>
-            
-            <div className="mb-8">
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <span 
-                  className="text-3xl text-gray-500 line-through font-mono" 
-                  style={{ fontFamily: 'var(--font-mono), monospace' }}
-                >
-                  €1,250
-                </span>
-                <span 
-                  className="text-6xl md:text-7xl font-mono font-bold text-[#10b981]"
-                  style={{ fontFamily: 'var(--font-mono), monospace' }}
-                >
-                  €597
+              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Test Drive
+              </h3>
+              <p className="text-sm text-gray-400 mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Standard
+              </p>
+              <div className="mb-6">
+                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  €598
                 </span>
               </div>
-            </div>
-            
-            <div className="space-y-4 mb-8 text-left max-w-md mx-auto">
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
-                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>Audio Analysis</span>
+              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <p>1x Narrative Unit</p>
+                <p className="text-xs text-gray-500">Max 10 Minutes</p>
+                <p className="text-xs text-gray-500">Standard Hybrid</p>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
-                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>Visual Narrative</span>
+            </motion.div>
+
+            {/* The Content Engine */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border-2 border-[#10b981]/50 p-8 rounded-sm text-center"
+            >
+              <div className="inline-block px-3 py-1 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                POPULAR
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-sm bg-[#10b981] mt-2 flex-shrink-0" />
-                <span className="text-gray-300 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>48h Delivery</span>
+              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Content Engine
+              </h3>
+              <p className="text-sm text-gray-400 mb-2 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Value Play
+              </p>
+              <div className="mb-6">
+                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  €1,795
+                </span>
+                <span className="text-gray-400 font-mono text-sm ml-2" style={{ fontFamily: 'var(--font-mono), monospace' }}>/mo</span>
               </div>
-            </div>
-            
-            {/* The Zero-Risk Protocol */}
-            <div className="backdrop-blur-md bg-black/60 border-2 border-[#10b981]/40 p-6 rounded-sm mb-8 relative overflow-hidden">
-              {/* Warning-style border glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/5 via-transparent to-[#10b981]/5 pointer-events-none" />
-              <div className="relative">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30 flex-shrink-0">
-                    <Shield className="h-5 w-5 text-[#10b981]" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 
-                      className="text-lg font-bold mb-2 font-mono uppercase tracking-wider text-[#10b981]"
-                      style={{ fontFamily: 'var(--font-mono), monospace' }}
-                    >
-                      The Zero-Risk Protocol
-                    </h3>
-                    <p className="text-sm text-gray-300 leading-relaxed">
-                      If the visual asset doesn't outperform your channel average retention in the first 60 seconds, I will refund the entire €597. The contract is voided. You pay €0. You keep the asset.
-                    </p>
-                  </div>
-                </div>
+              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <p>4x Narrative Units</p>
+                <p className="text-xs text-gray-500">Max 10 Minutes/ea</p>
+                <p className="text-xs text-gray-500">Priority Workflow</p>
               </div>
+            </motion.div>
+
+            {/* The Full Production */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={cardVariants}
+              className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 rounded-sm text-center"
+            >
+              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Full Pipeline
+              </h3>
+              <p className="text-sm text-gray-400 mb-2 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                The Freedom Play
+              </p>
+              <div className="mb-6">
+                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  €3,450
+                </span>
+                <span className="text-gray-400 font-mono text-sm ml-2" style={{ fontFamily: 'var(--font-mono), monospace' }}>/mo</span>
+              </div>
+              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <p>4x Units + 4x Podcasts</p>
+                <p className="text-xs text-gray-500">Optimized for Retention</p>
+                <p className="text-xs text-gray-500">Concierge Strategy</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* The Promise */}
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="backdrop-blur-md bg-black/60 border-2 border-[#10b981]/40 p-6 md:p-8 rounded-sm relative overflow-hidden max-w-3xl mx-auto"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/5 via-transparent to-[#10b981]/5 pointer-events-none" />
+            <div className="relative text-center">
+              <h3 
+                className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider text-[#10b981]"
+                style={{ fontFamily: 'var(--font-mono), monospace' }}
+              >
+                The Promise
+              </h3>
+              <p className="text-base md:text-lg text-gray-300 leading-relaxed font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                If we don't beat your average retention, the next asset is on us. Period.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -855,20 +894,20 @@ export default function Home() {
                     Kennet Timmers
                   </div>
                   <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                    Founder, Octomatic.ai
+                    Head of Visual Engineering
                   </div>
                 </div>
               </div>
 
               {/* Two Column Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8 md:gap-10">
                 {/* Image Column - Left */}
                 <div className="flex flex-col items-center md:items-start">
-                  <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
+                  <div className="w-full md:w-60 rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
                     <img 
-                      src="/images/Visual_alchemy_photo_kennet.png" 
+                      src="/Kennetphotowebsitev2.png" 
                       alt="Kennet Timmers" 
-                      className="w-full h-full object-contain max-h-full"
+                      className="w-full h-auto object-contain"
                     />
                   </div>
                 </div>
@@ -881,7 +920,7 @@ export default function Home() {
                       I don't just 'edit videos.' I architect information flows.
                     </p>
                     <p className="text-base md:text-lg text-gray-400 leading-relaxed">
-                      With a background as <strong className="text-white">Academy Lead at Be Informed</strong> (RegTech) and <strong className="text-white">Head of Operations</strong>, I treat your content like a software product: structured, optimized, and engineered for retention.
+                      The 'Engineer' behind the machine. Kennet applies his background in RegTech and Machine Learning to treat content like high-performance software. He doesn't make 'videos'; he builds retention-optimized information flows.
                     </p>
                   </div>
 
@@ -978,33 +1017,22 @@ export default function Home() {
                     Johna McCormick
                   </div>
                   <div className="text-gray-400 font-mono text-sm" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                    Head of Growth & Partnerships, Visual Alchemy
+                    Head of Partnerships & Client Success
                   </div>
                 </div>
               </div>
 
               {/* Two Column Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-10">
-                {/* Image Column - Left */}
-                <div className="flex flex-col items-center md:items-start">
-                  <div className="w-full md:w-48 md:min-h-[400px] rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
-                    <img 
-                      src="/images/Visual_alchemy_photo_johna.png" 
-                      alt="Johna" 
-                      className="w-full h-full object-contain max-h-full"
-                    />
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_240px] gap-8 md:gap-10">
                 {/* Credentials Column */}
-                <div className="space-y-6">
+                <div className="space-y-6 order-2 md:order-1">
                   {/* Body Copy */}
                   <div className="space-y-4">
                     <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
                       "Creativity without conversion is useless. I bridge the gap between 'Viral Content' and 'Business Growth'."
                     </p>
                     <p className="text-base md:text-lg text-gray-400 leading-relaxed">
-                      With a background in <strong className="text-white">Enterprise Solutions at Amazon</strong> and <strong className="text-white">Director-level Marketing roles</strong>, I ensure your content isn't just 'watched'—it's leveraged. I treat your channel like a high-performance asset class.
+                      Johna bridges the gap between your business goals and our technical execution. With a background in high-stakes operations and marketing strategy, she ensures every asset we build aligns with your revenue targets. She doesn't just manage the project; she manages your growth.
                     </p>
                   </div>
 
@@ -1029,7 +1057,7 @@ export default function Home() {
                         className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
                         style={{ fontFamily: 'var(--font-mono), monospace' }}
                       >
-                        I come from the world of high-velocity logistics and enterprise workflows. I don't believe in 'creative chaos.' I believe in deadlines, precision, and operational excellence.
+                        High-velocity logistics and enterprise workflows. Deadlines, precision, operational excellence.
                       </div>
                     </motion.div>
 
@@ -1052,11 +1080,11 @@ export default function Home() {
                         className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
                         style={{ fontFamily: 'var(--font-mono), monospace' }}
                       >
-                        I've led marketing divisions to capture market share in competitive US sectors. I understand that a video is actually a funnel. My job is to ensure your visuals convert attention into authority.
+                        Led marketing divisions in competitive US sectors. Ensures visuals convert attention into authority.
                       </div>
                     </motion.div>
 
-                    {/* US Operations */}
+                    {/* Real Estate & Strategy */}
                     <motion.div 
                       initial="hidden"
                       whileInView="visible"
@@ -1067,17 +1095,28 @@ export default function Home() {
                       <div className="w-10 h-10 rounded-sm bg-[#10b981]/20 flex items-center justify-center border border-[#10b981]/30">
                         <DollarSign className="h-5 w-5 text-[#10b981]" />
                       </div>
-                      <div className="font-bold text-lg text-white">US Operations</div>
+                      <div className="font-bold text-lg text-white">Real Estate & Strategy</div>
                       <div className="text-sm text-gray-400 leading-relaxed">
-                        Houston, Texas HQ
+                        Land Acquisition & Partnerships
                       </div>
                       <div 
                         className="text-xs text-gray-500 font-mono mt-1 leading-relaxed"
                         style={{ fontFamily: 'var(--font-mono), monospace' }}
                       >
-                        Managing the Western Hemisphere. While the engineering happens in the lab, the deals and partnerships are managed on US time. I am the bridge between your business and our production line.
+                        Manages lender and investor relationships. Facilitates acquisitions from site selection to closings.
                       </div>
                     </motion.div>
+                  </div>
+                </div>
+
+                {/* Image Column - Right */}
+                <div className="flex flex-col items-center md:items-end order-1 md:order-2">
+                  <div className="w-full md:w-60 rounded-sm border-2 border-white/20 bg-gradient-to-br from-white/10 to-white/5 overflow-hidden flex items-center justify-center">
+                    <img 
+                      src="/Johnaphotowebsitev2.png" 
+                      alt="Johna McCormick" 
+                      className="w-full h-auto object-contain"
+                    />
                   </div>
                 </div>
               </div>
@@ -1122,6 +1161,18 @@ export default function Home() {
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  Can you do videos longer than 10 minutes?
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-gray-400">
+                  Our standard units are engineered for 10 minutes to maximize YouTube's retention algorithm. Data shows that 10 minutes is the "Goldilocks Zone" for YouTube's algorithm to maximize both Watch Time and Completion Rate. For long-form documentaries or deep-dives exceeding this, we offer Custom Architecture pricing. We prioritize density over duration.
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem 
+                value="item-2" 
+                className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
+              >
+                <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   Is this just an AI tool like Runway or Sora?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-gray-400">
@@ -1130,7 +1181,7 @@ export default function Home() {
               </AccordionItem>
               
               <AccordionItem 
-                value="item-2" 
+                value="item-3" 
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
@@ -1142,7 +1193,7 @@ export default function Home() {
               </AccordionItem>
               
               <AccordionItem 
-                value="item-3" 
+                value="item-4" 
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
@@ -1154,14 +1205,14 @@ export default function Home() {
               </AccordionItem>
               
               <AccordionItem 
-                value="item-4" 
+                value="item-5" 
                 className="backdrop-blur-md bg-black/40 border border-white/10 rounded-sm"
               >
                 <AccordionTrigger className="px-6 py-4 text-left text-white hover:text-[#10b981] transition-colors font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   What if I hate it?
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-4 text-gray-400">
-                  We do one round of 'Calibration' revisions. If you still hate it, you don't pay.
+                  We do one round of Calibration. If the data doesn't beat your average retention, we produce your next asset for free. We don't refund because we deliver results, not 'subjective art'.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
