@@ -739,7 +739,7 @@ export default function Home() {
 
           {/* Pricing Cards Grid */}
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12">
-            {/* Single Asset */}
+            {/* Tier 1: The Test Drive */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -747,25 +747,34 @@ export default function Home() {
               variants={cardVariants}
               className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 rounded-sm text-center"
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              {/* Retention Floor Guarantee Badge */}
+              <div className="inline-block px-3 py-1 bg-[#10b981]/20 border border-[#10b981]/40 text-[#10b981] text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                RETENTION FLOOR GUARANTEE
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                 The Test Drive
               </h3>
-              <p className="text-sm text-gray-400 mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                The Standard
-              </p>
               <div className="mb-6">
-                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="text-4xl md:text-5xl font-mono font-bold text-[#10b981] mb-1" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   €598
-                </span>
+                </div>
+                <div className="text-lg font-mono text-gray-400" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  | $700
+                </div>
               </div>
-              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                <p>1x Narrative Unit</p>
-                <p className="text-xs text-gray-500">Max 10 Minutes</p>
-                <p className="text-xs text-gray-500">Standard Hybrid</p>
+              <div className="space-y-3 text-left text-sm text-gray-300 font-mono border-t border-white/10 pt-4" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>1x Visual Narrative Video (Max 10m)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>2x Viral Shorts</span>
+                </div>
               </div>
             </motion.div>
 
-            {/* The Content Engine */}
+            {/* Tier 2: The Content Engine */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -773,29 +782,38 @@ export default function Home() {
               variants={cardVariants}
               className="relative backdrop-blur-md bg-black/40 border-2 border-[#10b981]/50 p-8 rounded-sm text-center"
             >
-              <div className="inline-block px-3 py-1 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                POPULAR
+              {/* Optimal Yield Badge */}
+              <div className="inline-block px-3 py-1 bg-[#10b981] text-black text-xs font-semibold uppercase tracking-wider rounded-sm mb-2 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                OPTIMAL YIELD
               </div>
-              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              {/* Retention Floor Guarantee Badge */}
+              <div className="inline-block px-3 py-1 bg-[#10b981]/20 border border-[#10b981]/40 text-[#10b981] text-xs font-semibold uppercase tracking-wider rounded-sm mb-4 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                RETENTION FLOOR GUARANTEE
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                 The Content Engine
               </h3>
-              <p className="text-sm text-gray-400 mb-2 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                The Value Play
-              </p>
               <div className="mb-6">
-                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="text-4xl md:text-5xl font-mono font-bold text-[#10b981] mb-1" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   €1,795
-                </span>
-                <span className="text-gray-400 font-mono text-sm ml-2" style={{ fontFamily: 'var(--font-mono), monospace' }}>/mo</span>
+                </div>
+                <div className="text-lg font-mono text-gray-400" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  | $2,100<span className="text-sm">/mo</span>
+                </div>
               </div>
-              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                <p>4x Narrative Units</p>
-                <p className="text-xs text-gray-500">Max 10 Minutes/ea</p>
-                <p className="text-xs text-gray-500">Priority Workflow</p>
+              <div className="space-y-3 text-left text-sm text-gray-300 font-mono border-t border-white/10 pt-4" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>4x Visual Narrative Videos (Max 10m/ea)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>8x Viral Shorts</span>
+                </div>
               </div>
             </motion.div>
 
-            {/* The Full Production */}
+            {/* Tier 3: The Full Pipeline */}
             <motion.div 
               initial="hidden"
               whileInView="visible"
@@ -803,22 +821,30 @@ export default function Home() {
               variants={cardVariants}
               className="relative backdrop-blur-md bg-black/40 border-2 border-white/10 p-8 rounded-sm text-center"
             >
-              <h3 className="text-xl md:text-2xl font-bold mb-2 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+              <h3 className="text-xl md:text-2xl font-bold mb-4 font-mono uppercase tracking-wider" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                 The Full Pipeline
               </h3>
-              <p className="text-sm text-gray-400 mb-2 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                The Freedom Play
-              </p>
               <div className="mb-6">
-                <span className="text-4xl md:text-5xl font-mono font-bold text-[#10b981]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="text-4xl md:text-5xl font-mono font-bold text-[#10b981] mb-1" style={{ fontFamily: 'var(--font-mono), monospace' }}>
                   €3,450
-                </span>
-                <span className="text-gray-400 font-mono text-sm ml-2" style={{ fontFamily: 'var(--font-mono), monospace' }}>/mo</span>
+                </div>
+                <div className="text-lg font-mono text-gray-400" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                  | $4,000<span className="text-sm">/mo</span>
+                </div>
               </div>
-              <div className="space-y-2 text-sm text-gray-400 font-mono" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-                <p>4x Units + 4x Podcasts</p>
-                <p className="text-xs text-gray-500">Optimized for Retention</p>
-                <p className="text-xs text-gray-500">Concierge Strategy</p>
+              <div className="space-y-3 text-left text-sm text-gray-300 font-mono border-t border-white/10 pt-4" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>4x Visual Narrative Videos (Max 10m/ea)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>4x Narrative Podcasts</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#10b981]">•</span>
+                  <span>16x Viral Shorts</span>
+                </div>
               </div>
             </motion.div>
           </div>
